@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,80 +10,152 @@
 </head>
 <body>
   <div class="wrapper">
-    <img id="logo" src="WireGuard.svg" alt="Логотип">
+    <div class="header">
+        <div class="logo-container">
+            <img id="logo" src="wg.svg" alt="Логотип">
+        </div>
+        <h1 class="main-title">WireGuard Converter</h1>
+        <p class="subtitle">Convert your WireGuard configurations to different formats</p>
+    </div>
+    
 	<div class="container-columns">
 		<div class="container">
-			<label for="wgFiles" class="custom-file-upload" id="fileUploadLabel">Select files</label>
+            <div class="section-title">Configuration</div>
+			<label for="wgFiles" class="custom-file-upload" id="fileUploadLabel">
+                <span class="upload-icon">📁</span>
+                <span class="upload-text">Select files</span>
+            </label>
 			<input type="file" id="wgFiles" accept=".conf" multiple class="hidden-input">
-			<button onclick="convert()">Convert</button>
-				<label><div class="checkbox">
+			<button onclick="convert()" class="convert-btn">
+                <span class="btn-icon">⚡</span>
+                Convert
+            </button>
+            
+            <div class="section-title">Output Format</div>
+            <div class="format-options">
+				<label><div class="checkbox modern-radio">
 					<input type="radio" id="clash" name="option" class="radio" checked/>
-					<span class="radio-fakeradio"></span><img src="Clash.webp" alt="AmneziaWG Icon" class="amnezia-icon">Clash
+					<span class="radio-fakeradio"></span>
+                    <div class="option-content">
+                        <img src="Clash.webp" alt="Clash Icon" class="format-icon">
+                        <span class="option-label">Clash</span>
+                    </div>
 				</div></label>
-				<br>
-				<label><div class="checkbox">
+				
+				<label><div class="checkbox modern-radio">
 					<input type="radio" id="awg" name="option" class="radio" />
-					<span class="radio-fakeradio"></span><img src="AWG.webp" alt="AmneziaWG Icon" class="amnezia-icon">AmneziaWG
+					<span class="radio-fakeradio"></span>
+                    <div class="option-content">
+                        <img src="AWG.webp" alt="AmneziaWG Icon" class="format-icon">
+                        <span class="option-label">AmneziaWG</span>
+                    </div>
 				</div></label>
-				<br>
-				<label><div class="checkbox">
+				
+				<label><div class="checkbox modern-radio">
 					<input type="radio" id="karing" name="option" class="radio" />
-					<span class="radio-fakeradio"></span><img src="Karing.webp" alt="AmneziaWG Icon" class="amnezia-icon">Karing 
-				<img src="Hiddify.webp" alt="AmneziaWG Icon" class="amnezia-icon">Hiddify
+					<span class="radio-fakeradio"></span>
+                    <div class="option-content">
+                        <img src="Karing.webp" alt="Karing Icon" class="format-icon">
+                        <img src="Hiddify.webp" alt="Hiddify Icon" class="format-icon">
+                        <span class="option-label">Karing / Hiddify</span>
+                    </div>
 				</div></label>
+            </div>
 		</div>
+        
 		<div class="container2">
+            <div class="section-title">Advanced Settings</div>
 			<div class="musor1">
-				<label><div class="checkbox">
+                <div class="settings-group-title">Junk Packet Settings</div>
+				<label><div class="checkbox modern-radio">
 					<input type="radio" id="junk1" name="junk" class="radio" checked/>
-					<span class="radio-fakeradio"></span> jc = 3 jmin = 1 jmax = 3 
+					<span class="radio-fakeradio"></span>
+                    <span class="option-label">Light (jc=3, jmin=1, jmax=3)</span>
 				</div></label>
-				<br>
-				<label><div class="checkbox">
+				
+				<label><div class="checkbox modern-radio">
 					<input type="radio" id="junk2" name="junk" class="radio" />
-					<span class="radio-fakeradio"></span> jc = 30 jmin = 10 jmax = 30 
+					<span class="radio-fakeradio"></span>
+                    <span class="option-label">Heavy (jc=30, jmin=10, jmax=30)</span>
 				</div></label>
-				<br>
-				<label><div class="checkbox" style="padding-bottom: 10px">
+				
+				<label><div class="checkbox modern-radio">
 				<input type="radio" id="junk3" name="junk" class="radio" />
-				<span class="radio-fakeradio"></span> Your own version
+				<span class="radio-fakeradio"></span>
+                <span class="option-label">Custom Settings</span>
 			</div></label>
-			jc = <textarea id="jc1" class="jc" rows="1" maxlength="3" type="number" placeholder="128"></textarea> 
-			jmin = <textarea id="jmin1" class="jc" rows="1" maxlength="4" type="number" placeholder="1279"></textarea> 
-			jmax = <textarea id="jmax1" class="jc" rows="1" maxlength="4" placeholder="1280"></textarea>
-			<button onclick="" class="randombtn">Your own version</button>
+            
+            <div class="custom-inputs">
+                <div class="input-row">
+                    <label class="input-label">jc =</label>
+                    <textarea id="jc1" class="jc modern-input" rows="1" maxlength="3" type="number" placeholder="128"></textarea>
+                </div>
+                <div class="input-row">
+                    <label class="input-label">jmin =</label>
+                    <textarea id="jmin1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1279"></textarea>
+                </div>
+                <div class="input-row">
+                    <label class="input-label">jmax =</label>
+                    <textarea id="jmax1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1280"></textarea>
+                </div>
+            </div>
+			<button onclick="" class="randombtn modern-secondary-btn">Generate Random</button>
 		</div>
+        
 		<div class="musor2 hidden">
-			<label><div class="checkbox">
+            <div class="settings-group-title">Fake Packet Settings</div>
+			<label><div class="checkbox modern-radio">
 				<input type="radio" id="fake1" name="fake" class="radio" checked/>
-				<span class="radio-fakeradio"></span> f_p = 3, f_p_s = 1, f_p_d = 3
+				<span class="radio-fakeradio"></span>
+                <span class="option-label">Basic (f_p=3, f_p_s=1, f_p_d=3)</span>
 			</div></label>
-			<br>
-			<label><div class="checkbox">
+			
+			<label><div class="checkbox modern-radio">
 				<input type="radio" id="fake2" name="fake" class="radio" />
-				<span class="radio-fakeradio"></span> f_p = 1-10, f_p_s = 10-30, f_p_d = 10-30
+				<span class="radio-fakeradio"></span>
+                <span class="option-label">Advanced (random ranges)</span>
 			</div></label>
-			<br>
-			<label><div class="checkbox" style="padding-bottom: 10px">
+			
+			<label><div class="checkbox modern-radio">
 				<input type="radio" id="fake3" name="fake" class="radio" />
-				<span class="radio-fakeradio"></span> Your own version
+				<span class="radio-fakeradio"></span>
+                <span class="option-label">Custom Settings</span>
 			</div></label>
-			f_p = <textarea id="fp1" class="jc" rows="1" maxlength="7" type="number" placeholder="5-10"></textarea><br class="mobile-only">
-			f_p_s = <textarea id="fps1" class="jc" rows="1" maxlength="7" type="number" placeholder="40-100"></textarea><br class="mobile-only">
-			f_p_d = <textarea id="fpd1" class="jc" rows="1" maxlength="7" placeholder="20-250"></textarea>
-			<button onclick="" class="randombtn2">Random</button>
+            
+            <div class="custom-inputs">
+                <div class="input-row">
+                    <label class="input-label">f_p =</label>
+                    <textarea id="fp1" class="jc modern-input" rows="1" maxlength="7" type="number" placeholder="5-10"></textarea>
+                </div>
+                <div class="input-row">
+                    <label class="input-label">f_p_s =</label>
+                    <textarea id="fps1" class="jc modern-input" rows="1" maxlength="7" type="number" placeholder="40-100"></textarea>
+                </div>
+                <div class="input-row">
+                    <label class="input-label">f_p_d =</label>
+                    <textarea id="fpd1" class="jc modern-input" rows="1" maxlength="7" placeholder="20-250"></textarea>
+                </div>
+            </div>
+			<button onclick="" class="randombtn2 modern-secondary-btn">Generate Random</button>
+        </div>
+	</div>
+    
+	<div class="infobtn full-width">
+		<div class="file-list" id="fileList">No files selected</div>
+		<div class="result" id="output">
+			<textarea id="yamlOutput" placeholder="The converted configuration will appear here..." class="textarea1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+			<div class="button-container">
+				<button class="download-btn hidden" id="downloadBtn">
+                    <span class="btn-icon">💾</span>
+                    Download
+                </button>
+				<button class="download-btn hidden" id="copyBtn">
+                    <span class="btn-icon">📋</span>
+                    Copy
+                </button>
 			</div>
 		</div>
 	</div>
-		<div class="infobtn">
-			<div class="file-list" id="fileList"></div>
-			<div class="result" id="output">
-				<textarea id="yamlOutput" placeholder="The result will appear here..." class="textarea1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-				<div class="button-container">
-					<button class="download-btn hidden" id="downloadBtn">Download</button>
-					<button class="download-btn hidden" id="copyBtn">Copy</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</body></html>
+  </div>
+</body>
+</html>

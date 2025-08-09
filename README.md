@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a fork of [ProtonVPN-Converter](https://github.com/protontestguide/ProtonVPN-Converter), customized to convert WireGuard configuration files into formats that incorporate junk packet generation to evade Deep Packet Inspection (DPI) in highly restricted internet environments, such as China, Russia, and Iran. It generates configurations for Clash, AmneziaWG (AWG), and Karing, enhancing VPN traffic obfuscation to bypass censorship and surveillance.
+This project is a fork of [ProtonVPN-Converter](https://github.com/protontestguide/ProtonVPN-Converter), customized UI for converting WireGuard configuration files into formats that incorporate junk packet generation to evade Deep Packet Inspection (DPI) in highly restricted internet environments, such as China, Russia, and Iran. It generates configurations for Clash, AmneziaWG (AWG), and Karing, enhancing VPN traffic obfuscation to bypass censorship and surveillance.
 
 ## Features
 
@@ -67,7 +67,7 @@ Endpoint = server.com:port
 ## Customization Notes
 
 This fork extends the original [ProtonVPN-Converter](https://github.com/protontestguide/ProtonVPN-Converter) with the following enhancements:
-- Removed ProtonVPN-specific UI, allowing conversion of any WireGuard configuration.
+- UI Overhauled and Removed ProtonVPN-specific UI, allowing conversion of any WireGuard configuration.
 - Improved country code detection to support a broader range of proxy names.
 - Translated to English.
 
