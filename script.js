@@ -206,26 +206,15 @@ function convertToClashProxy(wgConfig, fileName) {
     proxyName = proxyName.replace(/FREE#?/g, '');
     proxyName = proxyName.replace(/-$/, '');
     
-    // Enhanced flag detection - finds country codes anywhere in the name (case insensitive)
-    // Pattern matches 2 letters that can be:
-    // - At word boundaries (start/end of string or surrounded by non-letters)
-    // - Followed by common separators like -, _, space, or digit
     const flagPattern = /(?:^|[^a-z])([a-z]{2})(?=[-_\s\d]|$)/gi;
     let match;
-    
+
     while ((match = flagPattern.exec(proxyName)) !== null) {
       const countryCode = match[1].toUpperCase();
       if (COUNTRY_FLAGS[countryCode]) {
-        // Replace the found country code with the flag + code
-        proxyName = proxyName.replace(
-          new RegExp(`(?:^|[^a-z])(${match[1]})(?=[-_\\s\\d]|$)`, 'gi'),
-          (fullMatch, code) => {
-            // Preserve any prefix character that isn't a letter
-            const prefix = fullMatch.charAt(0).match(/[a-z]/i) ? '' : fullMatch.charAt(0);
-            return prefix + COUNTRY_FLAGS[countryCode];
-          }
-        );
-        break; // Replace only the first match to avoid multiple replacements
+        // Add flag at the beginning, keep original name unchanged
+        proxyName = COUNTRY_FLAGS[countryCode].split(' ')[0] + ' ' + proxyName;
+        break;
       }
     }
   }
@@ -267,38 +256,19 @@ function generateAmneziaOptionsYAML(options) {
 
 function generateProxyGroups(proxies) {
   const groups = [];
-  const protonProxies = [];
-  const otherProxies = [];
+  const allProxies = [];
 
   proxies.forEach(proxy => {
-    const isProton = /(^|[_-])([A-Z]{2})([-_]FREE)?([#_-]|$)/i.test(proxy.originalName || proxy.name);
-    
-    if (isProton) {
-      protonProxies.push(proxy.name);
-    } else {
-      otherProxies.push(proxy.name);
-    }
+    allProxies.push(proxy.name);
   });
 
-  if (protonProxies.length > 0) {
+  if (allProxies.length > 0) {
     groups.push(`
-- name: Proton
+- name: DPI
   type: select
-  icon: https://res.cloudinary.com/dbulfrlrz/image/upload/v1703162849/static/logos/icons/vpn_f9embt.svg
+  icon: https://raw.githubusercontent.com/zaeboba/page/refs/heads/main/archive/wireguard.svg
   proxies:
-    - ${protonProxies.join('\n    - ')}
-  url: 'http://speed.cloudflare.com/'
-  unified-delay: true
-  interval: 300`);
-  }
-
-  if (otherProxies.length > 0) {
-    groups.push(`
-- name: Other
-  type: select
-  icon: https://raw.githubusercontent.com/zaeboba/page/refs/heads/main/archive/amnezia.svg
-  proxies:
-    - ${otherProxies.join('\n    - ')}
+    - ${allProxies.join('\n    - ')}
   url: 'http://speed.cloudflare.com/'
   unified-delay: true
   interval: 300`);
