@@ -23,9 +23,9 @@ document.getElementById('wgFiles').addEventListener('change', function(e) {
     const label = document.getElementById('fileUploadLabel');
     
     if (files.length === 0) {
-        label.textContent = 'Select files';
+        label.textContent = translations['select_files_label'];
     } else {
-        label.textContent = `Files selected: ${files.length}`;
+        label.textContent = translations['files_selected_label'].replace('{count}', files.length);
     }
 });
 document.querySelector('.randombtn').onclick = function() {
@@ -279,12 +279,12 @@ function generateProxyGroups(proxies) {
 
 function convert() {
   const files = document.getElementById('wgFiles').files;
-  if (!files.length) return alert('Select files .conf');
+  if (!files.length) return alert(translations['select_files_alert']);
 
   const selectedOption = document.querySelector('input[name="option"]:checked').id;
   
   proxyList = [];
-  document.getElementById('fileList').innerHTML = `Files being processed: ${Array.from(files).map(f => f.name).join(', ')}`;
+  document.getElementById('fileList').innerHTML = `${Array.from(files).map(f => f.name).join(', ')}`;
   let filesProcessed = 0;
   
   Array.from(files).forEach((file) => {
@@ -311,7 +311,7 @@ function convert() {
           }
         }
       } catch (e) {
-        alert(`Error in file ${file.name}: ${e.message}`);
+        alert(translations['error_in_file'].replace('{file}', file.name).replace('{msg}', e.message));
         filesProcessed++; 
         if (filesProcessed === files.length) {
           generateClashYaml();
@@ -319,7 +319,7 @@ function convert() {
       }
     };
     reader.onerror = function() {
-      alert(`Error reading file ${file.name}`);
+      alert(translations['error_reading_file'].replace('{file}', file.name));
       filesProcessed++;
       if (filesProcessed === files.length) {
         generateClashYaml();
@@ -331,7 +331,7 @@ function convert() {
 
 function generateClashYaml() {
   if (proxyList.length === 0) {
-    alert('Could not process any files');
+    alert(translations['could_not_process_files']);
     return;
   }
 
@@ -363,14 +363,14 @@ function generateClashYaml() {
   document.getElementById('downloadBtn').onclick = () => downloadYAML(fullYaml, 'clash-config.yaml');
   document.getElementById('copyBtn').onclick = () => {
     navigator.clipboard.writeText(fullYaml)
-      .then(() => alert('Config copied to clipboard!'))
-      .catch(err => alert('Failed to copy: ', err));
+      .then(() => alert(translations['config_copied']))
+      .catch(err => alert(translations['copy_failed']));
   };
 }
 
 function generateAWGYaml() {
   if (proxyList.length === 0) {
-    alert('Could not process any files');
+    alert(translations['could_not_process_files']);
     return;
   }
 
@@ -383,14 +383,14 @@ function generateAWGYaml() {
   document.getElementById('copyBtn').classList.remove('hidden');
   document.getElementById('copyBtn').onclick = () => {
     navigator.clipboard.writeText(fullYaml)
-      .then(() => alert('Config copied to clipboard!'))
-      .catch(err => alert('Failed to copy: ', err));
+      .then(() => alert(translations['config_copied']))
+      .catch(err => alert(translations['copy_failed']));
   };
 }
 
 function generateKaringYaml() {
   if (proxyList.length === 0) {
-    alert('Could not process any files');
+    alert(translations['could_not_process_files']);
     return;
   }
 
@@ -444,8 +444,8 @@ function generateKaringYaml() {
   document.getElementById('downloadBtn').onclick = () => downloadYAML(fullYaml, 'karing-config.json');
   document.getElementById('copyBtn').onclick = () => {
     navigator.clipboard.writeText(fullYaml)
-      .then(() => alert('Config copied to clipboard!'))
-      .catch(err => alert('Failed to copy: ', err));
+      .then(() => alert(translations['config_copied']))
+      .catch(err => alert(translations['copy_failed']));
   };
 }
 
@@ -566,3 +566,116 @@ function replaceMobileText() {
 // Вызываем при загрузке и при изменении размера окна
 window.addEventListener('DOMContentLoaded', replaceMobileText);
 window.addEventListener('resize', replaceMobileText);
+
+
+
+// TRNSLATION
+const supportedLangs = ["en", "tr", "fa", "ru", "zh"];
+let currentLang = localStorage.getItem("lang") || detectBrowserLang();
+
+function detectBrowserLang() {
+  let lang = navigator.language.slice(0, 2);
+  return supportedLangs.includes(lang) ? lang : "en";
+}
+
+async function loadLanguage(lang) {
+  try {
+    const res = await fetch(`./lang/${lang}.json`);
+    if (!res.ok) throw new Error(`Language file not found: ${lang}`);
+    const translations = await res.json();
+    translatePage(translations);
+    localStorage.setItem("lang", lang);
+    document.body.classList.remove('lang-en', 'lang-tr', 'lang-fa', 'lang-ru');
+    document.body.classList.add(`lang-${lang}`);
+    currentLang = lang;
+    updateDropdownSelection(lang);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+let translations = {};
+
+function translatePage(t) {
+  translations = t;  // save globally for script use
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (t[key]) {
+      if (el.tagName.toLowerCase() === "title") {
+        document.title = t[key];
+      } else {
+        el.textContent = t[key];
+      }
+    }
+  });
+
+  // Also update placeholders
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (t[key]) {
+      el.placeholder = t[key];
+    }
+  });
+}
+
+function updateDropdownSelection(lang) {
+  const dropdown = document.getElementById('languageSwitcher');
+  const selectedText = dropdown.querySelector('.selected-text');
+  const options = dropdown.querySelectorAll('.dropdown-option');
+  
+  // Remove active class from all options
+  options.forEach(opt => opt.classList.remove('active'));
+  
+  // Find and activate the current language option
+  const activeOption = dropdown.querySelector(`[data-value="${lang}"]`);
+  if (activeOption) {
+    activeOption.classList.add('active');
+    selectedText.textContent = activeOption.textContent;
+  }
+}
+
+// Custom Dropdown Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const dropdown = document.getElementById('languageSwitcher');
+  const selected = dropdown.querySelector('.dropdown-selected');
+  const selectedText = dropdown.querySelector('.selected-text');
+  const options = dropdown.querySelectorAll('.dropdown-option');
+  
+  // Toggle dropdown
+  selected.addEventListener('click', function(e) {
+    e.stopPropagation();
+    dropdown.classList.toggle('open');
+  });
+  
+  // Handle option selection
+  options.forEach(option => {
+    option.addEventListener('click', function() {
+      const selectedLang = this.dataset.value;
+      
+      // Only load if different language selected
+      if (selectedLang !== currentLang) {
+        loadLanguage(selectedLang);
+      }
+      
+      // Close dropdown
+      dropdown.classList.remove('open');
+    });
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('open');
+    }
+  });
+  
+  // Close dropdown on escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      dropdown.classList.remove('open');
+    }
+  });
+  
+  // Initialize: Load initial language and set dropdown
+  loadLanguage(currentLang);
+});

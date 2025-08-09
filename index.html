@@ -5,53 +5,80 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="icon" href="wg.svg" type="image/x-icon">
 	<link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lalezar&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 	<script defer src="script.js"></script>
-  <title>WireGuard Converter</title>
+  <title data-i18n="title">WireGuard Converter</title>
 </head>
 <body>
   <div class="wrapper">
     <div class="header">
         <div class="logo-container">
-            <img id="logo" src="wg.svg" alt="Логотип">
+            <img id="logo" src="wg.svg" alt="Logo" />
         </div>
-        <h1 class="main-title">WireGuard Converter</h1>
-        <p class="subtitle">Convert your WireGuard configurations to different formats</p>
+
+        <h1 class="main-title" data-i18n="main_title">WireGuard Converter</h1>
+        <p class="subtitle" data-i18n="subtitle">Convert your WireGuard configurations to different formats</p>
+
+        <div class="custom-dropdown" id="languageSwitcher">
+            <div class="dropdown-selected">
+                <span class="selected-text">English</span>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="dropdown-options">
+                <div class="dropdown-option active" data-value="en">English</div>
+                <div class="dropdown-option" data-value="tr">Türkçe</div>
+                <div class="dropdown-option" data-value="fa">فارسی</div>
+                <div class="dropdown-option" data-value="ru">Русский</div>
+                <div class="dropdown-option" data-value="zh">中文</div>
+            </div>
+        </div>
     </div>
     
 	<div class="container-columns">
 		<div class="container">
-            <div class="section-title">Configuration</div>
+            <div class="section-title" data-i18n="section_configuration">Configuration</div>
+
 			<label for="wgFiles" class="custom-file-upload" id="fileUploadLabel">
                 <span class="upload-icon">📁</span>
-                <span class="upload-text">Select files</span>
+                <span class="upload-text" data-i18n="select_files">Select files</span>
             </label>
 			<input type="file" id="wgFiles" accept=".conf" multiple class="hidden-input">
+
 			<button onclick="convert()" class="convert-btn">
                 <span class="btn-icon">⚡</span>
-                Convert
+                <span data-i18n="convert">Convert</span>
             </button>
             
-            <div class="section-title">Output Format</div>
+            <div class="section-title" data-i18n="output_format">Output Format</div>
+
             <div class="format-options">
-				<label><div class="checkbox modern-radio">
+				<label>
+                  <div class="checkbox modern-radio">
 					<input type="radio" id="clash" name="option" class="radio" checked/>
 					<span class="radio-fakeradio"></span>
                     <div class="option-content">
                         <img src="Clash.webp" alt="Clash Icon" class="format-icon">
                         <span class="option-label">Clash</span>
                     </div>
-				</div></label>
+				  </div>
+                </label>
 				
-				<label><div class="checkbox modern-radio">
+				<label>
+                  <div class="checkbox modern-radio">
 					<input type="radio" id="awg" name="option" class="radio" />
 					<span class="radio-fakeradio"></span>
                     <div class="option-content">
                         <img src="AWG.webp" alt="AmneziaWG Icon" class="format-icon">
-                        <span class="option-label">AmneziaWG</span>
+                        <img src="WGtunnel.webp" alt="WG Tunnel Icon" class="format-icon">
+                        <span class="option-label">AmneziaWG / WG Tunnel</span>
                     </div>
-				</div></label>
+				  </div>
+                </label>
 				
-				<label><div class="checkbox modern-radio">
+				<label>
+                  <div class="checkbox modern-radio">
 					<input type="radio" id="karing" name="option" class="radio" />
 					<span class="radio-fakeradio"></span>
                     <div class="option-content">
@@ -59,99 +86,123 @@
                         <img src="Hiddify.webp" alt="Hiddify Icon" class="format-icon">
                         <span class="option-label">Karing / Hiddify</span>
                     </div>
-				</div></label>
+				  </div>
+                </label>
             </div>
 		</div>
         
 		<div class="container2">
-            <div class="section-title">Advanced Settings</div>
+            <div class="section-title" data-i18n="advanced_settings">Advanced Settings</div>
+
 			<div class="musor1">
-                <div class="settings-group-title">Junk Packet Settings</div>
-				<label><div class="checkbox modern-radio">
+                <div class="settings-group-title" data-i18n="junk_packet_settings">Junk Packet Settings</div>
+
+				<label>
+                  <div class="checkbox modern-radio">
 					<input type="radio" id="junk1" name="junk" class="radio" checked/>
 					<span class="radio-fakeradio"></span>
-                    <span class="option-label">Light (jc=3, jmin=1, jmax=3)</span>
-				</div></label>
+                    <span class="option-label" data-i18n="light_option">Light (jc=3, jmin=1, jmax=3)</span>
+				  </div>
+                </label>
 				
-				<label><div class="checkbox modern-radio">
+				<label>
+                  <div class="checkbox modern-radio">
 					<input type="radio" id="junk2" name="junk" class="radio" />
 					<span class="radio-fakeradio"></span>
-                    <span class="option-label">Heavy (jc=30, jmin=10, jmax=30)</span>
-				</div></label>
+                    <span class="option-label" data-i18n="heavy_option">Heavy (jc=30, jmin=10, jmax=30)</span>
+				  </div>
+                </label>
 				
-				<label><div class="checkbox modern-radio">
-				<input type="radio" id="junk3" name="junk" class="radio" />
-				<span class="radio-fakeradio"></span>
-                <span class="option-label">Custom Settings</span>
-			</div></label>
+				<label>
+                  <div class="checkbox modern-radio">
+				    <input type="radio" id="junk3" name="junk" class="radio" />
+				    <span class="radio-fakeradio"></span>
+                    <span class="option-label" data-i18n="custom_settings">Custom Settings</span>
+				  </div>
+				</label>
             
             <div class="custom-inputs">
                 <div class="input-row">
-                    <label class="input-label">jc =</label>
-                    <textarea id="jc1" class="jc modern-input" rows="1" maxlength="3" type="number" placeholder="128"></textarea>
+                    <label class="input-label" data-i18n="jc_label">jc =</label>
+                    <textarea id="jc1" class="jc modern-input" rows="1" maxlength="3" type="number" placeholder="128" data-i18n-placeholder="jc_placeholder"></textarea>
                 </div>
                 <div class="input-row">
-                    <label class="input-label">jmin =</label>
-                    <textarea id="jmin1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1279"></textarea>
+                    <label class="input-label" data-i18n="jmin_label">jmin =</label>
+                    <textarea id="jmin1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1279" data-i18n-placeholder="jmin_placeholder"></textarea>
                 </div>
                 <div class="input-row">
-                    <label class="input-label">jmax =</label>
-                    <textarea id="jmax1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1280"></textarea>
+                    <label class="input-label" data-i18n="jmax_label">jmax =</label>
+                    <textarea id="jmax1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1280" data-i18n-placeholder="jmax_placeholder"></textarea>
                 </div>
             </div>
-			<button onclick="" class="randombtn modern-secondary-btn">Generate Random</button>
+
+			<button onclick="" class="randombtn modern-secondary-btn">
+                <span data-i18n="generate_random">Generate Random</span>
+            </button>
 		</div>
         
 		<div class="musor2 hidden">
-            <div class="settings-group-title">Fake Packet Settings</div>
-			<label><div class="checkbox modern-radio">
+            <div class="settings-group-title" data-i18n="fake_packet_settings">Fake Packet Settings</div>
+
+			<label>
+              <div class="checkbox modern-radio">
 				<input type="radio" id="fake1" name="fake" class="radio" checked/>
 				<span class="radio-fakeradio"></span>
-                <span class="option-label">Basic (f_p=3, f_p_s=1, f_p_d=3)</span>
-			</div></label>
+                <span class="option-label" data-i18n="fake_basic">Basic (f_p=3, f_p_s=1, f_p_d=3)</span>
+			  </div>
+			</label>
 			
-			<label><div class="checkbox modern-radio">
+			<label>
+              <div class="checkbox modern-radio">
 				<input type="radio" id="fake2" name="fake" class="radio" />
 				<span class="radio-fakeradio"></span>
-                <span class="option-label">Advanced (random ranges)</span>
-			</div></label>
+                <span class="option-label" data-i18n="fake_advanced">Advanced (random ranges)</span>
+			  </div>
+			</label>
 			
-			<label><div class="checkbox modern-radio">
+			<label>
+              <div class="checkbox modern-radio">
 				<input type="radio" id="fake3" name="fake" class="radio" />
 				<span class="radio-fakeradio"></span>
-                <span class="option-label">Custom Settings</span>
-			</div></label>
+                <span class="option-label" data-i18n="custom_settings_2">Custom Settings</span>
+			  </div>
+			</label>
             
             <div class="custom-inputs">
                 <div class="input-row">
-                    <label class="input-label">f_p =</label>
-                    <textarea id="fp1" class="jc modern-input" rows="1" maxlength="7" type="number" placeholder="5-10"></textarea>
+                    <label class="input-label" data-i18n="fp_label">f_p =</label>
+                    <textarea id="fp1" class="jc modern-input" rows="1" maxlength="7" type="number" placeholder="5-10" data-i18n-placeholder="fp_placeholder"></textarea>
                 </div>
                 <div class="input-row">
-                    <label class="input-label">f_p_s =</label>
-                    <textarea id="fps1" class="jc modern-input" rows="1" maxlength="7" type="number" placeholder="40-100"></textarea>
+                    <label class="input-label" data-i18n="fps_label">f_p_s =</label>
+                    <textarea id="fps1" class="jc modern-input" rows="1" maxlength="7" type="number" placeholder="40-100" data-i18n-placeholder="fps_placeholder"></textarea>
                 </div>
                 <div class="input-row">
-                    <label class="input-label">f_p_d =</label>
-                    <textarea id="fpd1" class="jc modern-input" rows="1" maxlength="7" placeholder="20-250"></textarea>
+                    <label class="input-label" data-i18n="fpd_label">f_p_d =</label>
+                    <textarea id="fpd1" class="jc modern-input" rows="1" maxlength="7" placeholder="20-250" data-i18n-placeholder="fpd_placeholder"></textarea>
                 </div>
             </div>
-			<button onclick="" class="randombtn2 modern-secondary-btn">Generate Random</button>
+
+			<button onclick="" class="randombtn2 modern-secondary-btn">
+                <span data-i18n="generate_random_2">Generate Random</span>
+            </button>
         </div>
 	</div>
     
 	<div class="infobtn full-width">
-		<div class="file-list" id="fileList">No files selected</div>
+		<div class="file-list" id="fileList" data-i18n="no_files">No files selected</div>
+
 		<div class="result" id="output">
-			<textarea id="yamlOutput" placeholder="The converted configuration will appear here..." class="textarea1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+			<textarea id="yamlOutput" class="textarea1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                      placeholder="The converted configuration will appear here..." data-i18n-placeholder="converted_placeholder"></textarea>
 			<div class="button-container">
 				<button class="download-btn hidden" id="downloadBtn">
                     <span class="btn-icon">💾</span>
-                    Download
+                    <span data-i18n="download">Download</span>
                 </button>
 				<button class="download-btn hidden" id="copyBtn">
                     <span class="btn-icon">📋</span>
-                    Copy
+                    <span data-i18n="copy">Copy</span>
                 </button>
 			</div>
 		</div>
