@@ -3,19 +3,19 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="icon" href="proton.svg" type="image/x-icon">
+	<link rel="icon" href="wg.svg" type="image/x-icon">
 	<link rel="stylesheet" href="styles.css">
 	<script defer src="script.js"></script>
-  <title>ProtonVPN Конвертер</title>
+  <title>WireGuard Converter</title>
 </head>
 <body>
   <div class="wrapper">
-    <img id="logo" src="logo.svg" alt="Логотип">
+    <img id="logo" src="WireGuard.svg" alt="Логотип">
 	<div class="container-columns">
 		<div class="container">
-			<label for="wgFiles" class="custom-file-upload" id="fileUploadLabel">Выбрать файлы</label>
+			<label for="wgFiles" class="custom-file-upload" id="fileUploadLabel">Select files</label>
 			<input type="file" id="wgFiles" accept=".conf" multiple class="hidden-input">
-			<button onclick="convert()">Конвертировать</button>
+			<button onclick="convert()">Convert</button>
 				<label><div class="checkbox">
 					<input type="radio" id="clash" name="option" class="radio" checked/>
 					<span class="radio-fakeradio"></span><img src="Clash.webp" alt="AmneziaWG Icon" class="amnezia-icon">Clash
@@ -46,12 +46,12 @@
 				<br>
 				<label><div class="checkbox" style="padding-bottom: 10px">
 				<input type="radio" id="junk3" name="junk" class="radio" />
-				<span class="radio-fakeradio"></span> Свой вариант
+				<span class="radio-fakeradio"></span> Your own version
 			</div></label>
 			jc = <textarea id="jc1" class="jc" rows="1" maxlength="3" type="number" placeholder="128"></textarea> 
 			jmin = <textarea id="jmin1" class="jc" rows="1" maxlength="4" type="number" placeholder="1279"></textarea> 
 			jmax = <textarea id="jmax1" class="jc" rows="1" maxlength="4" placeholder="1280"></textarea>
-			<button onclick="" class="randombtn">Случайно</button>
+			<button onclick="" class="randombtn">Your own version</button>
 		</div>
 		<div class="musor2 hidden">
 			<label><div class="checkbox">
@@ -66,32 +66,24 @@
 			<br>
 			<label><div class="checkbox" style="padding-bottom: 10px">
 				<input type="radio" id="fake3" name="fake" class="radio" />
-				<span class="radio-fakeradio"></span> Свой вариант
+				<span class="radio-fakeradio"></span> Your own version
 			</div></label>
 			f_p = <textarea id="fp1" class="jc" rows="1" maxlength="7" type="number" placeholder="5-10"></textarea><br class="mobile-only">
 			f_p_s = <textarea id="fps1" class="jc" rows="1" maxlength="7" type="number" placeholder="40-100"></textarea><br class="mobile-only">
 			f_p_d = <textarea id="fpd1" class="jc" rows="1" maxlength="7" placeholder="20-250"></textarea>
-			<button onclick="" class="randombtn2">Случайно</button>
+			<button onclick="" class="randombtn2">Random</button>
 			</div>
 		</div>
 	</div>
 		<div class="infobtn">
 			<div class="file-list" id="fileList"></div>
 			<div class="result" id="output">
-				<textarea id="yamlOutput" placeholder="Результат появится здесь..." class="textarea1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+				<textarea id="yamlOutput" placeholder="The result will appear here..." class="textarea1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
 				<div class="button-container">
-					<button class="download-btn hidden" id="downloadBtn">Скачать</button>
-					<button class="download-btn hidden" id="copyBtn">Скопировать</button>
+					<button class="download-btn hidden" id="downloadBtn">Download</button>
+					<button class="download-btn hidden" id="copyBtn">Copy</button>
 				</div>
 			</div>
-			<button id="warpButton" style="max-width: 400px;"><span class="button__text">Другие проекты</span></button>
-			<button id="promoButton" class="glow-on-hover"><span class="button__text">Amnezia <a style="color: #A40059">Premium<a></span></button>
-			<button id="BoostyButton" style="max-width: 400px;"><span class="button__text">Поддержать автора</span></button>
-			<div id="newButtons">
-				<button id="DonationAlertsButton"><span class="button__text">CloudTips</span></button>
-				<button id="BoostyNewButton"><span class="button__text">Boosty</span></button>
-			</div>
-			<div id="info1">Сделано на основе zaeboba.github.io/page/archive/clash.html</div>
 		</div>
 	</div>
 </body></html>

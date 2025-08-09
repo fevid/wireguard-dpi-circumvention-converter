@@ -1,37 +1,3 @@
-document.getElementById('DonationAlertsButton').onclick = function() {
-    window.location.href = 'https://pay.cloudtips.ru/p/209310e4';
-}
-document.getElementById('BoostyNewButton').onclick = function() {
-    window.location.href = 'https://boosty.to/warphelp/donate';
-}
-document.getElementById('BoostyButton').onclick = function() {
-    const newButtons = document.getElementById('newButtons');
-
-    if (newButtons.classList.contains('show')) {
-        newButtons.classList.remove('show');
-        setTimeout(() => {
-            this.style.display = 'block';
-        }, 500);
-    } else {
-        this.style.display = 'none';
-        newButtons.classList.add('show');
-        setTimeout(() => {
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'smooth'
-            });
-        }, 300);
-    }
-};
-
-document.getElementById('warpButton').onclick = function() {
-    window.location.href = 'https://my-other-projects.vercel.app/';
-}
-
-document.getElementById('promoButton').onclick = function() {
-    window.location.href = 'https://chatter-bike-3df.notion.site/Amnezia-Premium-1f72684dab0d8013a057ed6562c8bdca';
-}
-
 document.querySelectorAll('input[name="option"]').forEach(radio => {
   radio.addEventListener('change', function() {
     const musor1 = document.querySelector('.musor1');
@@ -57,9 +23,9 @@ document.getElementById('wgFiles').addEventListener('change', function(e) {
     const label = document.getElementById('fileUploadLabel');
     
     if (files.length === 0) {
-        label.textContent = 'Выбрать файлы';
+        label.textContent = 'Select files';
     } else {
-        label.textContent = `Файлов выбрано: ${files.length}`;
+        label.textContent = `Files selected: ${files.length}`;
     }
 });
 document.querySelector('.randombtn').onclick = function() {
@@ -85,17 +51,50 @@ document.querySelector('.randombtn2').onclick = function() {
 };
 
 const COUNTRY_FLAGS = {
-      'JP': '🇯🇵 JP',
-      'US': '🇺🇸 US',
-      'NL': '🇳🇱 NL',
-      'DE': '🇩🇪 DE',
-      'FR': '🇫🇷 FR',
-      'GB': '🇬🇧 GB',
-      'CA': '🇨🇦 CA',
-      'AU': '🇦🇺 AU',
-      'RO': '🇷🇴 RO',
-      'PL': '🇵🇱 PL'
-    };
+    "JP": "🇯🇵 JP",
+    "US": "🇺🇸 US",
+    "NL": "🇳🇱 NL",
+    "DE": "🇩🇪 DE",
+    "FR": "🇫🇷 FR",
+    "GB": "🇬🇧 GB",
+    "CA": "🇨🇦 CA",
+    "AU": "🇦🇺 AU",
+    "RO": "🇷🇴 RO",
+    "PL": "🇵🇱 PL",
+    "SE": "🇸🇪 SE",
+    "CH": "🇨🇭 CH",
+    "SG": "🇸🇬 SG",
+    "HK": "🇭🇰 HK",
+    "IT": "🇮🇹 IT",
+    "ES": "🇪🇸 ES",
+    "BR": "🇧🇷 BR",
+    "IN": "🇮🇳 IN",
+    "MX": "🇲🇽 MX",
+    "ZA": "🇿🇦 ZA",
+    "RU": "🇷🇺 RU",
+    "KR": "🇰🇷 KR",
+    "NO": "🇳🇴 NO",
+    "DK": "🇩🇰 DK",
+    "FI": "🇫🇮 FI",
+    "NZ": "🇳🇿 NZ",
+    "IE": "🇮🇪 IE",
+    "AT": "🇦🇹 AT",
+    "BE": "🇧🇪 BE",
+    "CZ": "🇨🇿 CZ",
+    "PT": "🇵🇹 PT",
+    "TR": "🇹🇷 TR",
+    "UA": "🇺🇦 UA",
+    "AR": "🇦🇷 AR",
+    "CL": "🇨🇱 CL",
+    "CO": "🇨🇴 CO",
+    "TH": "🇹🇭 TH",
+    "MY": "🇲🇾 MY",
+    "ID": "🇮🇩 ID",
+    "AE": "🇦🇪 AE",
+    "SA": "🇸🇦 SA",
+    "IL": "🇮🇱 IL",
+    "EG": "🇪🇬 EG"
+  };
 let proxyList = [];
 function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -183,7 +182,7 @@ function parseWGConfig(text) {
       if (['jc', 'jmin', 'jmax', 's1', 's2', 'h1', 'h2', 'h3', 'h4'].includes(cleanKey)) {
         peer.amneziaOptions[cleanKey] = value;
       } else if (cleanKey === 'presharedkey') {
-        peer.presharedKey = value; // Добавляем обработку PresharedKey
+        peer.presharedKey = value; // Adding PresharedKey processing
       } else {
         peer[cleanKey] = value;
       }
@@ -207,9 +206,27 @@ function convertToClashProxy(wgConfig, fileName) {
     proxyName = proxyName.replace(/FREE#?/g, '');
     proxyName = proxyName.replace(/-$/, '');
     
-    const flagMatch = proxyName.match(/^([A-Z]{2})[-_]/);
-    if (flagMatch && COUNTRY_FLAGS[flagMatch[1]]) {
-      proxyName = proxyName.replace(flagMatch[1], COUNTRY_FLAGS[flagMatch[1]]);
+    // Enhanced flag detection - finds country codes anywhere in the name (case insensitive)
+    // Pattern matches 2 letters that can be:
+    // - At word boundaries (start/end of string or surrounded by non-letters)
+    // - Followed by common separators like -, _, space, or digit
+    const flagPattern = /(?:^|[^a-z])([a-z]{2})(?=[-_\s\d]|$)/gi;
+    let match;
+    
+    while ((match = flagPattern.exec(proxyName)) !== null) {
+      const countryCode = match[1].toUpperCase();
+      if (COUNTRY_FLAGS[countryCode]) {
+        // Replace the found country code with the flag + code
+        proxyName = proxyName.replace(
+          new RegExp(`(?:^|[^a-z])(${match[1]})(?=[-_\\s\\d]|$)`, 'gi'),
+          (fullMatch, code) => {
+            // Preserve any prefix character that isn't a letter
+            const prefix = fullMatch.charAt(0).match(/[a-z]/i) ? '' : fullMatch.charAt(0);
+            return prefix + COUNTRY_FLAGS[countryCode];
+          }
+        );
+        break; // Replace only the first match to avoid multiple replacements
+      }
     }
   }
 
@@ -229,7 +246,7 @@ function convertToClashProxy(wgConfig, fileName) {
     ip: interfaceData.address.split('/')[0],
     private_key: interfaceData.privatekey,
     public_key: peerData.publickey,
-    preshared_key: peerData.presharedKey, // Добавляем PresharedKey в выходные данные
+    preshared_key: peerData.presharedKey, // Add PresharedKey to the output
     allowed_ips: peerData.allowedips.split(',').map(ip => `'${ip.trim()}'`),
     udp: true,
     mtu: 1420,
@@ -292,12 +309,12 @@ function generateProxyGroups(proxies) {
 
 function convert() {
   const files = document.getElementById('wgFiles').files;
-  if (!files.length) return alert('Выберите файлы .conf');
+  if (!files.length) return alert('Select files .conf');
 
   const selectedOption = document.querySelector('input[name="option"]:checked').id;
   
   proxyList = [];
-  document.getElementById('fileList').innerHTML = `Обрабатываются файлы: ${Array.from(files).map(f => f.name).join(', ')}`;
+  document.getElementById('fileList').innerHTML = `Files being processed: ${Array.from(files).map(f => f.name).join(', ')}`;
   let filesProcessed = 0;
   
   Array.from(files).forEach((file) => {
@@ -324,7 +341,7 @@ function convert() {
           }
         }
       } catch (e) {
-        alert(`Ошибка в файле ${file.name}: ${e.message}`);
+        alert(`Error in file ${file.name}: ${e.message}`);
         filesProcessed++; 
         if (filesProcessed === files.length) {
           generateClashYaml();
@@ -332,7 +349,7 @@ function convert() {
       }
     };
     reader.onerror = function() {
-      alert(`Ошибка чтения файла ${file.name}`);
+      alert(`Error reading file ${file.name}`);
       filesProcessed++;
       if (filesProcessed === files.length) {
         generateClashYaml();
@@ -344,7 +361,7 @@ function convert() {
 
 function generateClashYaml() {
   if (proxyList.length === 0) {
-    alert('Не удалось обработать ни один файл');
+    alert('Could not process any files');
     return;
   }
 
@@ -376,14 +393,14 @@ function generateClashYaml() {
   document.getElementById('downloadBtn').onclick = () => downloadYAML(fullYaml, 'clash-config.yaml');
   document.getElementById('copyBtn').onclick = () => {
     navigator.clipboard.writeText(fullYaml)
-      .then(() => alert('Конфиг скопирован в буфер обмена!'))
-      .catch(err => alert('Не удалось скопировать: ', err));
+      .then(() => alert('Config copied to clipboard!'))
+      .catch(err => alert('Failed to copy: ', err));
   };
 }
 
 function generateAWGYaml() {
   if (proxyList.length === 0) {
-    alert('Не удалось обработать ни один файл');
+    alert('Could not process any files');
     return;
   }
 
@@ -396,14 +413,14 @@ function generateAWGYaml() {
   document.getElementById('copyBtn').classList.remove('hidden');
   document.getElementById('copyBtn').onclick = () => {
     navigator.clipboard.writeText(fullYaml)
-      .then(() => alert('Конфиг скопирован в буфер обмена!'))
-      .catch(err => alert('Не удалось скопировать: ', err));
+      .then(() => alert('Config copied to clipboard!'))
+      .catch(err => alert('Failed to copy: ', err));
   };
 }
 
 function generateKaringYaml() {
   if (proxyList.length === 0) {
-    alert('Не удалось обработать ни один файл');
+    alert('Could not process any files');
     return;
   }
 
@@ -457,8 +474,8 @@ function generateKaringYaml() {
   document.getElementById('downloadBtn').onclick = () => downloadYAML(fullYaml, 'karing-config.json');
   document.getElementById('copyBtn').onclick = () => {
     navigator.clipboard.writeText(fullYaml)
-      .then(() => alert('Конфиг скопирован в буфер обмена!'))
-      .catch(err => alert('Не удалось скопировать: ', err));
+      .then(() => alert('Config copied to clipboard!'))
+      .catch(err => alert('Failed to copy: ', err));
   };
 }
 
