@@ -39,5 +39,6 @@
   "error_in_file": "Error in file {file}: {msg}",
   "error_reading_file": "Error reading file {file}.",
   "config_copied": "Config copied to clipboard!",
-  "copy_failed": "Failed to copy config."
+  "copy_failed": "Failed to copy config.",
+  "donate": "Support This Tool"
 }

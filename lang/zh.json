@@ -39,5 +39,6 @@
   "error_in_file": "文件 {file} 出错: {msg}",
   "error_reading_file": "读取文件 {file} 时出错。",
   "config_copied": "配置已复制到剪贴板！",
-  "copy_failed": "复制配置失败。"
+  "copy_failed": "复制配置失败。",
+  "donate": "支持此工具"
 }

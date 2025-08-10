@@ -39,5 +39,6 @@
   "error_in_file": "خطا در فایل {file}: {msg}",
   "error_reading_file": "خطا در خواندن فایل {file}.",
   "config_copied": "پیکربندی در کلیپ‌بورد کپی شد!",
-  "copy_failed": "کپی کردن ناموفق بود."
+  "copy_failed": "کپی کردن ناموفق بود.",
+  "donate": "از این ابزار پشتیبانی کنید"
 }

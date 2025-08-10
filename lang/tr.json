@@ -39,5 +39,6 @@
   "error_in_file": "{file} dosyasında hata: {msg}",
   "error_reading_file": "{file} dosyası okunamadı.",
   "config_copied": "Yapılandırma panoya kopyalandı!",
-  "copy_failed": "Kopyalama başarısız oldu."
+  "copy_failed": "Kopyalama başarısız oldu.",
+  "donate": "Bu Aracı Destekle"
 }
