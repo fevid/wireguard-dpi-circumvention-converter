@@ -777,3 +777,30 @@ body.lang-en, body.lang-tr {
 body.lang-fa {
   font-family: "Lalezar", sans-serif;
 }
+
+.donation-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.donation-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.donation-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 212, 170, 0.4);
+}
