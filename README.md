@@ -69,7 +69,7 @@ Endpoint = server.com:port
 This fork extends the original [ProtonVPN-Converter](https://github.com/protontestguide/ProtonVPN-Converter) with the following enhancements:
 - UI Overhauled and Removed ProtonVPN-specific UI, allowing conversion of any WireGuard configuration.
 - Improved country code detection to support a broader range of proxy names.
-- Translated to English.
+- Multilingual.
 
 
 ## Credits
