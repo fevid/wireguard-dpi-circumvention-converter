@@ -382,7 +382,7 @@ function generateAWGYaml() {
   document.getElementById('downloadBtn').onclick = downloadAWGConfigs;
   document.getElementById('copyBtn').classList.remove('hidden');
   document.getElementById('copyBtn').onclick = () => {
-    navigator.clipboard.writeText(fullYaml)
+    navigator.clipboard.writeText(finalOutput)
       .then(() => alert(translations['config_copied']))
       .catch(err => alert(translations['copy_failed']));
   };
