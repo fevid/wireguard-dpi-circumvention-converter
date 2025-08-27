@@ -19,6 +19,7 @@ This project is a fork of [ProtonVPN-Converter](https://github.com/protontestgui
 
 ## Usage
 
+Visit the website on [GitHub Pages](https://fevid.github.io/wireguard-dpi-circumvention-converter/) or [Vercel](https://wireguard-converter.vercel.app/), or clone the project and serve it locally by running `python -m http.server 8000` in the project directory, then accessing `http://localhost:8000` in your browser.
 1. **Upload WireGuard Configs**: Select one or more `.conf` files via the web interface.
 2. **Select Output Format**: Choose Clash, AWG, or Karing.
 3. **Configure Junk Packets**:
