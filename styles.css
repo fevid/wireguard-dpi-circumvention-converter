@@ -237,6 +237,11 @@ button:hover, .convert-btn:hover {
     box-shadow: 0 10px 25px rgba(0, 212, 170, 0.4);
 }
 
+.convert-btn:last-of-type {
+    text-transform: none !important;
+    background: linear-gradient(135deg, #daaa74 0%, #c46539 100%) !important;
+}
+
 .modern-secondary-btn {
     background: linear-gradient(135deg, var(--warning) 0%, #ff6b6b 100%);
     margin-top: 1.5rem;
@@ -254,11 +259,17 @@ button:hover, .convert-btn:hover {
     transform: translateY(-3px);
 }
 
+.action-btns{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 1rem;
+}
+
 /* Radio Buttons */
 .format-options {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    margin-bottom: 40px;
 }
 
 .modern-radio {
@@ -510,9 +521,13 @@ button:hover, .convert-btn:hover {
     }
 
     .container-columns {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column-reverse;
         gap: 1.5rem;
-        left: 0;
+    }
+
+    .infobtn{
+        display: none;
     }
 
     .main-title {
@@ -784,9 +799,14 @@ body.lang-fa {
   font-family: "Lalezar", sans-serif;
 }
 
-.donation-container {
+.footer-container {
     text-align: center;
     margin-top: 2rem;
+}
+
+.donation-btn:first-of-type{
+    margin-right: 15px;
+    margin-bottom: 15px;
 }
 
 .donation-btn {
@@ -809,4 +829,9 @@ body.lang-fa {
 .donation-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(0, 212, 170, 0.4);
+}
+
+#confInput {
+    height: 300px; /* smaller than result textarea */
+    margin-bottom: 1.5rem;
 }

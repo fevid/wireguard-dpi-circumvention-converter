@@ -57,11 +57,35 @@
             </label>
 			<input type="file" id="wgFiles" accept=".conf" multiple class="hidden-input">
 
-			<button onclick="convert()" class="convert-btn">
-                <span class="btn-icon">⚡</span>
-                <span data-i18n="convert">Convert</span>
-            </button>
+            <textarea id="confInput" class="textarea1" placeholder="Or paste your .conf file content here..."></textarea>
+
+            <div class="action-btns">
+                
+                <button onclick="convert()" class="convert-btn">
+                    <span class="btn-icon">🔄</span>
+                    <span data-i18n="convert">Convert</span>
+                </button>
+                <button type="button" id="clearBtn" class="convert-btn">
+                    <span data-i18n="clear">Clear</span>
+                </button>
+            </div>
             
+            <textarea id="yamlOutput" class="textarea1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                        placeholder="The converted configuration will appear here..." data-i18n-placeholder="converted_placeholder"></textarea>
+                <div class="button-container">
+                    <button class="download-btn hidden" id="downloadBtn">
+                        <span class="btn-icon">⬇️</span>
+                        <span data-i18n="download">Download</span>
+                    </button>
+                    <button class="download-btn hidden" id="copyBtn">
+                        <span class="btn-icon">📋</span>
+                        <span data-i18n="copy">Copy</span>
+                    </button>
+                </div>
+            
+		</div>
+        
+		<div class="container2">
             <div class="section-title" data-i18n="output_format">Output Format</div>
 
             <div class="format-options">
@@ -100,9 +124,7 @@
 				  </div>
                 </label>
             </div>
-		</div>
-        
-		<div class="container2">
+
             <div class="section-title" data-i18n="advanced_settings">Advanced Settings</div>
 
 			<div class="musor1">
@@ -202,28 +224,16 @@
     
 	<div class="infobtn full-width">
 		<div class="file-list" id="fileList" data-i18n="no_files">No files selected</div>
-
-		<div class="result" id="output">
-			<textarea id="yamlOutput" class="textarea1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                      placeholder="The converted configuration will appear here..." data-i18n-placeholder="converted_placeholder"></textarea>
-			<div class="button-container">
-				<button class="download-btn hidden" id="downloadBtn">
-                    <span class="btn-icon">💾</span>
-                    <span data-i18n="download">Download</span>
-                </button>
-				<button class="download-btn hidden" id="copyBtn">
-                    <span class="btn-icon">📋</span>
-                    <span data-i18n="copy">Copy</span>
-                </button>
-			</div>
-		</div>
 	</div>
   </div>
 
-  <div class="donation-container">
+  <div class="footer-container">
     <a href="https://coindrop.to/fevid101" target="_blank" class="donation-btn">
-        <span class="btn-icon">🪙</span>
+        <span class="btn-icon">💸</span>
         <span data-i18n="donate">Support The Author</span>
+    </a>
+    <a href="https://github.com/fevid/wireguard-dpi-circumvention-converter" target="_blank" class="donation-btn">
+        <span>Github</span>
     </a>
 </div>
 </body>

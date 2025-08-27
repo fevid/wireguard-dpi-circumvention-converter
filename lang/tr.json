@@ -5,6 +5,7 @@
   "section_configuration": "Yapılandırma",
   "select_files": "Dosya seç",
   "convert": "Dönüştür",
+  "clear": "Temizle",
   "output_format": "Çıktı Formatı",
   "advanced_settings": "Gelişmiş Ayarlar",
   "junk_packet_settings": "Çöp Paket Ayarları",

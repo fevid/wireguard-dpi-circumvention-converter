@@ -5,6 +5,7 @@
   "section_configuration": "Конфигурация",
   "select_files": "Выбрать файлы",
   "convert": "Преобразовать",
+  "clear": "Очистить",
   "output_format": "Формат вывода",
   "advanced_settings": "Дополнительные настройки",
   "junk_packet_settings": "Настройки мусорных пакетов",

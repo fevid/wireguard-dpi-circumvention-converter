@@ -18,16 +18,37 @@ document.querySelectorAll('input[name="option"]').forEach(radio => {
     }
   });
 });
+
 document.getElementById('wgFiles').addEventListener('change', function(e) {
-    const files = e.target.files;
-    const label = document.getElementById('fileUploadLabel');
-    
-    if (files.length === 0) {
-        label.textContent = translations['select_files_label'];
-    } else {
-        label.textContent = translations['files_selected_label'].replace('{count}', files.length);
-    }
+  const files = e.target.files;
+  const confInput = document.getElementById('confInput');
+
+  if (!files.length) {
+    confInput.value = "";
+    document.getElementById('fileList').innerHTML = i18n('select_files_label');
+    updateFileLabel();
+    return;
+  }
+
+  document.getElementById('fileList').innerHTML = `${Array.from(files).map(f => f.name).join(', ')}`;
+
+  let loaded = 0;
+  let combinedText = "";
+  Array.from(files).forEach((file) => {
+    const reader = new FileReader();
+    reader.onload = function() {
+      combinedText += String(reader.result).trim() + "\n\n";
+      loaded++;
+      if (loaded === files.length) {
+        confInput.value = combinedText.trim();
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  updateFileLabel(); // uses current translations and selected count
 });
+
 document.querySelector('.randombtn').onclick = function() {
   const jc = getRandomInt(1, 128);
   const jmin = getRandomInt(1, 1279);
@@ -212,7 +233,6 @@ function convertToClashProxy(wgConfig, fileName) {
     while ((match = flagPattern.exec(proxyName)) !== null) {
       const countryCode = match[1].toUpperCase();
       if (COUNTRY_FLAGS[countryCode]) {
-        // Add flag at the beginning, keep original name unchanged
         proxyName = COUNTRY_FLAGS[countryCode].split(' ')[0] + ' ' + proxyName;
         break;
       }
@@ -232,10 +252,10 @@ function convertToClashProxy(wgConfig, fileName) {
     type: "wireguard",
     server: peerData.endpoint.split(':')[0],
     port: parseInt(peerData.endpoint.split(':')[1]),
-    ip: interfaceData.address.split('/')[0],
+    ip: interfaceData.address, 
     private_key: interfaceData.privatekey,
     public_key: peerData.publickey,
-    preshared_key: peerData.presharedKey, // Add PresharedKey to the output
+    preshared_key: peerData.presharedKey,
     allowed_ips: peerData.allowedips.split(',').map(ip => `'${ip.trim()}'`),
     udp: true,
     mtu: 1420,
@@ -279,55 +299,120 @@ function generateProxyGroups(proxies) {
 
 function convert() {
   const files = document.getElementById('wgFiles').files;
-  if (!files.length) return alert(translations['select_files_alert']);
+  const textInput = document.getElementById('confInput').value.trim();
+
+  if (!files.length && !textInput) {
+    return alert(translations['select_files_alert']);
+  }
 
   const selectedOption = document.querySelector('input[name="option"]:checked').id;
-  
+
   proxyList = [];
-  document.getElementById('fileList').innerHTML = `${Array.from(files).map(f => f.name).join(', ')}`;
+  document.getElementById('fileList').innerHTML = "";
   let filesProcessed = 0;
-  
-  Array.from(files).forEach((file) => {
-    const reader = new FileReader();
-    reader.onload = function() {
-      try {
-        const wgConfig = parseWGConfig(reader.result);
-        const proxy = convertToClashProxy(wgConfig, file.name);
-        proxyList.push(proxy);
-        filesProcessed++;
-        if (filesProcessed === files.length) {
-          switch(selectedOption) {
-            case 'clash':
-              generateClashYaml();
-              break;
-            case 'awg':
-              generateAWGYaml();
-              break;
-            case 'karing':
-              generateKaringYaml();
-              break;
-            default:
-              generateClashYaml();
+
+  // --- Case 1: files take priority ---
+  if (files.length) {
+    document.getElementById('fileList').innerHTML =
+      `${Array.from(files).map(f => f.name).join(', ')}`;
+
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = function () {
+        try {
+          const wgConfig = parseWGConfig(reader.result);
+          const proxy = convertToClashProxy(wgConfig, file.name);
+          proxyList.push(proxy);
+        } catch (e) {
+          alert(
+            translations['error_in_file']
+              .replace('{file}', file.name)
+              .replace('{msg}', e.message)
+          );
+        } finally {
+          filesProcessed++;
+          if (filesProcessed === files.length) {
+            finalizeConversion(selectedOption);
           }
         }
-      } catch (e) {
-        alert(translations['error_in_file'].replace('{file}', file.name).replace('{msg}', e.message));
-        filesProcessed++; 
+      };
+      reader.onerror = function () {
+        alert(translations['error_reading_file'].replace('{file}', file.name));
+        filesProcessed++;
         if (filesProcessed === files.length) {
-          generateClashYaml();
+          finalizeConversion(selectedOption);
         }
-      }
-    };
-    reader.onerror = function() {
-      alert(translations['error_reading_file'].replace('{file}', file.name));
-      filesProcessed++;
-      if (filesProcessed === files.length) {
-        generateClashYaml();
-      }
-    };
-    reader.readAsText(file);
-  });
+      };
+      reader.readAsText(file);
+    });
+    return; 
+  }
+
+  // --- Case 2: pasted configs ---
+  if (textInput) {
+    try {
+      const wgConfigs = parseMultipleWGConfigs(textInput);
+      wgConfigs.forEach((wgConfig, idx) => {
+        const proxy = convertToClashProxy(wgConfig, `pasted_${idx + 1}.conf`);
+        proxyList.push(proxy);
+      });
+      document.getElementById('fileList').innerHTML =
+        wgConfigs.map((_, i) => `pasted_${i + 1}.conf`).join(', ');
+
+      finalizeConversion(selectedOption);
+    } catch (e) {
+      alert(
+        translations['error_in_file']
+          .replace('{file}', "pasted.conf")
+          .replace('{msg}', e.message)
+      );
+    }
+  }
 }
+
+
+function parseMultipleWGConfigs(text) {
+  const parts = text.split(/\n(?=\[Interface\])/); // split when new [Interface] begins
+  return parts
+    .map(p => p.trim())
+    .filter(p => p) // skip empty
+    .map(p => parseWGConfig(p));
+}
+
+
+function finalizeConversion(selectedOption) {
+  switch (selectedOption) {
+    case "clash":
+      generateClashYaml();
+      break;
+    case "awg":
+      generateAWGYaml();
+      break;
+    case "karing":
+      generateKaringYaml();
+      break;
+    default:
+      generateClashYaml();
+  }
+
+  // Scroll into view after conversion
+  const output = document.getElementById('yamlOutput');
+  if (output) {
+    output.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
+
+document.getElementById('clearBtn').addEventListener('click', function () {
+  const confInput = document.getElementById('confInput');
+  const fileInput = document.getElementById('wgFiles');
+
+  confInput.value = "";
+  fileInput.value = "";
+  document.getElementById('fileList').innerHTML = i18n('select_files_label');
+  updateFileLabel();  // reset label using current language
+});
+
+
 
 function generateClashYaml() {
   if (proxyList.length === 0) {
@@ -340,12 +425,13 @@ function generateClashYaml() {
     yaml += `  type: ${proxy.type}\n`;
     yaml += `  server: ${proxy.server}\n`;
     yaml += `  port: ${proxy.port}\n`;
-    yaml += `  ip: ${proxy.ip}\n`;
+    yaml += `  ip: ${proxy.ip}\n`; // Now includes subnet mask
     yaml += `  private-key: ${proxy.private_key}\n`;
     yaml += `  public-key: ${proxy.public_key}\n`;
+    if (proxy.preshared_key) {
+      yaml += `  pre-shared-key: ${proxy.preshared_key}\n`;
+    }
     yaml += `  allowed-ips: [${proxy.allowed_ips.join(', ')}]\n`;
-	if (proxy.preshared_key) {
-    yaml += `  pre-shared-key: ${proxy.preshared_key}\n`;}
     yaml += `  udp: ${proxy.udp}\n`;
     yaml += `  mtu: ${proxy.mtu}\n`;
     yaml += `  remote-dns-resolve: ${proxy.remote_dns_resolve}\n`;
@@ -422,7 +508,7 @@ function generateKaringYaml() {
   const outbounds = proxyList.map(proxy => ({
     "type": "wireguard",
     "tag": proxy.name,
-    "local_address": [`${proxy.ip}/32`],
+    "local_address": [proxy.ip], 
     "private_key": proxy.private_key,
     "peer_public_key": proxy.public_key,
     "mtu": proxy.mtu,
@@ -462,12 +548,13 @@ function downloadYAML(yamlContent, fileName) {
 }
 
 function downloadAWGConfigs() {
-  if (proxyList.length === 0) return;
-  const downloadFrame = document.createElement('iframe');
-  downloadFrame.style.display = 'none';
-  document.body.appendChild(downloadFrame);
+  if (proxyList.length === 0) {
+    alert(translations['could_not_process_files']);
+    return;
+  }
+
   proxyList.forEach((proxy, index) => {
-    setTimeout(() => {
+    try {
       const awgConfig = generateSingleAWGConfig(proxy);
       const fileName = getAWGFileName(proxy, index);
       
@@ -477,16 +564,18 @@ function downloadAWGConfigs() {
       const link = document.createElement('a');
       link.href = url;
       link.download = fileName;
-      downloadFrame.contentDocument.body.appendChild(link);
+      document.body.appendChild(link);
       link.click();
+      
       setTimeout(() => {
+        document.body.removeChild(link);
         URL.revokeObjectURL(url);
-      }, 10000);
-    }, 1000 * index);
+      }, 100);
+    } catch (e) {
+      console.error(`Failed to download config ${index + 1}: ${e.message}`);
+      alert(translations['error_in_file'].replace('{file}', getAWGFileName(proxy, index)).replace('{msg}', e.message));
+    }
   });
-  setTimeout(() => {
-    document.body.removeChild(downloadFrame);
-  }, 1000 * proxyList.length + 1000);
 }
 
 function generateSingleAWGConfig(proxy) {
@@ -582,17 +671,20 @@ async function loadLanguage(lang) {
   try {
     const res = await fetch(`./lang/${lang}.json`);
     if (!res.ok) throw new Error(`Language file not found: ${lang}`);
-    const translations = await res.json();
-    translatePage(translations);
+    const t = await res.json();          // <— avoid shadowing 'translations'
+    translatePage(t);                    // translatePage will set global 'translations'
     localStorage.setItem("lang", lang);
-    document.body.classList.remove('lang-en', 'lang-tr', 'lang-fa', 'lang-ru');
+    document.body.classList.remove('lang-en', 'lang-tr', 'lang-fa', 'lang-ru', 'lang-zh');
     document.body.classList.add(`lang-${lang}`);
     currentLang = lang;
     updateDropdownSelection(lang);
+
+    updateFileLabel();                   // <— refresh label with current lang
   } catch (err) {
     console.error(err);
   }
 }
+
 
 let translations = {};
 
@@ -679,3 +771,29 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize: Load initial language and set dropdown
   loadLanguage(currentLang);
 });
+
+// --- i18n helpers ---
+function i18n(key, params = {}) {
+  let str = (translations && translations[key]) ? translations[key] : key;
+  for (const k in params) str = str.replace(new RegExp(`{${k}}`, 'g'), params[k]);
+  return str;
+}
+
+function updateFileLabel() {
+  const fileInput = document.getElementById('wgFiles');
+  const uploadText = document.querySelector('#fileUploadLabel .upload-text');
+  if (!uploadText || !fileInput) return;
+
+  const count = fileInput.files ? fileInput.files.length : 0;
+  if (count === 0) {
+    // prefer 'select_files' if it exists, else 'select_files_label'
+    uploadText.textContent = translations['select_files'] 
+      ? translations['select_files'] 
+      : i18n('select_files_label');
+  } else {
+    uploadText.textContent = i18n('files_selected_label', { count });
+  }
+}
+
+
+

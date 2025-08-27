@@ -5,6 +5,7 @@
   "section_configuration": "配置",
   "select_files": "选择文件",
   "convert": "转换",
+  "clear": "清除",
   "output_format": "输出格式",
   "advanced_settings": "高级设置",
   "junk_packet_settings": "垃圾数据包设置",

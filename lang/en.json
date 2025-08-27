@@ -5,6 +5,7 @@
   "section_configuration": "Configuration",
   "select_files": "Select files",
   "convert": "Convert",
+  "clear": "Clear",
   "output_format": "Output Format",
   "advanced_settings": "Advanced Settings",
   "junk_packet_settings": "Junk Packet Settings",
