@@ -207,7 +207,6 @@ body::before {
 
 .upload-icon {
     font-size: 1.2rem;
-    transform: translateY(-3px);
 }
 
 /* Buttons */
@@ -252,11 +251,6 @@ button:hover, .convert-btn:hover {
 
 .modern-secondary-btn:hover {
     box-shadow: 0 10px 25px rgba(255, 179, 71, 0.4);
-}
-
-.btn-icon {
-    font-size: 1.1rem;
-    transform: translateY(-3px);
 }
 
 .action-btns{
@@ -800,13 +794,11 @@ body.lang-fa {
 }
 
 .footer-container {
-    text-align: center;
+    display: flex;
+    align-items: center;
     margin-top: 2rem;
-}
-
-.donation-btn:first-of-type{
-    margin-right: 15px;
-    margin-bottom: 15px;
+    justify-content: center;
+    gap: 15px;
 }
 
 .donation-btn {
@@ -834,4 +826,8 @@ body.lang-fa {
 #confInput {
     height: 300px; /* smaller than result textarea */
     margin-bottom: 1.5rem;
+}
+
+.donate-img{
+    width: 20px;
 }

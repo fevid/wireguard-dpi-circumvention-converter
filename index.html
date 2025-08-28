@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="icon" href="wg.svg" type="image/x-icon">
+	<link rel="icon" href="assets/wg.svg" type="image/x-icon">
 	<link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +26,7 @@
   <div class="wrapper">
     <div class="header">
         <div class="logo-container">
-            <img id="logo" src="wg.svg" alt="Logo" />
+            <img id="logo" src="assets/wg.svg" alt="Logo" />
         </div>
 
         <h1 class="main-title" data-i18n="main_title">WireGuard Converter</h1>
@@ -52,7 +52,7 @@
             <div class="section-title" data-i18n="section_configuration">Configuration</div>
 
 			<label for="wgFiles" class="custom-file-upload" id="fileUploadLabel">
-                <span class="upload-icon">📁</span>
+                <span class="upload-icon"><img src="assets/file.svg" alt="File" /></span>
                 <span class="upload-text" data-i18n="select_files">Select files</span>
             </label>
 			<input type="file" id="wgFiles" accept=".conf" multiple class="hidden-input">
@@ -62,7 +62,7 @@
             <div class="action-btns">
                 
                 <button onclick="convert()" class="convert-btn">
-                    <span class="btn-icon">🔄</span>
+                    <span class="btn-icon"><img src="assets/convert.svg" alt="Convert" /></span>
                     <span data-i18n="convert">Convert</span>
                 </button>
                 <button type="button" id="clearBtn" class="convert-btn">
@@ -74,11 +74,11 @@
                         placeholder="The converted configuration will appear here..." data-i18n-placeholder="converted_placeholder"></textarea>
                 <div class="button-container">
                     <button class="download-btn hidden" id="downloadBtn">
-                        <span class="btn-icon">⬇️</span>
+                        <span class="btn-icon"><img src="assets/download.svg" alt="Download" /></span>
                         <span data-i18n="download">Download</span>
                     </button>
                     <button class="download-btn hidden" id="copyBtn">
-                        <span class="btn-icon">📋</span>
+                        <span class="btn-icon"><img src="assets/copy.svg" alt="Copy" /></span>
                         <span data-i18n="copy">Copy</span>
                     </button>
                 </div>
@@ -91,10 +91,10 @@
             <div class="format-options">
 				<label>
                   <div class="checkbox modern-radio">
-					<input type="radio" id="clash" name="option" class="radio" checked/>
+					<input type="radio" id="clash" name="option" class="radio"/>
 					<span class="radio-fakeradio"></span>
                     <div class="option-content">
-                        <img src="Clash.webp" alt="Clash Icon" class="format-icon">
+                        <img src="assets/Clash.webp" alt="Clash Icon" class="format-icon">
                         <span class="option-label">Clash</span>
                     </div>
 				  </div>
@@ -102,11 +102,11 @@
 				
 				<label>
                   <div class="checkbox modern-radio">
-					<input type="radio" id="awg" name="option" class="radio" />
+					<input type="radio" id="awg" name="option" class="radio" checked/>
 					<span class="radio-fakeradio"></span>
                     <div class="option-content">
-                        <img src="AWG.webp" alt="AmneziaWG Icon" class="format-icon">
-                        <img src="WGtunnel.webp" alt="WG Tunnel Icon" class="format-icon">
+                        <img src="assets/AWG.webp" alt="AmneziaWG Icon" class="format-icon">
+                        <img src="assets/WGtunnel.webp" alt="WG Tunnel Icon" class="format-icon">
                         <span class="option-label">AmneziaWG / WG Tunnel</span>
                     </div>
 				  </div>
@@ -117,8 +117,8 @@
 					<input type="radio" id="karing" name="option" class="radio" />
 					<span class="radio-fakeradio"></span>
                     <div class="option-content">
-                        <img src="Karing.webp" alt="Karing Icon" class="format-icon">
-                        <img src="Hiddify.webp" alt="Hiddify Icon" class="format-icon">
+                        <img src="assets/Karing.webp" alt="Karing Icon" class="format-icon">
+                        <img src="assets/Hiddify.webp" alt="Hiddify Icon" class="format-icon">
                         <span class="option-label">Karing / Hiddify</span>
                     </div>
 				  </div>
@@ -229,10 +229,11 @@
 
   <div class="footer-container">
     <a href="https://coindrop.to/fevid101" target="_blank" class="donation-btn">
-        <span class="btn-icon">💸</span>
+        <img class="donate-img" src="assets/donate.svg" alt="Donate" />
         <span data-i18n="donate">Support The Author</span>
     </a>
     <a href="https://github.com/fevid/wireguard-dpi-circumvention-converter" target="_blank" class="donation-btn">
+        <img class="donate-img" src="assets/github.svg" alt="Github" />
         <span>Github</span>
     </a>
 </div>
