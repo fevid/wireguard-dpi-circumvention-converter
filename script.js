@@ -13,7 +13,7 @@ const COUNTRY_FLAGS = {
   "SA": "🇸🇦 SA", "IL": "🇮🇱 IL", "EG": "🇪🇬 EG"
 };
 
-const AMNEZIA_KEYS = ['jc', 'jmin', 'jmax', 's1', 's2', 'h1', 'h2', 'h3', 'h4', 'i1'];
+let AMNEZIA_KEYS = ['jc', 'jmin', 'jmax', 's1', 's2', 'h1', 'h2', 'h3', 'h4', 'i1'];
 const SUPPORTED_LANGS = ["en", "tr", "fa", "ru", "zh"];
 
 // Global State
@@ -27,6 +27,7 @@ const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) +
 const getById = (id) => document.getElementById(id);
 const getBySelector = (selector) => document.querySelector(selector);
 const getAllBySelector = (selector) => document.querySelectorAll(selector);
+
 
 // DOM Element Cache
 const elements = {
@@ -183,6 +184,7 @@ function convertToClashProxy(wgConfig, fileName) {
   // Merge amnezia options
   const amneziaOptions = {};
   for (const key of AMNEZIA_KEYS) {
+    if(interfaceData.amneziaOptions[key] || peerData.amneziaOptions[key] || defaultAmnezia[key]  )
     amneziaOptions[key] = interfaceData.amneziaOptions[key] 
       || peerData.amneziaOptions[key] 
       || defaultAmnezia[key];
