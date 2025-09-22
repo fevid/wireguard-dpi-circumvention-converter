@@ -9,6 +9,7 @@
   "output_format": "输出格式",
   "advanced_settings": "高级设置",
   "junk_packet_settings": "垃圾数据包设置",
+  "15_option": "协议 1.5（Amnezia 4.8.8.1 及更高版本)",
   "light_option": "轻量 (jc=3, jmin=1, jmax=3)",
   "heavy_option": "重度 (jc=30, jmin=10, jmax=30)",
   "custom_settings": "自定义设置",

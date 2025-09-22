@@ -9,6 +9,7 @@
   "output_format": "Output Format",
   "advanced_settings": "Advanced Settings",
   "junk_packet_settings": "Junk Packet Settings",
+  "15_option": "Protocol 1.5 (Amnezia 4.8.8.1 and later)",
   "light_option": "Light (jc=3, jmin=1, jmax=3)",
   "heavy_option": "Heavy (jc=30, jmin=10, jmax=30)",
   "custom_settings": "Custom Settings",

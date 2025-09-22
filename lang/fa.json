@@ -9,6 +9,7 @@
   "output_format": "فرمت خروجی",
   "advanced_settings": "تنظیمات پیشرفته",
   "junk_packet_settings": "تنظیمات بسته‌های زائد",
+  "15_option": "پروتکل ۱.۵ (Amnezia نسخه 4.8.8.1 و بعد از آن)",
   "light_option": "سبک (jc=3, jmin=1, jmax=3)",
   "heavy_option": "سنگین (jc=30, jmin=10, jmax=30)",
   "custom_settings": "تنظیمات سفارشی",
