@@ -32,6 +32,7 @@
   "fpd_placeholder": "20-250",
   "no_files": "未选择文件",
   "converted_placeholder": "转换后的配置将显示在此处...",
+  "input_placeholder": "或者将你的 .conf 文件内容粘贴在这里...",
   "download": "下载",
   "copy": "复制",
   "select_files_alert": "请选择一个或多个 .conf 文件。",

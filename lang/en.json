@@ -32,6 +32,7 @@
   "fpd_placeholder": "20-250",
   "no_files": "No files selected",
   "converted_placeholder": "The converted configuration will appear here...",
+  "input_placeholder": "Or paste your .conf file content here...",
   "download": "Download",
   "copy": "Copy",
   "select_files_alert": "Please select one or more .conf files.",

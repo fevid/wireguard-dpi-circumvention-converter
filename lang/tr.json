@@ -32,6 +32,7 @@
   "fpd_placeholder": "20-250",
   "no_files": "Dosya seçilmedi",
   "converted_placeholder": "Dönüştürülmüş yapılandırma burada görünecek...",
+  "input_placeholder": "Veya .conf dosyanızın içeriğini buraya yapıştırın...",
   "download": "İndir",
   "copy": "Kopyala",
   "select_files_alert": ".conf dosyalarını seçiniz.",
