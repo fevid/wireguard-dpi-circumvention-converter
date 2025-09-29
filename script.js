@@ -21,6 +21,58 @@ let proxyList = [];
 let translations = {};
 let currentLang = localStorage.getItem("lang") || detectBrowserLang();
 
+// Add this function after line 16 (after currentLang variable)
+function showNotification(message, type = 'success') {
+  document.querySelectorAll('.notification').forEach(el => el.remove());
+
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  
+  if (currentLang === 'fa') {
+    notification.classList.add('rtl-text');
+  }
+
+  notification.textContent = message;
+  
+  Object.assign(notification.style, {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    padding: '1rem 1.5rem',
+    borderRadius: '1rem',
+    color: 'white',
+    fontWeight: '600',
+    zIndex: '10000',
+    opacity: '0',
+    transform: 'translateX(100%)',
+    transition: 'all 0.3s ease',
+    backdropFilter: 'blur(20px)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)',
+    textAlign: currentLang === 'fa' ? 'right' : 'left'
+  });
+
+  const bg = {
+    success: 'linear-gradient(135deg, #00d4aa 0%, #00b4d8 100%)',
+    error: 'linear-gradient(135deg, #ff6b6b 0%, #c46539 100%)',
+    info: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+  };
+  notification.style.background = bg[type] || bg.success;
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+    notification.style.opacity = '1';
+    notification.style.transform = 'translateX(0)';
+  }, 10);
+
+  setTimeout(() => {
+    notification.style.opacity = '0';
+    notification.style.transform = 'translateX(100%)';
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
+
 // Utility Functions
 const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -32,6 +84,7 @@ const getAllBySelector = (selector) => document.querySelectorAll(selector);
 // DOM Element Cache
 const elements = {
   get wgFiles() { return getById('wgFiles'); },
+  get yamlOutput() { return getById('yamlOutput'); },
   get confInput() { return getById('confInput'); },
   get fileList() { return getById('fileList'); },
   get yamlOutput() { return getById('yamlOutput'); },
@@ -243,7 +296,7 @@ ${proxyNames}
 // Output Generators
 function generateClashYaml() {
   if (proxyList.length === 0) {
-    alert(translations['could_not_process_files']);
+    showNotification(translations['could_not_process_files'] || 'Could not process files', 'error');
     return;
   }
 
@@ -282,7 +335,7 @@ function generateClashYaml() {
 
 function generateAWGYaml() {
   if (proxyList.length === 0) {
-    alert(translations['could_not_process_files']);
+    showNotification(translations['could_not_process_files'] || 'Could not process files', 'error');
     return;
   }
 
@@ -297,7 +350,7 @@ function generateAWGYaml() {
 
 function generateKaringYaml() {
   if (proxyList.length === 0) {
-    alert(translations['could_not_process_files']);
+    showNotification(translations['could_not_process_files'] || 'Could not process files', 'error');
     return;
   }
 
@@ -407,7 +460,7 @@ function downloadYAML(content, fileName) {
 
 function downloadAWGConfigs() {
   if (proxyList.length === 0) {
-    alert(translations['could_not_process_files']);
+    showNotification(translations['could_not_process_files'] || 'Could not process files', 'error');
     return;
   }
 
@@ -447,9 +500,26 @@ function showButtons() {
 }
 
 function copyToClipboard(text) {
+  if (!text.trim()) {
+    showNotification(translations['nothing_to_copy'] || 'Nothing to copy!', 'error');
+    return;
+  }
+  
   navigator.clipboard.writeText(text)
-    .then(() => alert(translations['config_copied']))
-    .catch(() => alert(translations['copy_failed']));
+    .then(() => showNotification(translations['config_copied'] || 'Configuration copied!'))
+    .catch(() => {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showNotification(translations['config_copied'] || 'Configuration copied!');
+      } catch (err) {
+        showNotification(translations['copy_failed'] || 'Failed to copy', 'error');
+      }
+      document.body.removeChild(textArea);
+    });
 }
 
 // Main Conversion Logic
@@ -458,7 +528,7 @@ function convert() {
   const textInput = elements.confInput.value.trim();
 
   if (!files.length && !textInput) {
-    return alert(translations['select_files_alert']);
+    return showNotification(translations['select_files_alert'] || 'Please select files or paste configuration', 'error');
   }
 
   const selectedOption = getBySelector('input[name="option"]:checked')?.id;
@@ -489,9 +559,9 @@ function processFiles(files, selectedOption) {
         const proxy = convertToClashProxy(wgConfig, file.name);
         proxyList.push(proxy);
       } catch (error) {
-        alert(translations['error_in_file']
+        showNotification((translations['error_in_file'] || 'Error in file {file}: {msg}')
           .replace('{file}', file.name)
-          .replace('{msg}', error.message));
+          .replace('{msg}', error.message), 'error');
       } finally {
         filesProcessed++;
         if (filesProcessed === totalFiles) {
@@ -501,7 +571,8 @@ function processFiles(files, selectedOption) {
     };
     
     reader.onerror = function() {
-      alert(translations['error_reading_file'].replace('{file}', file.name));
+      showNotification((translations['error_reading_file'] || 'Error reading file {file}')
+  .replace('{file}', file.name), 'error');
       filesProcessed++;
       if (filesProcessed === totalFiles) {
         finalizeConversion(selectedOption);
@@ -583,6 +654,9 @@ function handleFileChange(event) {
 
   if (!files.length) {
     confInput.value = "";
+    confInput.disabled = false;
+    confInput.style.opacity = '1';
+    confInput.style.cursor = 'text';
     elements.fileList.innerHTML = i18n('select_files_label');
     updateFileLabel();
     return;
@@ -600,6 +674,9 @@ function handleFileChange(event) {
       loaded++;
       if (loaded === files.length) {
         confInput.value = combinedText.trim();
+        confInput.disabled = true;
+        confInput.style.opacity = '0.7';
+        confInput.style.cursor = 'not-allowed';
       }
     };
     reader.readAsText(file);
@@ -634,7 +711,11 @@ function handleRandomFake() {
 
 function handleClear() {
   elements.confInput.value = "";
+  elements.confInput.disabled = false;
+  elements.confInput.style.opacity = '1';
+  elements.confInput.style.cursor = 'text';
   elements.wgFiles.value = "";
+  elements.yamlOutput.value = "";
   elements.fileList.innerHTML = i18n('select_files_label');
   updateFileLabel();
 }
