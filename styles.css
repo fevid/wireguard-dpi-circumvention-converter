@@ -805,6 +805,12 @@ body.lang-fa {
     gap: 15px;
 }
 
+@media (max-width: 410px) {
+    .footer-container {
+        flex-direction: column;
+    }
+}
+
 .donation-btn {
     display: inline-flex;
     align-items: center;
