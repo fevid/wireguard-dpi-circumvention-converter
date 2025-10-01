@@ -471,9 +471,12 @@ function downloadAWGConfigs() {
       downloadYAML(awgConfig, fileName);
     } catch (error) {
       console.error(`Failed to download config ${index + 1}:`, error);
-      alert(translations['error_in_file']
-        .replace('{file}', getAWGFileName(proxy, index))
-        .replace('{msg}', error.message));
+      showNotification(
+        (translations['error_in_file'] || 'Error in {file}: {msg}')
+          .replace('{file}', getAWGFileName(proxy, index))
+          .replace('{msg}', error.message),
+        'error'
+      );
     }
   });
 }
@@ -598,9 +601,9 @@ function processTextInput(textInput, selectedOption) {
     
     finalizeConversion(selectedOption);
   } catch (error) {
-    alert(translations['error_in_file']
-      .replace('{file}', "pasted.conf")
-      .replace('{msg}', error.message));
+    showNotification((translations['error_in_file'] || 'Error in {file}: {msg}')
+        .replace('{file}', 'pasted.conf')
+        .replace('{msg}', error.message),'error');
   }
 }
 

@@ -793,6 +793,10 @@ body.lang-fa {
   font-family: "Lalezar", sans-serif;
 }
 
+.rtl-text{
+    direction: rtl;
+}
+
 .footer-container {
     display: flex;
     align-items: center;
