@@ -76,3 +76,13 @@ This fork extends the original [ProtonVPN-Converter](https://github.com/protonte
 ## Credits
 
 - Original project: [ProtonVPN-Converter](https://github.com/protontestguide/ProtonVPN-Converter) by [protontestguide](https://github.com/protontestguide).
+
+## 🗂 Other Projects
+
+- [OpenVPN AuthBatch](https://github.com/fevid/openvpn-authbatch)
+
+
+
+<a href="https://nowpayments.io/donation?api_key=bc7f43a9-c6fe-4382-a8eb-69001c7a5fe0" target="_blank" rel="noreferrer noopener">
+    <img src="https://nowpayments.io/images/embeds/donation-button-black.svg" alt="Crypto donation button by NOWPayments">
+</a>
