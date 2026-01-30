@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a fork of [ProtonVPN-Converter](https://github.com/protontestguide/ProtonVPN-Converter), customized UI for converting WireGuard configuration files into formats that incorporate junk packet generation to evade Deep Packet Inspection (DPI) in highly restricted internet environments, such as China, Russia, and Iran. It generates configurations for Clash, AmneziaWG (AWG), and Karing, enhancing VPN traffic obfuscation to bypass censorship and surveillance.
+This project is a fork of [ProtonVPN-Converter](https://github.com/protontestguide/ProtonVPN-Converter), customized UI for converting WireGuard configuration files into formats that incorporate junk packet generation to evade Deep Packet Inspection (DPI) in highly restricted internet environments, such as China, Russia, and Iran. It generates configurations for Clash, AmneziaWG (AWG), and Wiresock, enhancing VPN traffic obfuscation to bypass censorship and surveillance.
 
 ## Features
 
@@ -24,7 +24,6 @@ Visit the website on [GitHub Pages](https://fevid.github.io/wireguard-dpi-circum
 2. **Select Output Format**: Choose Clash, AWG, or Karing.
 3. **Configure Junk Packets**:
    - Select predefined options (`junk1`, `junk2`) or enter custom values for `jc`, `jmin`, `jmax`.
-   - For Karing, set `fake_packets`, `fake_packets_size`, and `fake_packets_delay` (predefined or custom).
 4. **Convert and Download**: Click the convert button to process files and download the generated configuration(s).
 5. **Copy to Clipboard**: Optionally copy the output for manual use.
 
