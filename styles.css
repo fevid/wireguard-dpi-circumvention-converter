@@ -939,4 +939,14 @@ body.lang-fa {
 #ws_id, .amnezia15-field{
     width: 100%;
 }
+.amnezia15-doc{
+    color: var(--accent); 
+    margin-bottom: 1rem; 
+    display: block; 
+    text-align: center;
+}
 
+.amnezia15-doc a{
+    text-decoration: none;
+    color: #4f158a;
+}
