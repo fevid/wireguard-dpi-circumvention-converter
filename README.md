@@ -11,8 +11,8 @@ This project is a fork of [ProtonVPN-Converter](https://github.com/protontestgui
 - **Multiple Output Formats**:
   - **Clash**: YAML configuration with junk packet options.
   - **AmneziaWG (AWG)**: Text-based WireGuard configs with Amnezia options.
-  - **Karing**: JSON configuration with customizable fake packet settings.
-- **Customizable Junk Packets**: Predefined or user-defined settings for junk packet parameters (`jc`, `jmin`, `jmax`) and Karing-specific fake packets (`fake_packets`, `fake_packets_size`, `fake_packets_delay`).
+  - **Wiresock**: Text-based WireGuard configs with Masking options.
+- **Customizable Junk Packets**: Predefined or user-defined settings for junk packet parameters (`jc`, `jmin`, `jmax`).
 - **Country Flag Detection**: Automatically identifies country codes in proxy names and adds flag emojis for clarity.
 - **Randomized Parameters**: Generate random junk packet settings for quick setup.
 - **User-Friendly Interface**: Web-based UI for file selection, configuration, and downloading results.
@@ -21,7 +21,7 @@ This project is a fork of [ProtonVPN-Converter](https://github.com/protontestgui
 
 Visit the website on [GitHub Pages](https://fevid.github.io/wireguard-dpi-circumvention-converter/) or [Vercel](https://wireguard-converter.vercel.app/), or clone the project and serve it locally by running `python -m http.server 8000` in the project directory, then accessing `http://localhost:8000` in your browser.
 1. **Insert WireGuard Configs**: Select one or more `.conf` files via the web interface or paste them manually.
-2. **Select Output Format**: Choose Clash, AWG, or Karing.
+2. **Select Output Format**: Choose Clash, AWG, or Wiresock.
 3. **Configure Junk Packets**:
    - Select predefined options (`junk1`, `junk2`) or enter custom values for `jc`, `jmin`, `jmax`.
 4. **Convert and Download**: Click the convert button to process files and download the generated configuration(s).
