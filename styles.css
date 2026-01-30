@@ -334,6 +334,58 @@ button:hover, .convert-btn:hover {
     font-weight: 500;
 }
 
+/* Custom Checkbox for Amnezia 1.5 */
+.modern-checkbox {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(240, 147, 251, 0.1);
+    border: 1px solid rgba(240, 147, 251, 0.3);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.modern-checkbox:hover {
+    background: rgba(240, 147, 251, 0.15);
+    border-color: rgba(240, 147, 251, 0.5);
+}
+
+.modern-checkbox .checkbox {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+input[type="checkbox"]:checked + .checkmark {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+input[type="checkbox"]:checked + .checkmark::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--surface);
+    font-weight: bold;
+    font-size: 14px;
+}
+
 /* Custom Inputs */
 .custom-inputs {
     margin-top: 1rem;
@@ -371,6 +423,7 @@ button:hover, .convert-btn:hover {
     resize: none;
     width: 80px;
     text-align: center;
+    font-family: inherit;
 }
 
 .modern-input:focus, .jc:focus {
@@ -378,6 +431,43 @@ button:hover, .convert-btn:hover {
     border-color: var(--primary);
     box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.3);
     background: rgba(255, 255, 255, 0.15);
+}
+
+/* Modern Select Styling */
+.modern-select {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    width: 120px;
+    text-align: center;
+    font-family: inherit;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+.modern-select option:hover {
+    background: rgb(156, 156, 156);
+    color: var(--primary);
+}
+
+
+.modern-select option {
+    background: var(--glass-bg);
+    color: black;
+    padding: 10px;
+    font-family: inherit;
 }
 
 /* Result Section */
@@ -434,6 +524,7 @@ button:hover, .convert-btn:hover {
     margin-bottom: 1.5rem;
     transition: all 0.3s ease;
     line-height: 1.5;
+    font-family: 'Courier New', monospace;
 }
 
 .textarea1:focus {
@@ -552,7 +643,7 @@ button:hover, .convert-btn:hover {
         text-align: left;
     }
 
-    .modern-input, .jc {
+    .modern-input, .jc, .modern-select {
         width: 100%;
         text-align: left;
     }
@@ -561,9 +652,12 @@ button:hover, .convert-btn:hover {
         display: block;
     }
 
-
     .header {
         padding-bottom: 1rem;
+    }
+    
+    .modern-select {
+        text-align: center;
     }
 }
 
@@ -841,3 +935,8 @@ body.lang-fa {
 .donate-img{
     width: 20px;
 }
+
+#ws_id, .amnezia15-field{
+    width: 100%;
+}
+

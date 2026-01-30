@@ -10,17 +10,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lalezar&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 	<script defer src="script.js"></script>
   <title data-i18n="title">WireGuard Converter</title>
-  <meta name="description" content="Convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Karing, or Hiddify formats with ease. Customize junk and fake packet settings for optimal performance.">
-  <meta name="keywords" content="WireGuard, VPN, configuration converter, Clash, AmneziaWG, WG Tunnel, Karing, Hiddify, junk packet settings, fake packet settings, VPN converter">
+  <meta name="description" content="Convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Wiresocket formats with ease. Customize junk and packet settings for optimal performance.">
+  <meta name="keywords" content="WireGuard, VPN, configuration converter, Clash, AmneziaWG, WG Tunnel, Wiresocket, junk packet settings, VPN converter">
   <meta name="author" content="fevid">
 <meta property="og:title" content="WireGuard Converter">
-<meta property="og:description" content="Easily convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Karing, or Hiddify formats with customizable settings.">
+<meta property="og:description" content="Easily convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Wiresocket formats with customizable settings.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wireguard-converter.vercel.app/">
 <meta property="og:site_name" content="WireGuard Converter">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WireGuard Converter">
-<meta name="twitter:description" content="Easily convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Karing, or Hiddify formats with customizable settings.">
+<meta name="twitter:description" content="Easily convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Wiresocket formats with customizable settings.">
 </head>
 <body>
   <div class="wrapper">
@@ -114,12 +114,11 @@
 				
 				<label>
                   <div class="checkbox modern-radio">
-					<input type="radio" id="karing" name="option" class="radio" />
+					<input type="radio" id="wiresocket" name="option" class="radio" />
 					<span class="radio-fakeradio"></span>
                     <div class="option-content">
-                        <img src="assets/Karing.webp" alt="Karing Icon" class="format-icon">
-                        <img src="assets/Hiddify.webp" alt="Hiddify Icon" class="format-icon">
-                        <span class="option-label">Karing / Hiddify</span>
+                        <img src="assets/Wiresocket.webp" alt="Wiresocket Icon" class="format-icon">
+                        <span class="option-label">Wiresocket</span>
                     </div>
 				  </div>
                 </label>
@@ -130,11 +129,12 @@
 			<div class="musor1">
                 <div class="settings-group-title" data-i18n="junk_packet_settings">Junk Packet Settings</div>
 
-                <label id="junk-amnezia15" class="hidden">
-                    <div class="checkbox modern-radio">
-                        <input type="radio" id="junkAmnezia15" name="junk" class="radio"/>
-                        <span class="radio-fakeradio"></span>
-                        <span class="option-label" data-i18n="15_option">Amnezia 1.5 Protocol (Amneiza Client 4.8.8.1 and later)</span>
+                <!-- Amnezia 1.5 Toggle -->
+                <label class="modern-checkbox" id="amnezia15-toggle-label">
+                    <div class="checkbox">
+                        <input type="checkbox" id="enableAmnezia15" class="hidden"/>
+                        <span class="checkmark"></span>
+                        <span class="option-label" style="margin-left: 10px; color: var(--accent); font-weight: 600;" data-i18n="enable_15">Enable Amnezia 1.5 (I1-I5)</span>
                     </div>
                 </label>
 
@@ -150,7 +150,7 @@
                   <div class="checkbox modern-radio">
 					<input type="radio" id="junk2" name="junk" class="radio" />
 					<span class="radio-fakeradio"></span>
-                    <span class="option-label" data-i18n="heavy_option">Heavy (jc=30, jmin=10, jmax=30)</span>
+                    <span class="option-label" data-i18n="heavy_option">Heavy (jc=5, jmin=10, jmax=40)</span>
 				  </div>
                 </label>
 				
@@ -162,7 +162,8 @@
 				  </div>
 				</label>
             
-            <div class="custom-inputs">
+            <!-- Standard Junk Packet Inputs -->
+            <div id="standard-junk-inputs" class="custom-inputs">
                 <div class="input-row">
                     <label class="input-label" data-i18n="jc_label">jc =</label>
                     <textarea id="jc1" class="jc modern-input" rows="1" maxlength="3" type="number" placeholder="128" data-i18n-placeholder="jc_placeholder"></textarea>
@@ -177,50 +178,98 @@
                 </div>
             </div>
 
-			<button onclick="" class="randombtn modern-secondary-btn">
+            <!-- Amnezia 1.5 I1-I5 Inputs -->
+            <div id="amnezia15-inputs" class="custom-inputs hidden" style="margin-top: 1rem; border-color: var(--accent);">
+                <div class="settings-group-title" style="color: var(--accent); margin-bottom: 0.5rem;">Amnezia 1.5 Parameters (v4.8.12.7+)</div>
+                <div class="input-row">
+                    <label class="input-label">I1 =</label>
+                    <textarea id="i1_1" class="jc modern-input amnezia15-field" rows="1" placeholder="Enter I1 value or leave blank for default"></textarea>
+                </div>
+                <div class="input-row">
+                    <label class="input-label">I2 =</label>
+                    <textarea id="i2_1" class="jc modern-input amnezia15-field" rows="1" placeholder="Enter I2 value"></textarea>
+                </div>
+                <div class="input-row">
+                    <label class="input-label">I3 =</label>
+                    <textarea id="i3_1" class="jc modern-input amnezia15-field" rows="1" placeholder="Enter I3 value"></textarea>
+                </div>
+                <div class="input-row">
+                    <label class="input-label">I4 =</label>
+                    <textarea id="i4_1" class="jc modern-input amnezia15-field" rows="1" placeholder="Enter I4 value"></textarea>
+                </div>
+                <div class="input-row">
+                    <label class="input-label">I5 =</label>
+                    <textarea id="i5_1" class="jc modern-input amnezia15-field" rows="1" placeholder="Enter I5 value"></textarea>
+                </div>
+            </div>
+
+			<button onclick="" class="randombtn modern-secondary-btn" id="randomJunkBtn">
                 <span data-i18n="generate_random">Generate Random</span>
             </button>
 		</div>
         
 		<div class="musor2 hidden">
-            <div class="settings-group-title" data-i18n="fake_packet_settings">Fake Packet Settings</div>
+            <div class="settings-group-title">Wiresocket Settings</div>
 
-			<label>
+            <label>
               <div class="checkbox modern-radio">
-				<input type="radio" id="fake1" name="fake" class="radio" checked/>
-				<span class="radio-fakeradio"></span>
-                <span class="option-label" data-i18n="fake_basic">Basic (f_p=3, f_p_s=1, f_p_d=3)</span>
-			  </div>
-			</label>
-			
-			<label>
+                <input type="radio" id="ws_junk1" name="ws_junk" class="radio" checked/>
+                <span class="radio-fakeradio"></span>
+                <span class="option-label" data-i18n="light_option">Light (jc=3, jmin=1, jmax=3)</span>
+              </div>
+            </label>
+            
+            <label>
               <div class="checkbox modern-radio">
-				<input type="radio" id="fake2" name="fake" class="radio" />
-				<span class="radio-fakeradio"></span>
-                <span class="option-label" data-i18n="fake_advanced">Advanced (random ranges)</span>
-			  </div>
-			</label>
-			
-			<label>
+                <input type="radio" id="ws_junk2" name="ws_junk" class="radio" />
+                <span class="radio-fakeradio"></span>
+                <span class="option-label" data-i18n="heavy_option">Heavy (jc=5, jmin=10, jmax=40)</span>
+              </div>
+            </label>
+            
+            <label>
               <div class="checkbox modern-radio">
-				<input type="radio" id="fake3" name="fake" class="radio" />
-				<span class="radio-fakeradio"></span>
-                <span class="option-label" data-i18n="custom_settings_2">Custom Settings</span>
-			  </div>
-			</label>
+                <input type="radio" id="ws_junk3" name="ws_junk" class="radio" />
+                <span class="radio-fakeradio"></span>
+                <span class="option-label" data-i18n="custom_settings">Custom Settings</span>
+              </div>
+            </label>
             
             <div class="custom-inputs">
                 <div class="input-row">
-                    <label class="input-label" data-i18n="fp_label">f_p =</label>
-                    <textarea id="fp1" class="jc modern-input" rows="1" maxlength="7" type="number" placeholder="5-10" data-i18n-placeholder="fp_placeholder"></textarea>
+                    <label class="input-label" data-i18n="jc_label">jc =</label>
+                    <textarea id="ws_jc1" class="jc modern-input" rows="1" maxlength="3" type="number" placeholder="128"></textarea>
                 </div>
                 <div class="input-row">
-                    <label class="input-label" data-i18n="fps_label">f_p_s =</label>
-                    <textarea id="fps1" class="jc modern-input" rows="1" maxlength="7" type="number" placeholder="40-100" data-i18n-placeholder="fps_placeholder"></textarea>
+                    <label class="input-label" data-i18n="jmin_label">jmin =</label>
+                    <textarea id="ws_jmin1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1279"></textarea>
                 </div>
                 <div class="input-row">
-                    <label class="input-label" data-i18n="fpd_label">f_p_d =</label>
-                    <textarea id="fpd1" class="jc modern-input" rows="1" maxlength="7" placeholder="20-250" data-i18n-placeholder="fpd_placeholder"></textarea>
+                    <label class="input-label" data-i18n="jmax_label">jmax =</label>
+                    <textarea id="ws_jmax1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1280"></textarea>
+                </div>
+            </div>
+
+            <div class="custom-inputs" style="margin-top: 1rem; border-color: var(--warning);">
+                <div class="settings-group-title" style="color: var(--warning); margin-bottom: 0.5rem;">Wiresocket Parameters (v3+)</div>
+                <div class="input-row">
+                    <label class="input-label">Id =</label>
+                    <textarea id="ws_id" class="jc modern-input" rows="1" placeholder="google.com"></textarea>
+                </div>
+                <div class="input-row">
+                    <label class="input-label">Ip =</label>
+                    <select id="ws_ip" class="modern-select">
+                        <option value="QUIC">QUIC</option>
+                        <option value="DNS">DNS</option>
+                    </select>
+                </div>
+                <div class="input-row">
+                    <label class="input-label">Ib =</label>
+                    <select id="ws_ib" class="modern-select">
+                        <option value="Chrome">Chrome</option>
+                        <option value="Firefox">Firefox</option>
+                        <option value="cURL">cURL</option>
+                    </select>
                 </div>
             </div>
 

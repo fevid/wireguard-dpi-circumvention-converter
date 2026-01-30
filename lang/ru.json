@@ -11,7 +11,7 @@
   "junk_packet_settings": "Настройки мусорных пакетов",
   "15_option": "Протокол 1.5 (Amnezia 4.8.8.1 и новее)",
   "light_option": "Лёгкий (jc=3, jmin=1, jmax=3)",
-  "heavy_option": "Тяжёлый (jc=30, jmin=10, jmax=30)",
+  "heavy_option": "Тяжёлый (jc=5, jmin=10, jmax=40)",
   "custom_settings": "Пользовательские настройки",
   "jc_label": "jc =",
   "jc_placeholder": "128",

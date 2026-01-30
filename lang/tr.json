@@ -11,7 +11,7 @@
   "junk_packet_settings": "Çöp Paket Ayarları",
   "15_option": "Protokol 1.5 (Amnezia 4.8.8.1 ve sonrası)",
   "light_option": "Hafif (jc=3, jmin=1, jmax=3)",
-  "heavy_option": "Ağır (jc=30, jmin=10, jmax=30)",
+  "heavy_option": "Ağır (jc=5, jmin=10, jmax=40)",
   "custom_settings": "Özel Ayarlar",
   "jc_label": "jc =",
   "jc_placeholder": "128",
