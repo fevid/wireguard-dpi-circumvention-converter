@@ -107,11 +107,7 @@ function generateAmneziaDefaults() {
     junk3: {
       jc: parseInt(getById('jc1').value) || 128,
       jmin: parseInt(getById('jmin1').value) || 1279,
-      jmax: parseInt(getById('jmax1').value) || 1280,
-      h1: 1,
-      h2: 2,
-      h3: 3,
-      h4: 4
+      jmax: parseInt(getById('jmax1').value) || 1280
     }
   };
 
@@ -124,11 +120,12 @@ function generateAmneziaDefaults() {
   // Always include standard params
   const result = {
     ...config,
-    s1: 0, s2: 0,
-    h1: config.h1 || 1,
-    h2: config.h2 || 2,
-    h3: config.h3 || 3,
-    h4: config.h4 || 4
+    s1: 0,
+    s2: 0,
+    h1: 1,
+    h2: 2,
+    h3: 3,
+    h4: 4
   };
 
   // Add I1-I5 if enabled and have values
@@ -173,6 +170,8 @@ function generateWiresocketDefaults() {
     jc,
     jmin,
     jmax,
+    s1: 0,
+    s2: 0,
     h1: 1,
     h2: 2,
     h3: 3,
@@ -434,6 +433,8 @@ function generateSingleAWGConfig(proxy) {
     `Jc = ${options.jc || 128}`,
     `Jmin = ${options.jmin || 1279}`,
     `Jmax = ${options.jmax || 1280}`,
+    `S1 = ${options.s1 || 0}`,
+    `S2 = ${options.s2 || 0}`,
     `H1 = ${options.h1 || 1}`,
     `H2 = ${options.h2 || 2}`,
     `H3 = ${options.h3 || 3}`,
@@ -501,6 +502,8 @@ function generateSingleWiresocketConfig(proxy) {
     `Jc = ${options.jc || 128}`,
     `Jmin = ${options.jmin || 1279}`,
     `Jmax = ${options.jmax || 1280}`,
+    `S1 = ${options.s1 || 0}`,
+    `S2 = ${options.s2 || 0}`,
     `H1 = ${options.h1 || 1}`,
     `H2 = ${options.h2 || 2}`,
     `H3 = ${options.h3 || 3}`,
