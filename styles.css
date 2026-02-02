@@ -412,6 +412,10 @@ input[type="checkbox"]:checked + .checkmark::after {
     min-width: 50px;
 }
 
+.modern-input::placeholder{
+    color: #a8a8b3;
+}
+
 .modern-input, .jc {
     padding: 0.75rem;
     background: rgba(255, 255, 255, 0.1);
