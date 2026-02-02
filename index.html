@@ -165,23 +165,31 @@
             <!-- Standard Junk Packet Inputs -->
             <div id="standard-junk-inputs" class="custom-inputs">
                 <div class="input-row">
-                    <label class="input-label" data-i18n="jc_label">jc =</label>
-                    <textarea id="jc1" class="jc modern-input" rows="1" maxlength="3" type="number" placeholder="128" data-i18n-placeholder="jc_placeholder"></textarea>
+                    <label class="input-label">jc =</label>
+                    <textarea id="jc1" class="jc modern-input" rows="1" maxlength="3" type="number" placeholder="128"></textarea>
                 </div>
                 <div class="input-row">
-                    <label class="input-label" data-i18n="jmin_label">jmin =</label>
-                    <textarea id="jmin1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1279" data-i18n-placeholder="jmin_placeholder"></textarea>
+                    <label class="input-label">jmin =</label>
+                    <textarea id="jmin1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1279"></textarea>
                 </div>
                 <div class="input-row">
-                    <label class="input-label" data-i18n="jmax_label">jmax =</label>
-                    <textarea id="jmax1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1280" data-i18n-placeholder="jmax_placeholder"></textarea>
+                    <label class="input-label">jmax =</label>
+                    <textarea id="jmax1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1280"></textarea>
                 </div>
             </div>
 
             <!-- Amnezia 1.5 I1-I5 Inputs -->
             <div id="amnezia15-inputs" class="custom-inputs hidden" style="margin-top: 1rem; border-color: var(--accent);">
-                <div class="settings-group-title" style="color: var(--accent); margin-bottom: 0.5rem;">Amnezia 1.5 Parameters (v4.8.11.4+)</div>
-                <small class="amnezia15-doc">* See the <a target="_blank" href="https://docs.amnezia.org/documentation/instructions/new-amneziawg-selfhosted/">official docs</a> for details on these parameters</small>
+                <div class="settings-group-title" style="color: var(--accent); margin-bottom: 0.5rem;" data-i18n="amnezia_params">Amnezia 1.5 Parameters (v4.8.11.4+)</div>
+                <small class="amnezia15-doc">
+                    <span data-i18n="amnezia15_note_prefix"></span>
+                    <a
+                        target="_blank"
+                        href="https://docs.amnezia.org/documentation/instructions/new-amneziawg-selfhosted/"
+                        data-i18n="amnezia15_official_docs"
+                    ></a>
+                    <span data-i18n="amnezia15_note_suffix"></span>
+                </small>
                 <div class="input-row">
                     <label class="input-label">I1 =</label>
                     <textarea id="i1_1" class="jc modern-input amnezia15-field" rows="1" placeholder="Enter I1 value or leave blank for default"></textarea>
@@ -238,21 +246,21 @@
             
             <div class="custom-inputs">
                 <div class="input-row">
-                    <label class="input-label" data-i18n="jc_label">jc =</label>
+                    <label class="input-label">jc =</label>
                     <textarea id="ws_jc1" class="jc modern-input" rows="1" maxlength="3" type="number" placeholder="128"></textarea>
                 </div>
                 <div class="input-row">
-                    <label class="input-label" data-i18n="jmin_label">jmin =</label>
+                    <label class="input-label">jmin =</label>
                     <textarea id="ws_jmin1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1279"></textarea>
                 </div>
                 <div class="input-row">
-                    <label class="input-label" data-i18n="jmax_label">jmax =</label>
+                    <label class="input-label">jmax =</label>
                     <textarea id="ws_jmax1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1280"></textarea>
                 </div>
             </div>
 
             <div class="custom-inputs" style="margin-top: 1rem; border-color: var(--warning);">
-                <div class="settings-group-title" style="color: var(--warning); margin-bottom: 0.5rem;">Wiresock Parameters (v3+)</div>
+                <div class="settings-group-title" style="color: var(--warning); margin-bottom: 0.5rem;" data-i18n="wiresock_params">Wiresock Parameters (v3+)</div>
                 <div class="input-row">
                     <label class="input-label">Id =</label>
                     <textarea id="ws_id" class="jc modern-input" rows="1" placeholder="Enter Domain for Masking"></textarea>
