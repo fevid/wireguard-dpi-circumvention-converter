@@ -893,7 +893,7 @@ function detectBrowserLang() {
 
 async function loadLanguage(lang) {
   try {
-    const response = await fetch(`./lang/${lang}.json`);
+    const response = await fetch(`./lang/${lang}.json?v=1.1`);  //?v=1.1 for forcing to load new data and bypass caching
     if (!response.ok) throw new Error(`Language file not found: ${lang}`);
     
     const languageData = await response.json();
