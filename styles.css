@@ -228,6 +228,10 @@ button, .convert-btn {
     gap: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    
+}
+
+.convert-btn{
     margin-bottom: 30px;
 }
 
@@ -243,7 +247,7 @@ button:hover, .convert-btn:hover {
 
 .modern-secondary-btn {
     background: linear-gradient(135deg, var(--warning) 0%, #ff6b6b 100%);
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     text-transform: none;
     letter-spacing: normal;
     font-weight: 600;
