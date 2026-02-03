@@ -775,20 +775,21 @@ function setupEventListeners() {
 function handleOptionChange() {
   const isWiresocket = this.id === 'wiresocket';
   const isAwg = this.id === 'awg';
+  const isClash = this.id === 'clash';
   
   elements.musor1.classList.toggle('hidden', isWiresocket);
   elements.musor2.classList.toggle('hidden', !isWiresocket);
   elements.containerColumns.classList.toggle('karing-active', isWiresocket);
   elements.container2.classList.toggle('karing-active', isWiresocket);
   
-  // Show/hide Amnezia 1.5 toggle
+  // Show/hide Amnezia 1.5 toggle for both Clash and AWG
   const amnezia15Toggle = getById('amnezia15-toggle-label');
   if (amnezia15Toggle) {
-    amnezia15Toggle.style.display = isAwg ? 'block' : 'none';
+    amnezia15Toggle.style.display = (isAwg || isClash) ? 'block' : 'none';
   }
-  // Uncheck Amnezia 1.5 when switching to other formats
+  // Uncheck Amnezia 1.5 when switching to Wiresocket
   const amnezia15Checkbox = getById('enableAmnezia15');
-  if (!isAwg && amnezia15Checkbox) {
+  if (isWiresocket && amnezia15Checkbox) {
     amnezia15Checkbox.checked = false;
     toggleAmnezia15.call(amnezia15Checkbox);
   }
