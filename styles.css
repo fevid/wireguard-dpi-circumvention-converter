@@ -113,8 +113,6 @@ body::before {
     gap: 2rem;
     margin-bottom: 3rem;
     max-width: 100%;
-    position: relative;
-    left: 0;
 }
 
 .container, .container2 {
@@ -126,7 +124,6 @@ body::before {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    margin: 0;
 }
 
 .container::before, .container2::before {
@@ -479,10 +476,8 @@ input[type="checkbox"]:checked + .checkmark::after {
 }
 
 /* Result Section */
-.infobtn, .full-width {
+.infobtn {
     width: 100%;
-    max-width: 100%;
-    margin: 0;
     grid-column: 1 / -1;
 }
 
@@ -588,10 +583,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     display: none;
 }
 
-.musor2.hidden {
-    display: none;
-}
-
 .musor1, .musor2 {
     animation: fadeIn 0.3s ease;
 }
@@ -685,13 +676,29 @@ input[type="checkbox"]:checked + .checkmark::after {
     }
 }
 
-/* Special handling for Karing mode */
-.container-columns.karing-active {
+/* Scrollbar Styling */
+.container:hover::after, .container2:hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    opacity: 0;
+    animation: ripple 0.6s ease-out;
 }
 
-.container2.karing-active {
-    margin-right: 0;
+@keyframes ripple {
+    0% {
+        opacity: 1;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
 }
 
 /* Enhanced glassmorphism effects */
@@ -836,6 +843,7 @@ input[type="checkbox"]:checked + .checkmark::after {
     background: rgba(0, 255, 136, 0.15);
     color: var(--primary);
     font-weight: 600;
+    padding-left: 2rem;
 }
 
 .dropdown-option.active::before {
@@ -844,10 +852,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     left: 0.75rem;
     color: var(--primary);
     font-weight: bold;
-}
-
-.dropdown-option.active {
-    padding-left: 2rem;
 }
 
 /* Mobile adjustments */
@@ -935,11 +939,6 @@ body.lang-fa {
     box-shadow: 0 10px 25px rgba(0, 212, 170, 0.4);
 }
 
-#confInput {
-    height: 300px; /* smaller than result textarea */
-    margin-bottom: 1.5rem;
-}
-
 .donate-img{
     width: 20px;
 }
@@ -957,4 +956,31 @@ body.lang-fa {
 .amnezia15-doc a{
     text-decoration: none;
     color: #4f158a;
+}
+
+/* Classes replacing inline styles */
+.amnezia15-inputs-panel {
+    margin-top: 1rem;
+    border-color: var(--accent);
+}
+
+.amnezia15-group-title {
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.amnezia15-label {
+    margin-left: 25px;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.wiresock-params-panel {
+    margin-top: 1rem;
+    border-color: var(--warning);
+}
+
+.wiresock-group-title {
+    color: var(--warning);
+    margin-bottom: 0.5rem;
 }

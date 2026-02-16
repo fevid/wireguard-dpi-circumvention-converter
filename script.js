@@ -22,7 +22,7 @@ let proxyList = [];
 let translations = {};
 let currentLang = localStorage.getItem("lang") || detectBrowserLang();
 
-// Add this function after line 16 (after currentLang variable)
+// Utility Functions - Notifications
 function showNotification(message, type = 'success') {
   document.querySelectorAll('.notification').forEach(el => el.remove());
 
@@ -656,16 +656,15 @@ function convert() {
     return showNotification(translations['select_files_alert'] || 'Please select files or paste configuration', 'error');
   }
 
-  const selectedOption = getBySelector('input[name="option"]:checked')?.id;
   proxyList = [];
   elements.fileList.innerHTML = "";
 
   // Process files if available
   if (files.length) {
-    processFiles(files, selectedOption);
+    processFiles(files, selectedFormat);
   } else if (textInput) {
     // Process pasted configs
-    processTextInput(textInput, selectedOption);
+    processTextInput(textInput, selectedFormat);
   }
 }
 
@@ -697,7 +696,7 @@ function processFiles(files, selectedOption) {
     
     reader.onerror = function() {
       showNotification((translations['error_reading_file'] || 'Error reading file {file}')
-  .replace('{file}', file.name), 'error');
+        .replace('{file}', file.name), 'error');
       filesProcessed++;
       if (filesProcessed === totalFiles) {
         finalizeConversion(selectedOption);
@@ -774,8 +773,6 @@ function setupEventListeners() {
 
 function handleOptionChange() {
   const isWiresocket = this.id === 'wiresocket';
-  const isAwg = this.id === 'awg';
-  const isClash = this.id === 'clash';
   
   elements.musor1.classList.toggle('hidden', isWiresocket);
   elements.musor2.classList.toggle('hidden', !isWiresocket);
@@ -785,7 +782,7 @@ function handleOptionChange() {
   // Show/hide Amnezia 1.5 toggle for both Clash and AWG
   const amnezia15Toggle = getById('amnezia15-toggle-label');
   if (amnezia15Toggle) {
-    amnezia15Toggle.style.display = (isAwg || isClash) ? 'block' : 'none';
+    amnezia15Toggle.style.display = isWiresocket ? 'none' : 'block';
   }
   // Uncheck Amnezia 1.5 when switching to Wiresocket
   const amnezia15Checkbox = getById('enableAmnezia15');
@@ -798,13 +795,7 @@ function handleOptionChange() {
 
 function toggleAmnezia15() {
   const isChecked = getById('enableAmnezia15')?.checked || false;
-  const amnezia15Inputs = getById('amnezia15-inputs');
-  
-  if (isChecked) {
-    amnezia15Inputs?.classList.remove('hidden');
-  } else {
-    amnezia15Inputs?.classList.add('hidden');
-  }
+  getById('amnezia15-inputs')?.classList.toggle('hidden', !isChecked);
 }
 
 function handleFileChange(event) {
@@ -852,10 +843,6 @@ function handleRandomJunk() {
   getById('jc1').value = jc;
   getById('jmin1').value = jmin;
   getById('jmax1').value = jmax;
-  getById('h1_1').value = getRandomInt(1, 5);
-  getById('h2_1').value = getRandomInt(1, 10);
-  getById('h3_1').value = getRandomInt(1, 10);
-  getById('h4_1').value = getRandomInt(1, 10);
   getById('junk3').checked = true;
 }
 
@@ -881,9 +868,9 @@ function handleClear() {
   updateFileLabel();
 }
 
-// Mobile-specific Functions
+// Mobile-specific Functions (placeholder for future mobile enhancements)
 function replaceMobileText() {
-  if (!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) return;
+  // Reserved for future mobile-specific text adjustments
 }
 
 // Internationalization

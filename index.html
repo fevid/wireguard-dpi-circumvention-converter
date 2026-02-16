@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="icon" href="assets/wg.svg" type="image/x-icon">
-	<link rel="stylesheet" href="styles.css">
+    <title data-i18n="title">WireGuard Converter</title>
+    <meta name="description" content="Convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Wiresock formats with ease. Customize junk and packet settings for optimal performance.">
+    <meta name="keywords" content="WireGuard, VPN, configuration converter, Clash, AmneziaWG, WG Tunnel, Wiresock, junk packet settings, VPN converter">
+    <meta name="author" content="fevid">
+    <meta property="og:title" content="WireGuard Converter">
+    <meta property="og:description" content="Easily convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Wiresock formats with customizable settings.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wireguard-converter.vercel.app/">
+    <meta property="og:site_name" content="WireGuard Converter">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="WireGuard Converter">
+    <meta name="twitter:description" content="Easily convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Wiresock formats with customizable settings.">
+    <link rel="icon" href="assets/wg.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lalezar&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
-	<script defer src="script.js"></script>
-  <title data-i18n="title">WireGuard Converter</title>
-  <meta name="description" content="Convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Wiresock formats with ease. Customize junk and packet settings for optimal performance.">
-  <meta name="keywords" content="WireGuard, VPN, configuration converter, Clash, AmneziaWG, WG Tunnel, Wiresock, junk packet settings, VPN converter">
-  <meta name="author" content="fevid">
-<meta property="og:title" content="WireGuard Converter">
-<meta property="og:description" content="Easily convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Wiresock formats with customizable settings.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://wireguard-converter.vercel.app/">
-<meta property="og:site_name" content="WireGuard Converter">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WireGuard Converter">
-<meta name="twitter:description" content="Easily convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Wiresock formats with customizable settings.">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
   <div class="wrapper">
@@ -134,7 +134,7 @@
                     <div class="checkbox">
                         <input type="checkbox" id="enableAmnezia15" class="hidden"/>
                         <span class="checkmark"></span>
-                        <span class="option-label" style="margin-left: 25px; color: var(--accent); font-weight: 600;" data-i18n="enable_15">Enable Amnezia 1.5 (I1-I5)</span>
+                        <span class="option-label amnezia15-label" data-i18n="enable_15">Enable Amnezia 1.5 (I1-I5)</span>
                     </div>
                 </label>
 
@@ -176,14 +176,14 @@
                     <label class="input-label">jmax =</label>
                     <textarea id="jmax1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1280"></textarea>
                 </div>
-                <button onclick="" class="randombtn modern-secondary-btn" id="randomJunkBtn">
+                <button class="randombtn modern-secondary-btn" id="randomJunkBtn">
                     <span data-i18n="generate_random">Generate Random</span>
                 </button>
             </div>
 
             <!-- Amnezia 1.5 I1-I5 Inputs -->
-            <div id="amnezia15-inputs" class="custom-inputs hidden" style="margin-top: 1rem; border-color: var(--accent);">
-                <div class="settings-group-title" style="color: var(--accent); margin-bottom: 0.5rem;" data-i18n="amnezia_params">Amnezia 1.5 Parameters (v4.8.11.4+)</div>
+            <div id="amnezia15-inputs" class="custom-inputs hidden amnezia15-inputs-panel">
+                <div class="settings-group-title amnezia15-group-title" data-i18n="amnezia_params">Amnezia 1.5 Parameters (v4.8.11.4+)</div>
                 <small class="amnezia15-doc">
                     <span data-i18n="amnezia15_note_prefix"></span>
                     <a
@@ -256,13 +256,13 @@
                     <label class="input-label">jmax =</label>
                     <textarea id="ws_jmax1" class="jc modern-input" rows="1" maxlength="4" type="number" placeholder="1280"></textarea>
                 </div>
-                <button onclick="" class="randombtn2 modern-secondary-btn">
+                <button class="randombtn2 modern-secondary-btn">
                     <span data-i18n="generate_random">Generate Random</span>
                 </button>
             </div>
 
-            <div class="custom-inputs" style="margin-top: 1rem; border-color: var(--warning);">
-                <div class="settings-group-title" style="color: var(--warning); margin-bottom: 0.5rem;" data-i18n="wiresock_params">Wiresock Parameters (v3+)</div>
+            <div class="custom-inputs wiresock-params-panel">
+                <div class="settings-group-title wiresock-group-title" data-i18n="wiresock_params">Wiresock Parameters (v3+)</div>
                 <div class="input-row">
                     <label class="input-label">Id =</label>
                     <textarea id="ws_id" class="jc modern-input" rows="1" placeholder="Enter Domain for Masking"></textarea>
