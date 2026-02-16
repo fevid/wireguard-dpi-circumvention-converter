@@ -474,12 +474,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     font-family: 'Courier New', monospace;
 }
 
-.modern-input::placeholder,
-.jc::placeholder {
-    color: var(--text-muted);
-    opacity: 1;
-}
-
 .modern-input,
 .jc {
     padding: 0.5rem 0.75rem;
@@ -561,7 +555,13 @@ input[type="checkbox"]:checked + .checkmark::after {
     background: var(--surface-3);
 }
 
-.textarea1::placeholder {
+.textarea1::placeholder,
+.modern-input::placeholder,
+.jc::placeholder {
+    font-family: "Inter", "Josefin Sans", "Segoe UI", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.02em;
     color: var(--text-muted);
     opacity: 1;
 }
