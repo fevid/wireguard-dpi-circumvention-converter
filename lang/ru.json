@@ -32,5 +32,6 @@
   "donate": "Поддержите этот инструмент",
   "amnezia15_note_prefix": "* Подробности о параметрах см. в ",
   "amnezia15_official_docs": "официальной документации",
-  "amnezia15_note_suffix": " "
+  "amnezia15_note_suffix": " ",
+  "address_copied": "Адрес скопирован!"
 }

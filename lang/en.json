@@ -32,5 +32,6 @@
   "donate": "Support This Tool",
   "amnezia15_note_prefix": "* See the ",
   "amnezia15_official_docs": "official docs",
-  "amnezia15_note_suffix": " for details on these parameters"
+  "amnezia15_note_suffix": " for details on these parameters",
+  "address_copied": "Address Copied!"
 }

@@ -32,5 +32,6 @@
   "donate": "支持此工具",
   "amnezia15_note_prefix": "* 有关这些参数的详细信息，请参阅",
   "amnezia15_official_docs": "官方文档",
-  "amnezia15_note_suffix": " "
+  "amnezia15_note_suffix": " ",
+  "address_copied": "地址已复制!"
 }
