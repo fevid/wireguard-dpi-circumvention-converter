@@ -292,14 +292,48 @@
   </div>
 
   <div class="footer-container">
-    <a href="https://nowpayments.io/donation/fevid" target="_blank" class="donation-btn">
+    <button type="button" id="donateBtn" class="donation-btn">
         <img class="donate-img" src="assets/donate.svg" alt="Donate" />
-        <span data-i18n="donate">Support The Author</span>
-    </a>
+        <span data-i18n="donate">Support This Project</span>
+    </button>
     <a href="https://github.com/fevid/wireguard-dpi-circumvention-converter" target="_blank" class="donation-btn">
         <img class="donate-img" src="assets/github.svg" alt="Github" />
         <span>Github</span>
     </a>
+</div>
+
+<div id="donateModal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 data-i18n="donate_title">Support This Project</h2>
+            <button type="button" class="modal-close" id="donateModalClose" aria-label="Close">&times;</button>
+        </div>
+        <p class="modal-subtitle" data-i18n="donate_subtitle">
+            Free, no ads, no telemetry. If it saved you some time, sending a few coins helps keep it that way.
+        </p>
+        <div class="wallet-list">
+            <div class="wallet-item" data-address="bc1q8clnx03a4wzcm1t0n9ntk0tj6zx22xzrq2jvhk">
+                <span class="wallet-label">BTC</span>
+                <span class="wallet-address">bc1q8clnx03a4wzcm1t0n9ntk0tj6zx22xzrq2jvhk</span>
+                <span class="copy-hint" data-i18n="copy">Copy</span>
+            </div>
+            <div class="wallet-item" data-address="0xaE5774e34635476f0B6b9B685b99fA1827fADAEa">
+                <span class="wallet-label">ETH</span>
+                <span class="wallet-address">0xaE5774e34635476f0B6b9B685b99fA1827fADAEa</span>
+                <span class="copy-hint" data-i18n="copy">Copy</span>
+            </div>
+            <div class="wallet-item" data-address="ltc1qak0ptwlnp7vn56yhryq3u6mflmdcm3s0t6cj60">
+                <span class="wallet-label">LTC</span>
+                <span class="wallet-address">ltc1qak0ptwlnp7vn56yhryq3u6mflmdcm3s0t6cj60</span>
+                <span class="copy-hint" data-i18n="copy">Copy</span>
+            </div>
+            <div class="wallet-item" data-address="TDcQTV1aJ4SPtw8sft6CvQhmMzS22gaVx1">
+                <span class="wallet-label">USDT (TRC20)</span>
+                <span class="wallet-address">TDcQTV1aJ4SPtw8sft6CvQhmMzS22gaVx1</span>
+                <span class="copy-hint" data-i18n="copy">Copy</span>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

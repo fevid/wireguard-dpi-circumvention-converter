@@ -736,6 +736,9 @@ input[type="checkbox"]:checked + .checkmark::after {
     text-decoration: none;
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     cursor: pointer;
+    width: auto;
+    flex: 0 0 auto;
+    font-family: inherit;
 }
 
 .donation-btn:hover {
@@ -913,4 +916,114 @@ input[type="checkbox"]:checked + .checkmark::after {
     .footer-container {
         flex-direction: column;
     }
+}
+/* ── Donation Modal ──────────────────────────────────────── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.modal-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+}
+
+.modal-close:hover {
+    color: var(--text);
+}
+
+.modal-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0 0 1rem 0;
+}
+
+.wallet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wallet-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.wallet-item:hover {
+    border-color: var(--border-strong);
+    background: var(--surface-3);
+}
+
+.wallet-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.wallet-address {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-family: monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.copy-hint {
+    font-size: 0.7rem;
+    color: var(--accent);
+    white-space: nowrap;
 }

@@ -1021,7 +1021,46 @@ document.addEventListener('DOMContentLoaded', function() {
     handleOptionChange.call(checkedOption);
   }
   validateConvertButton();
+  setupDonationModal();
 });
+
+// ── Donation Modal ──────────────────────────────────────────
+function setupDonationModal() {
+  const donateBtn = document.getElementById('donateBtn');
+  const modal = document.getElementById('donateModal');
+  const closeBtn = document.getElementById('donateModalClose');
+
+  if (!donateBtn || !modal) return;
+
+  donateBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+  });
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.classList.add('hidden');
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+      modal.classList.add('hidden');
+    }
+  });
+
+  getAllBySelector('.wallet-item').forEach((item) => {
+    item.addEventListener('click', () => {
+      const address = item.getAttribute('data-address');
+      navigator.clipboard.writeText(address)
+        .then(() => showNotification(translations['address_copied'] || 'Address copied!'))
+        .catch(() => showNotification(translations['copy_failed'] || 'Failed to copy', 'error'));
+    });
+  });
+}
 
 function validateConvertButton() {
   const selectedOption = getBySelector('input[name="option"]:checked')?.id;
