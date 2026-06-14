@@ -64,7 +64,7 @@ AllowedIPs = 0.0.0.0/0
 Endpoint = server.com:port
 ```
 
-## Customization Notes
+## Credits
 
 This fork extends the original [ProtonVPN-Converter](https://github.com/protontestguide/ProtonVPN-Converter) with the following enhancements:
 - UI Overhauled and Removed ProtonVPN-specific UI, allowing conversion of any WireGuard configuration.
@@ -72,16 +72,19 @@ This fork extends the original [ProtonVPN-Converter](https://github.com/protonte
 - Multilingual.
 
 
-## Credits
-
-- Original project: [ProtonVPN-Converter](https://github.com/protontestguide/ProtonVPN-Converter) by [protontestguide](https://github.com/protontestguide).
-
 ## 🗂 Other Projects
 
 - [OpenVPN AuthBatch](https://github.com/fevid/openvpn-authbatch)
 
 
+## 💸 Support
 
-<a href="https://nowpayments.io/donation?api_key=bc7f43a9-c6fe-4382-a8eb-69001c7a5fe0" target="_blank" rel="noreferrer noopener">
-    <img src="https://nowpayments.io/images/embeds/donation-button-black.svg" alt="Crypto donation button by NOWPayments">
-</a>
+Even small amounts make a difference.
+
+| Network | Address |
+| --- | --- |
+| BTC | `bc1q8clnx03a4wzcmvt0n9ntk0tj6zx22xzrq2jvhk` |
+| ETH | `0xaE5774e34635d76f0B6b9B685b99fA1827fADAEa` |
+| LTC | `ltc1qak0ptwlnp7vn76yhryq3u6mflmdcm3s0t6cj60` |
+| TON | `UQBVVcD7mRhwXlyJAD2V0OIeDh496_DHhUlMdidS4R6nvn2H` |
+| USDT/USDC (TRC20) | `TDcQTV1aJ4SPtw8sft2CvQhmMzS22gaVx1` |
