@@ -5,7 +5,9 @@
     box-sizing: border-box;
 }
 
-:root {
+/* ── Dark Theme (default) ────────────────────────────────── */
+:root,
+[data-theme="dark"] {
     --primary: #6366f1;
     --primary-dark: #4f46e5;
     --primary-light: rgba(99, 102, 241, 0.15);
@@ -25,6 +27,7 @@
     --warning: #f59e0b;
     --warning-dim: rgba(245, 158, 11, 0.12);
     --danger: #f87171;
+    --danger-dim: rgba(248, 113, 113, 0.12);
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
@@ -32,6 +35,33 @@
     --radius-md: 0.75rem;
     --radius-lg: 1rem;
     --radius-xl: 1.25rem;
+}
+
+/* ── Light Theme ─────────────────────────────────────────── */
+[data-theme="light"] {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --primary-light: rgba(79, 70, 229, 0.1);
+    --secondary: #7c3aed;
+    --accent: #6d28d9;
+    --background: #f3f4f8;
+    --surface: #ffffff;
+    --surface-2: #f1f1f7;
+    --surface-3: #e8e8f0;
+    --text: #1a1a2e;
+    --text-secondary: #4a4a6a;
+    --text-muted: #8a8aaa;
+    --border: rgba(0, 0, 0, 0.08);
+    --border-strong: rgba(0, 0, 0, 0.15);
+    --success: #059669;
+    --success-dim: rgba(5, 150, 105, 0.1);
+    --warning: #d97706;
+    --warning-dim: rgba(217, 119, 6, 0.1);
+    --danger: #dc2626;
+    --danger-dim: rgba(220, 38, 38, 0.1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 body {
@@ -44,6 +74,14 @@ body {
     font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     line-height: 1.5;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="light"] body,
+body[data-theme="light"] {
+    background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(79, 70, 229, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 85% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
 }
 
 /* ── Font overrides by language ─────────────────────────── */
@@ -103,6 +141,38 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
     font-weight: 400;
 }
 
+/* ── Theme Toggle Button ─────────────────────────────────── */
+.theme-toggle-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-md);
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    padding: 0;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--surface-3);
+    border-color: var(--primary);
+    transform: scale(1.08);
+    box-shadow: none;
+}
+
+.theme-icon-light { display: none; }
+.theme-icon-dark  { display: inline; }
+
+[data-theme="light"] .theme-icon-light { display: inline; }
+[data-theme="light"] .theme-icon-dark  { display: none; }
+
 /* ── Layout Grid ─────────────────────────────────────────── */
 .container-columns {
     display: grid;
@@ -120,7 +190,7 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
     padding: 1.75rem;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, background 0.3s ease;
 }
 
 .container::before,
@@ -161,7 +231,7 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
     text-align: left;
 }
 
-/* ── File Upload ─────────────────────────────────────────── */
+/* ── File Upload with Drag-and-Drop ──────────────────────── */
 .custom-file-upload {
     display: flex;
     align-items: center;
@@ -183,10 +253,16 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
     overflow: hidden;
 }
 
-.custom-file-upload:hover {
+.custom-file-upload:hover,
+.custom-file-upload.drag-over {
     background: rgba(99, 102, 241, 0.22);
     border-color: rgba(99, 102, 241, 0.7);
     color: #c4b5fd;
+}
+
+.custom-file-upload.drag-over {
+    border-style: solid;
+    transform: scale(1.01);
 }
 
 .upload-icon img {
@@ -222,13 +298,10 @@ button:hover,
     box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
 }
 
-/* Clear button — subdued */
 .convert-btn:last-of-type {
     background: var(--surface-3) !important;
     color: var(--text-secondary) !important;
     border: 1px solid var(--border-strong);
-    text-transform: none !important;
-    letter-spacing: normal !important;
 }
 
 .convert-btn:last-of-type:hover {
@@ -247,7 +320,7 @@ button:hover,
     gap: 0.75rem;
 }
 
-/* Generate Random button */
+/* Generate Random / Secondary buttons */
 .modern-secondary-btn {
     background: var(--surface-3);
     color: var(--text-secondary);
@@ -263,6 +336,19 @@ button:hover,
     background: var(--surface-2);
     color: var(--text);
     box-shadow: none;
+}
+
+.junk-actions-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.junk-actions-row .modern-secondary-btn {
+    margin-top: 0;
+    flex: 1;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.5rem;
 }
 
 /* Download / Copy buttons */
@@ -288,19 +374,10 @@ button:hover,
     gap: 0.4rem;
     text-transform: none;
     letter-spacing: normal;
-    opacity: 0.4;
-    pointer-events: none;
     width: auto;
 }
 
-.download-btn:not(.hidden) {
-    opacity: 1;
-    pointer-events: auto;
-    color: var(--text);
-    border-color: var(--border-strong);
-}
-
-.download-btn:not(.hidden):hover {
+.download-btn:hover {
     background: var(--primary-light);
     border-color: rgba(99, 102, 241, 0.5);
     color: var(--accent);
@@ -308,10 +385,47 @@ button:hover,
     transform: none;
 }
 
-.btn-icon img {
-    width: 16px;
-    height: 16px;
-    opacity: 0.75;
+.download-btn.hidden {
+    display: none;
+}
+
+.config-tabs-actions-header{
+    position: relative;
+    display: flex;
+    margin-top: 0.75rem;
+    color: var(--accent);
+    font-size: .95rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -12px;
+}
+
+.config-tabs-actions-header div{
+    display: block;
+    height: 1px;
+    background-color: var(--primary);
+    width: 90%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.config-tabs-actions-header span{
+    z-index: 1;
+    padding: .5rem;
+    background-color: var(--surface-2);
+}
+
+.config-tabs-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem;
+}
+
+.config-tabs-actions .download-btn {
+    border-color: var(--border-strong);
+    color: var(--text);
 }
 
 /* ── Format Options (Radio) ──────────────────────────────── */
@@ -446,6 +560,36 @@ input[type="checkbox"]:checked + .checkmark::after {
     line-height: 1;
 }
 
+.randomize-per-config-label {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(167, 139, 250, 0.08);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+    background: rgba(99, 102, 241, 0.06);
+    border-color: rgba(99, 102, 241, 0.18);
+    padding: 0.5rem 0.75rem;
+}
+.randomize-per-config-label:hover {
+    background: rgba(167, 139, 250, 0.12);
+    border-color: rgba(167, 139, 250, 0.35);
+}
+
+.randomize-per-config-label .checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    width: 100%;
+}
+
+.randomize-per-config-label .option-label{
+    margin-left: 7px; font-size:0.8rem; color: var(--text-secondary);
+}
+
 /* ── Custom Inputs ───────────────────────────────────────── */
 .custom-inputs {
     margin-top: 0.75rem;
@@ -453,6 +597,10 @@ input[type="checkbox"]:checked + .checkmark::after {
     background: rgba(0, 0, 0, 0.2);
     border-radius: var(--radius-md);
     border: 1px solid var(--border);
+}
+
+[data-theme="light"] .custom-inputs {
+    background: rgba(0, 0, 0, 0.04);
 }
 
 .input-row {
@@ -497,6 +645,13 @@ input[type="checkbox"]:checked + .checkmark::after {
     background: var(--surface-3);
 }
 
+/* Validation error state */
+.modern-input.input-error,
+.jc.input-error {
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 0 3px var(--danger-dim) !important;
+}
+
 /* Modern Select */
 .modern-select {
     padding: 0.5rem 2rem 0.5rem 0.75rem;
@@ -525,7 +680,7 @@ input[type="checkbox"]:checked + .checkmark::after {
 }
 
 .modern-select option {
-    background: #1a1a2a;
+    background: var(--surface-2);
     color: var(--text);
     padding: 8px;
     font-family: inherit;
@@ -536,14 +691,14 @@ input[type="checkbox"]:checked + .checkmark::after {
     width: 100%;
     height: 280px;
     background: var(--surface-2);
-    border: 1px solid var(--border);
+    border: 2px dashed var(--border-strong); /* FIX: Dashed border indicates drop zone */
     border-radius: var(--radius-md);
     padding: 1rem 1.25rem;
     color: var(--text);
     font-size: 0.83rem;
     resize: vertical;
     margin-bottom: 1rem;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.3s ease, border-style 0.15s ease;
     line-height: 1.6;
     font-family: 'Courier New', monospace;
 }
@@ -551,8 +706,16 @@ input[type="checkbox"]:checked + .checkmark::after {
 .textarea1:focus {
     outline: none;
     border-color: var(--primary);
+    border-style: solid; /* Solid border when typing for better UX */
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
     background: var(--surface-3);
+}
+
+.textarea1.drag-over {
+    border-color: var(--primary);
+    border-style: solid;
+    background: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
 .textarea1::placeholder,
@@ -571,6 +734,198 @@ input[type="checkbox"]:checked + .checkmark::after {
 .textarea1::-webkit-scrollbar-thumb  { background: var(--surface-3); border-radius: 3px; }
 .textarea1::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
 
+/* ── Validation Panel ────────────────────────────────────── */
+.validation-panel {
+    margin-bottom: 0.75rem;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    font-size: 0.82rem;
+}
+
+.validation-panel.hidden {
+    display: none;
+}
+
+.validation-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.validation-item:last-child {
+    border-bottom: none;
+}
+
+.validation-item.error {
+    background: var(--danger-dim);
+    color: var(--danger);
+}
+
+.validation-item.warning {
+    background: var(--warning-dim);
+    color: var(--warning);
+}
+
+.validation-item.ok {
+    background: var(--success-dim);
+    color: var(--success);
+}
+
+.validation-icon {
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    margin-top: 0.05rem;
+}
+
+.validation-text {
+    line-height: 1.4;
+}
+
+/* ── Config Tabs ─────────────────────────────────────────── */
+.config-tabs-container {
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface-2);
+}
+
+.config-tabs-container.hidden {
+    display: none;
+}
+
+.config-tabs-header {
+    display: flex;
+    overflow-x: auto;
+    background: var(--surface-3);
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--surface-2); /* More visible */
+    cursor: grab; /* Indicates it can be dragged */
+    touch-action: pan-x; /* Ensures smooth native touch scrolling on mobile */
+    user-select: none; /* Prevents text highlighting while dragging */
+    -webkit-user-select: none;
+}
+
+.config-tabs-header:active {
+    cursor: grabbing;
+}
+
+/* Make scrollbar much more obvious on Webkit browsers (Chrome, Edge, Safari) */
+.config-tabs-header::-webkit-scrollbar {
+    height: 10px; /* Increased from 4px for easy grabbing */
+}
+.config-tabs-header::-webkit-scrollbar-track {
+    background: var(--surface-2);
+    border-radius: 5px;
+}
+.config-tabs-header::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 5px;
+    border: 2px solid var(--surface-2); /* Creates a nice padded look */
+}
+.config-tabs-header::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+.config-tab-btn {
+    padding: 0.6rem 1rem;
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    border-radius: 0;
+    border-right: 1px solid var(--border);
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+    width: auto;
+    min-width: 80px;
+    box-shadow: none;
+}
+
+.config-tab-btn:hover {
+    background: var(--surface-2);
+    color: var(--text);
+    box-shadow: none;
+}
+
+.config-tab-btn.active {
+    background: var(--surface);
+    color: var(--primary);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary);
+}
+
+.config-tabs-body {
+    position: relative;
+}
+
+.config-tab-pane {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+}
+
+.config-tab-pane.active {
+    display: flex;
+}
+
+.config-tab-pane textarea {
+    width: 100%;
+    height: 240px;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.875rem 1rem;
+    color: var(--text);
+    font-size: 0.8rem;
+    resize: vertical;
+    font-family: 'Courier New', monospace;
+    line-height: 1.55;
+    transition: border-color 0.15s ease;
+    margin-bottom: 0;
+}
+
+.config-tab-pane textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.config-tab-pane-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.config-tab-pane-actions .download-btn {
+    font-size: 0.78rem;
+    padding: 0.5rem 0.75rem;
+    border-color: var(--border-strong);
+    color: var(--text);
+    flex: 0 0 auto;
+    width: auto;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.qr-btn {
+    background: rgba(167, 139, 250, 0.1);
+    border-color: rgba(167, 139, 250, 0.3) !important;
+    color: var(--accent) !important;
+}
+
+.qr-btn:hover {
+    background: rgba(167, 139, 250, 0.2) !important;
+}
+
 /* ── File List Bar ───────────────────────────────────────── */
 .infobtn {
     width: 100%;
@@ -582,7 +937,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 1rem 1.5rem;
-    margin-bottom: 1.5rem;
     color: var(--text-secondary);
     font-size: 0.85rem;
     font-weight: 500;
@@ -716,7 +1070,7 @@ input[type="checkbox"]:checked + .checkmark::after {
 .footer-container {
     display: flex;
     align-items: center;
-    margin-top: 1.5rem;
+    margin: 1.5rem 0;
     justify-content: center;
     gap: 0.75rem;
 }
@@ -816,6 +1170,147 @@ input[type="checkbox"]:checked + .checkmark::after {
     width: 100%;
 }
 
+/* ── Donation Modal ──────────────────────────────────────── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.modal-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+}
+
+.modal-close:hover {
+    color: var(--text);
+    background: none;
+    box-shadow: none;
+}
+
+.modal-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0 0 1rem 0;
+}
+
+.wallet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wallet-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.wallet-item:hover {
+    border-color: var(--border-strong);
+    background: var(--surface-3);
+}
+
+.wallet-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.wallet-address {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-family: monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.copy-hint {
+    font-size: 0.7rem;
+    color: var(--accent);
+    white-space: nowrap;
+}
+
+/* ── QR Modal ────────────────────────────────────────────── */
+.qr-modal-box {
+    max-width: 340px;
+    text-align: center;
+}
+
+.qr-code-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: #fff;
+    border-radius: var(--radius-md);
+    margin: 1rem auto;
+    width: fit-content;
+}
+
+.qr-code-container canvas,
+.qr-code-container img {
+    display: block;
+}
+
+.qr-note {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+}
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 768px) {
     .wrapper {
@@ -880,6 +1375,16 @@ input[type="checkbox"]:checked + .checkmark::after {
         margin: 1rem auto 0;
         width: fit-content;
     }
+
+    .theme-toggle-btn {
+        position: static;
+        margin: 0.75rem auto 0;
+        display: block;
+    }
+
+    .config-tabs-actions {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 480px) {
@@ -910,120 +1415,14 @@ input[type="checkbox"]:checked + .checkmark::after {
     .dropdown-option {
         font-size: 0.8rem;
     }
+
+    .junk-actions-row {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 410px) {
     .footer-container {
         flex-direction: column;
     }
-}
-/* ── Donation Modal ──────────────────────────────────────── */
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 1rem;
-}
-
-.modal-overlay.hidden {
-    display: none;
-}
-
-.modal-box {
-    background: var(--surface-2);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-xl);
-    padding: 1.5rem;
-    max-width: 420px;
-    width: 100%;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-}
-
-.modal-header h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0;
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 1.5rem;
-    line-height: 1;
-    cursor: pointer;
-    padding: 0;
-    transition: color 0.2s ease;
-    flex: 0 0 auto;
-    width: 28px;
-    height: 28px;
-}
-
-.modal-close:hover {
-    color: var(--text);
-}
-
-.modal-subtitle {
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    line-height: 1.5;
-    margin: 0 0 1rem 0;
-}
-
-.wallet-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.wallet-item {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.7rem 0.9rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.wallet-item:hover {
-    border-color: var(--border-strong);
-    background: var(--surface-3);
-}
-
-.wallet-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text);
-    white-space: nowrap;
-}
-
-.wallet-address {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    font-family: monospace;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.copy-hint {
-    font-size: 0.7rem;
-    color: var(--accent);
-    white-space: nowrap;
 }

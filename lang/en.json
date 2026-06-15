@@ -34,5 +34,6 @@
   "amnezia15_official_docs": "official docs",
   "amnezia15_note_suffix": " for details on these parameters",
   "address_copied": "Address Copied!",
-  "donate_subtitle": "Free, no ads, no telemetry. If it saved you some time, sending a few coins helps keep it that way."
+  "donate_subtitle": "Free, no ads, no telemetry. If it saved you some time, sending a few coins helps keep it that way.",
+  "randomizePerConfig": "Randomize per Config"
 }

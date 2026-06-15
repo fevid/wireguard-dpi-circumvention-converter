@@ -34,5 +34,6 @@
   "amnezia15_official_docs": "官方文档",
   "amnezia15_note_suffix": " ",
   "address_copied": "地址已复制!",
-  "donate_subtitle": "免费、无广告、无遥测。如果它为您节省了一些时间，发送一些币有助于保持这种方式。"
+  "donate_subtitle": "免费、无广告、无遥测。如果它为您节省了一些时间，发送一些币有助于保持这种方式。",
+"randomizePerConfig": "按配置随机"
 }
