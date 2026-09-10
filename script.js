@@ -50,6 +50,17 @@ const AMNEZIA_KEYS    = ['jc', 'jmin', 'jmax', 's1', 's2', 'h1', 'h2', 'h3', 'h4
 const AMNEZIA15_KEYS  = ['i1', 'i2', 'i3', 'i4', 'i5'];
 const SUPPORTED_LANGS = ["en", "tr", "fa", "ru", "zh"];
 
+// DNS Provider Addresses
+const DNS_PROVIDERS = {
+  google:    '8.8.8.8, 8.8.4.4',
+  cloudflare: '1.1.1.1, 1.0.0.1',
+  quad9:     '9.9.9.9, 149.112.112.112',
+  opendns:   '208.67.222.222, 208.67.220.220',
+  adguard:   '94.140.14.14, 94.140.15.15',
+  nextdns:   '45.90.28.0, 45.90.30.0',
+  custom:    ''
+};
+
 // ── LocalStorage keys ────────────────────────────────────
 const LS_THEME         = 'wg_theme';
 const LS_JUNK_MODE     = 'wg_junk_mode';
@@ -58,6 +69,11 @@ const LS_RANDOMIZE_PC  = 'wg_randomize_per_config';
 const LS_WS_ID         = 'wg_ws_id';
 const LS_WS_IP         = 'wg_ws_ip';
 const LS_WS_IB         = 'wg_ws_ib';
+const LS_CUSTOM_DNS    = 'wg_custom_dns';
+const LS_DNS_PROVIDER  = 'wg_dns_provider';
+const LS_CUSTOM_DNS_VAL = 'wg_custom_dns_val';
+const LS_CUSTOM_MTU    = 'wg_custom_mtu';
+const LS_MTU_VALUE     = 'wg_mtu_value';
 
 // ═══════════════════════════════════════════════════════════
 // Global State
@@ -174,6 +190,17 @@ function persistSettings() {
   localStorage.setItem(LS_WS_ID, getById('ws_id')?.value || '');
   localStorage.setItem(LS_WS_IP, getById('ws_ip')?.value || 'QUIC');
   localStorage.setItem(LS_WS_IB, getById('ws_ib')?.value || 'Chrome');
+
+  // Custom DNS
+  const enableDNS = getById('enableCustomDNS')?.checked || false;
+  localStorage.setItem(LS_CUSTOM_DNS, enableDNS ? '1' : '0');
+  localStorage.setItem(LS_DNS_PROVIDER, getById('dnsProvider')?.value || 'google');
+  localStorage.setItem(LS_CUSTOM_DNS_VAL, getById('customDNS')?.value || '');
+
+  // Custom MTU
+  const enableMTU = getById('enableCustomMTU')?.checked || false;
+  localStorage.setItem(LS_CUSTOM_MTU, enableMTU ? '1' : '0');
+  localStorage.setItem(LS_MTU_VALUE, getById('customMTU')?.value || '1420');
 }
 
 function restoreSettings() {
@@ -213,6 +240,35 @@ function restoreSettings() {
   if (wsIb) {
     const el = getById('ws_ib');
     if (el) el.value = wsIb;
+  }
+
+  // Custom DNS
+  const enableDNS = localStorage.getItem(LS_CUSTOM_DNS);
+  if (enableDNS === '1') {
+    const cb = getById('enableCustomDNS');
+    if (cb) { cb.checked = true; toggleCustomDNS(); }
+  }
+  const dnsProvider = localStorage.getItem(LS_DNS_PROVIDER);
+  if (dnsProvider) {
+    const el = getById('dnsProvider');
+    if (el) { el.value = dnsProvider; toggleCustomDNSPanel(); }
+  }
+  const customDNSVal = localStorage.getItem(LS_CUSTOM_DNS_VAL);
+  if (customDNSVal !== null) {
+    const el = getById('customDNS');
+    if (el) el.value = customDNSVal;
+  }
+
+  // Custom MTU
+  const enableMTU = localStorage.getItem(LS_CUSTOM_MTU);
+  if (enableMTU === '1') {
+    const cb = getById('enableCustomMTU');
+    if (cb) { cb.checked = true; toggleCustomMTU(); }
+  }
+  const mtuValue = localStorage.getItem(LS_MTU_VALUE);
+  if (mtuValue) {
+    const el = getById('customMTU');
+    if (el) el.value = mtuValue;
   }
 
   validateConvertButton();
@@ -577,7 +633,12 @@ function convertToProxy(wgConfig, fileName, format = 'clash', usePerConfigRandom
   const colonIdx = peerData.endpoint.lastIndexOf(':');
   const server   = peerData.endpoint.slice(0, colonIdx);
   const port     = peerData.endpoint.slice(colonIdx + 1);
-  const dnsList  = ifaceData.dns ? ifaceData.dns.split(',').map(d => d.trim()) : [];
+
+  // Use custom DNS if enabled, otherwise use config's DNS
+  const customDNS = getCustomDNS();
+  const dnsList = customDNS
+    ? customDNS.split(',').map(d => d.trim())
+    : (ifaceData.dns ? ifaceData.dns.split(',').map(d => d.trim()) : []);
 
   let options = {};
 
@@ -661,7 +722,7 @@ function convertToProxy(wgConfig, fileName, format = 'clash', usePerConfigRandom
       ? peerData.allowedips.split(',').map(ip => `'${ip.trim()}'`)
       : [],
     udp: true,
-    mtu: 1420,
+    mtu: getCustomMTU() || 1420, // Use custom MTU if set, otherwise default 1420
     remote_dns_resolve: true,
     dns: dnsList,
     isDefaultAmnezia: !(ifaceData.amneziaOptions.jc || peerData.amneziaOptions?.jc)
@@ -1382,6 +1443,27 @@ function setupEventListeners() {
     persistSettings();
   });
 
+  // Custom DNS settings
+  getById('enableCustomDNS')?.addEventListener('change', () => {
+    toggleCustomDNS();
+    persistSettings();
+  });
+
+  getById('dnsProvider')?.addEventListener('change', () => {
+    toggleCustomDNSPanel();
+    persistSettings();
+  });
+
+  getById('customDNS')?.addEventListener('input', persistSettings);
+
+  // Custom MTU settings
+  getById('enableCustomMTU')?.addEventListener('change', () => {
+    toggleCustomMTU();
+    persistSettings();
+  });
+
+  getById('customMTU')?.addEventListener('input', persistSettings);
+
   // File input
   elements.wgFiles.addEventListener('change', handleFileChange);
 
@@ -1427,6 +1509,45 @@ function handleOptionChange() {
 function toggleAmnezia15() {
   const isChecked = getById('enableAmnezia15')?.checked || false;
   getById('amnezia15-inputs')?.classList.toggle('hidden', !isChecked);
+}
+
+function toggleCustomDNS() {
+  const isChecked = getById('enableCustomDNS')?.checked || false;
+  getById('dns-settings-panel')?.classList.toggle('hidden', !isChecked);
+  toggleCustomDNSPanel();
+}
+
+function toggleCustomDNSPanel() {
+  const provider = getById('dnsProvider')?.value;
+  getById('custom-dns-panel')?.classList.toggle('hidden', provider !== 'custom');
+}
+
+function toggleCustomMTU() {
+  const isChecked = getById('enableCustomMTU')?.checked || false;
+  getById('mtu-settings-panel')?.classList.toggle('hidden', !isChecked);
+}
+
+function getCustomDNS() {
+  const enableDNS = getById('enableCustomDNS')?.checked || false;
+  if (!enableDNS) return null;
+
+  const provider = getById('dnsProvider')?.value || 'google';
+  if (provider === 'custom') {
+    return getById('customDNS')?.value?.trim() || null;
+  } else {
+    return DNS_PROVIDERS[provider] || DNS_PROVIDERS.google;
+  }
+}
+
+function getCustomMTU() {
+  const enableMTU = getById('enableCustomMTU')?.checked || false;
+  if (!enableMTU) return null;
+
+  const mtuValue = parseInt(getById('customMTU')?.value);
+  if (isNaN(mtuValue) || mtuValue < 576 || mtuValue > 1500) {
+    return 1420; // Default value if invalid
+  }
+  return mtuValue;
 }
 
 function handleFileChange(event) {
@@ -1732,12 +1853,15 @@ document.addEventListener('DOMContentLoaded', function () {
   loadLanguage(currentLang);
   restoreSettings();
   toggleAmnezia15();
+  toggleCustomDNS();
+  toggleCustomDNSPanel();
+  toggleCustomMTU();
 
   const checkedOption = getBySelector('input[name="option"]:checked');
   if (checkedOption) handleOptionChange.call(checkedOption);
 
   validateConvertButton();
-  setupDraggableTabs(); 
+  setupDraggableTabs();
 });
 
 window.addEventListener('resize', () => {});

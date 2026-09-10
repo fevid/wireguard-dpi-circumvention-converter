@@ -35,5 +35,13 @@
   "amnezia15_note_suffix": " ",
   "address_copied": "地址已复制!",
   "donate_subtitle": "免费、无广告、无遥测。如果它为您节省了一些时间，发送一些币有助于保持这种方式。",
-"randomizePerConfig": "按配置随机"
+"randomizePerConfig": "按配置随机",
+"dns_settings": "DNS 设置",
+"enable_custom_dns": "修改 DNS 设置",
+"dns_provider": "DNS 提供商:",
+"custom_dns_option": "自定义 DNS",
+"dns_label": "DNS:",
+"mtu_settings": "MTU 设置",
+"enable_custom_mtu": "修改 MTU 值",
+"mtu_hint": "默认: 1420. 典型范围: 1280-1500"
 }

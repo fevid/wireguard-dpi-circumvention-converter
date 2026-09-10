@@ -35,5 +35,13 @@
   "amnezia15_note_suffix": " ",
   "address_copied": "Адрес скопирован!",
   "donate_subtitle": "Бесплатно, без рекламы, без телеметрии. Если это сэкономило вам немного времени, отправка нескольких монет помогает сохранить всё так же.",
-"randomizePerConfig": "Случайно для каждого конфига"
+"randomizePerConfig": "Случайно для каждого конфига",
+"dns_settings": "Настройки DNS",
+"enable_custom_dns": "Изменить настройки DNS",
+"dns_provider": "Провайдер DNS:",
+"custom_dns_option": "Пользовательский DNS",
+"dns_label": "DNS:",
+"mtu_settings": "Настройки MTU",
+"enable_custom_mtu": "Изменить значение MTU",
+"mtu_hint": "По умолчанию: 1420. Типичный диапазон: 1280-1500"
 }

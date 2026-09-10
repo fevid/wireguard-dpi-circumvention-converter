@@ -35,5 +35,13 @@
   "amnezia15_note_suffix": " را ببینید",
   "address_copied": "آدرس کپی شد!",
   "donate_subtitle": "رایگان، بدون تبلیغات، بدون ردیابی. اگر در زمان شما صرفه‌جویی کرد، ارسال چند سکه کمک می‌کند این وضعیت حفظ شود.",
-"randomizePerConfig": "تصادفی‌سازی برای هر کانفیگ"
+"randomizePerConfig": "تصادفی‌سازی برای هر کانفیگ",
+"dns_settings": "تنظیمات DNS",
+"enable_custom_dns": "تغییر تنظیمات DNS",
+"dns_provider": "ارائه‌دهنده DNS:",
+"custom_dns_option": "DNS سفارشی",
+"dns_label": "DNS:",
+"mtu_settings": "تنظیمات MTU",
+"enable_custom_mtu": "تغییر مقدار MTU",
+"mtu_hint": "پیش‌فرض: 1420. محدوده معمول: 1280-1500"
 }

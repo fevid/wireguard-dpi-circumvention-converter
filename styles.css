@@ -527,7 +527,7 @@ button:hover,
 .modern-checkbox .checkbox {
     display: flex;
     align-items: center;
-    gap: 0;
+    gap: 0.5rem;
     position: relative;
     width: 100%;
 }
@@ -635,6 +635,13 @@ input[type="checkbox"]:checked + .checkmark::after {
     width: 80px;
     text-align: center;
     font-family: 'Courier New', monospace;
+}
+
+#dns-settings-panel .modern-select,
+#dns-settings-panel .modern-input {
+    flex: 1;
+    width: auto;
+    text-align: left;
 }
 
 .modern-input:focus,
@@ -1157,6 +1164,21 @@ input[type="checkbox"]:checked + .checkmark::after {
 .wiresock-group-title {
     color: var(--warning);
     margin-bottom: 0.5rem;
+}
+
+/* ── DNS and MTU Settings ────────────────────────────────── */
+.musor3,
+.musor4 {
+    margin-top: 0.75rem;
+    animation: fadeIn 0.2s ease;
+}
+
+.setting-hint {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    display: block;
+    margin-top: 0.5rem;
+    text-align: left;
 }
 
 /* ── Utility ─────────────────────────────────────────────── */

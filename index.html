@@ -324,6 +324,60 @@
                     </div>
                 </div>
             </div>
+
+            <!-- DNS Settings -->
+            <div class="musor3">
+                <div class="settings-group-title" data-i18n="dns_settings">DNS Settings</div>
+
+                <label class="modern-checkbox" id="custom-dns-toggle-label">
+                    <div class="checkbox">
+                        <input type="checkbox" id="enableCustomDNS" class="hidden"/>
+                        <span class="checkmark"></span>
+                        <span class="option-label" data-i18n="enable_custom_dns">Override DNS Settings</span>
+                    </div>
+                </label>
+
+                <div id="dns-settings-panel" class="custom-inputs hidden">
+                    <div class="input-row">
+                        <label class="input-label" data-i18n="dns_provider">DNS Provider:</label>
+                        <select id="dnsProvider" class="modern-select">
+                            <option value="google">Google (8.8.8.8, 8.8.4.4)</option>
+                            <option value="cloudflare">Cloudflare (1.1.1.1, 1.0.0.1)</option>
+                            <option value="quad9">Quad9 (9.9.9.9, 149.112.112.112)</option>
+                            <option value="opendns">OpenDNS (208.67.222.222, 208.67.220.220)</option>
+                            <option value="adguard">AdGuard (94.140.14.14, 94.140.15.15)</option>
+                            <option value="nextdns">NextDNS (45.90.28.0, 45.90.30.0)</option>
+                            <option value="custom" data-i18n="custom_dns_option">Custom DNS</option>
+                        </select>
+                    </div>
+
+                    <div id="custom-dns-panel" class="input-row hidden">
+                        <label class="input-label" data-i18n="dns_label">DNS:</label>
+                        <textarea id="customDNS" class="jc modern-input" rows="1" placeholder="8.8.8.8, 1.1.1.1"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MTU Settings -->
+            <div class="musor4">
+                <div class="settings-group-title" data-i18n="mtu_settings">MTU Settings</div>
+
+                <label class="modern-checkbox" id="custom-mtu-toggle-label">
+                    <div class="checkbox">
+                        <input type="checkbox" id="enableCustomMTU" class="hidden"/>
+                        <span class="checkmark"></span>
+                        <span class="option-label" data-i18n="enable_custom_mtu">Override MTU Value</span>
+                    </div>
+                </label>
+
+                <div id="mtu-settings-panel" class="custom-inputs hidden">
+                    <div class="input-row">
+                        <label class="input-label">MTU =</label>
+                        <textarea id="customMTU" class="jc modern-input" rows="1" maxlength="4" placeholder="1420"></textarea>
+                    </div>
+                    <small class="setting-hint" data-i18n="mtu_hint">Default: 1420. Typical range: 1280-1420</small>
+                </div>
+            </div>
         </div>
     </div>
 

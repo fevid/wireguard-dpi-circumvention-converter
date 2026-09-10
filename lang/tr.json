@@ -35,5 +35,13 @@
   "amnezia15_note_suffix": " bakın",
   "address_copied": "Adres Kopyalandı!",
   "donate_subtitle": "Ücretsiz, reklamsız, telemetrisiz. Size biraz zaman kazandırdıysa, birkaç coin göndermeniz bu şekilde kalmasına yardımcı olur.",
-"randomizePerConfig": "Yapılandırma başına rastgele"
+"randomizePerConfig": "Yapılandırma başına rastgele",
+"dns_settings": "DNS Ayarları",
+"enable_custom_dns": "DNS Ayarlarını Değiştir",
+"dns_provider": "DNS Sağlayıcı:",
+"custom_dns_option": "Özel DNS",
+"dns_label": "DNS:",
+"mtu_settings": "MTU Ayarları",
+"enable_custom_mtu": "MTU Değerini Değiştir",
+"mtu_hint": "Varsayılan: 1420. Tipik aralık: 1280-1500"
 }
