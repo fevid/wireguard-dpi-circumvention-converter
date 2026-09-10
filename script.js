@@ -1,6 +1,3 @@
-// ═══════════════════════════════════════════════════════════
-// Constants and Configuration
-// ═══════════════════════════════════════════════════════════
 const COUNTRY_FLAGS = {
   "AD": "🇦🇩 AD", "AE": "🇦🇪 AE", "AF": "🇦🇫 AF", "AG": "🇦🇬 AG", "AI": "🇦🇮 AI", "AL": "🇦🇱 AL",
   "AM": "🇦🇲 AM", "AO": "🇦🇴 AO", "AQ": "🇦🇶 AQ", "AR": "🇦🇷 AR", "AS": "🇦🇸 AS", "AT": "🇦🇹 AT",
@@ -50,7 +47,73 @@ const AMNEZIA_KEYS    = ['jc', 'jmin', 'jmax', 's1', 's2', 'h1', 'h2', 'h3', 'h4
 const AMNEZIA15_KEYS  = ['i1', 'i2', 'i3', 'i4', 'i5'];
 const SUPPORTED_LANGS = ["en", "tr", "fa", "ru", "zh"];
 
-// DNS Provider Addresses
+const COUNTRY_TLDS = {
+    '.de': 'DE', '.fr': 'FR', '.ru': 'RU', '.nl': 'NL',
+    '.uk': 'GB', '.it': 'IT', '.es': 'ES', '.pl': 'PL',
+    '.se': 'SE', '.no': 'NO', '.fi': 'FI', '.dk': 'DK',
+    '.at': 'AT', '.ch': 'CH', '.be': 'BE', '.ie': 'IE',
+    '.pt': 'PT', '.gr': 'GR', '.cz': 'CZ', '.ro': 'RO',
+    '.hu': 'HU', '.bg': 'BG', '.hr': 'HR', '.sk': 'SK',
+    '.si': 'SI', '.ee': 'EE', '.lv': 'LV', '.lt': 'LT',
+    '.jp': 'JP', '.kr': 'KR', '.cn': 'CN', '.tw': 'TW',
+    '.in': 'IN', '.au': 'AU', '.nz': 'NZ', '.ca': 'CA',
+    '.br': 'BR', '.mx': 'MX', '.ar': 'AR', '.cl': 'CL',
+    '.za': 'ZA', '.tr': 'TR', '.ua': 'UA', '.il': 'IL',
+    '.ae': 'AE', '.sa': 'SA', '.th': 'TH', '.vn': 'VN',
+    '.id': 'ID', '.my': 'MY', '.sg': 'SG', '.ph': 'PH',
+    '.us': 'US', '.by': 'BY', '.kz': 'KZ'
+};
+const COUNTRY_NAMES = {
+    'germany': 'DE', 'deutschland': 'DE', 'deutsch': 'DE', 'frankfurt': 'DE', 'berlin': 'DE',
+    'france': 'FR', 'french': 'FR', 'paris': 'FR',
+    'netherlands': 'NL', 'dutch': 'NL', 'amsterdam': 'NL', 'holland': 'NL',
+    'usa': 'US', 'unitedstates': 'US', 'us-': 'US', '-us': 'US',
+    'unitedkingdom': 'GB', 'uk-': 'GB', '-uk': 'GB', 'britain': 'GB', 'london': 'GB',
+    'russia': 'RU', 'russian': 'RU', 'moscow': 'RU',
+    'japan': 'JP', 'japanese': 'JP', 'tokyo': 'JP', 'osaka': 'JP',
+    'singapore': 'SG', 'singaporean': 'SG',
+    'canada': 'CA', 'canadian': 'CA', 'toronto': 'CA', 'montreal': 'CA',
+    'australia': 'AU', 'australian': 'AU', 'sydney': 'AU', 'melbourne': 'AU',
+    'sweden': 'SE', 'swedish': 'SE', 'stockholm': 'SE',
+    'switzerland': 'CH', 'swiss': 'CH', 'zurich': 'CH', 'geneva': 'CH',
+    'italy': 'IT', 'italian': 'IT', 'rome': 'IT', 'milan': 'IT',
+    'spain': 'ES', 'spanish': 'ES', 'madrid': 'ES', 'barcelona': 'ES',
+    'poland': 'PL', 'polish': 'PL', 'warsaw': 'PL',
+    'turkey': 'TR', 'turkish': 'TR', 'istanbul': 'TR', 'ankara': 'TR',
+    'india': 'IN', 'mumbai': 'IN', 'delhi': 'IN', 'bangalore': 'IN',
+    'brazil': 'BR', 'brazilian': 'BR', 'saopaulo': 'BR',
+    'korea': 'KR', 'korean': 'KR', 'seoul': 'KR',
+    'hongkong': 'HK', 'hong': 'HK',
+    'greece': 'GR', 'greek': 'GR', 'athens': 'GR',
+    'norway': 'NO', 'norwegian': 'NO', 'oslo': 'NO',
+    'finland': 'FI', 'finnish': 'FI', 'helsinki': 'FI',
+    'denmark': 'DK', 'danish': 'DK', 'copenhagen': 'DK',
+    'austria': 'AT', 'austrian': 'AT', 'vienna': 'AT',
+    'belgium': 'BE', 'belgian': 'BE', 'brussels': 'BE',
+    'ireland': 'IE', 'irish': 'IE', 'dublin': 'IE',
+    'portugal': 'PT', 'portuguese': 'PT', 'lisbon': 'PT',
+    'czech': 'CZ', 'czechia': 'CZ', 'prague': 'CZ',
+    'romania': 'RO', 'romanian': 'RO', 'bucharest': 'RO',
+    'hungary': 'HU', 'hungarian': 'HU', 'budapest': 'HU',
+    'croatia': 'HR', 'croatian': 'HR', 'zagreb': 'HR',
+    'bulgaria': 'BG', 'bulgarian': 'BG', 'sofia': 'BG',
+    'ukraine': 'UA', 'ukrainian': 'UA', 'kyiv': 'UA',
+    'israel': 'IL', 'israeli': 'IL', 'telaviv': 'IL',
+    'uae': 'AE', 'emirates': 'AE', 'dubai': 'AE',
+    'saudi': 'SA', 'arabia': 'SA', 'riyadh': 'SA',
+    'thailand': 'TH', 'thai': 'TH', 'bangkok': 'TH',
+    'vietnam': 'VN', 'vietnamese': 'VN', 'hanoi': 'VN',
+    'indonesia': 'ID', 'indonesian': 'ID', 'jakarta': 'ID',
+    'malaysia': 'MY', 'malaysian': 'MY', 'kualalumpur': 'MY',
+    'philippines': 'PH', 'filipino': 'PH', 'manila': 'PH',
+    'mexico': 'MX', 'mexican': 'MX', 'mexicocity': 'MX',
+    'argentina': 'AR', 'argentinian': 'AR', 'buenosaires': 'AR',
+    'chile': 'CL', 'chilean': 'CL', 'santiago': 'CL',
+    'southafrica': 'ZA', 'african': 'ZA', 'johannesburg': 'ZA',
+    'taiwan': 'TW', 'taiwanese': 'TW', 'taipei': 'TW',
+    'newzealand': 'NZ', 'zealand': 'NZ', 'auckland': 'NZ'
+};
+
 const DNS_PROVIDERS = {
   google:    '8.8.8.8, 8.8.4.4',
   cloudflare: '1.1.1.1, 1.0.0.1',
@@ -61,7 +124,6 @@ const DNS_PROVIDERS = {
   custom:    ''
 };
 
-// ── LocalStorage keys ────────────────────────────────────
 const LS_THEME         = 'wg_theme';
 const LS_JUNK_MODE     = 'wg_junk_mode';
 const LS_AMNEZIA15     = 'wg_amnezia15';
@@ -75,16 +137,10 @@ const LS_CUSTOM_DNS_VAL = 'wg_custom_dns_val';
 const LS_CUSTOM_MTU    = 'wg_custom_mtu';
 const LS_MTU_VALUE     = 'wg_mtu_value';
 
-// ═══════════════════════════════════════════════════════════
-// Global State
-// ═══════════════════════════════════════════════════════════
 let proxyList    = [];
 let translations = {};
 let currentLang  = localStorage.getItem("lang") || detectBrowserLang();
 
-// ═══════════════════════════════════════════════════════════
-// Utility — DOM
-// ═══════════════════════════════════════════════════════════
 const getById          = (id)       => document.getElementById(id);
 const getBySelector    = (sel)      => document.querySelector(sel);
 const getAllBySelector  = (sel)      => document.querySelectorAll(sel);
@@ -109,9 +165,6 @@ const elements = {
   get downloadZipBtn()   { return getById('downloadZipBtn'); },
 };
 
-// ═══════════════════════════════════════════════════════════
-// Notifications
-// ═══════════════════════════════════════════════════════════
 function showNotification(message, type = 'success') {
   document.querySelectorAll('.notification').forEach(el => el.remove());
 
@@ -151,9 +204,6 @@ function showNotification(message, type = 'success') {
   }, 3500);
 }
 
-// ═══════════════════════════════════════════════════════════
-// Theme Toggle
-// ═══════════════════════════════════════════════════════════
 function initTheme() {
   const saved = localStorage.getItem(LS_THEME) || 'dark';
   applyTheme(saved);
@@ -170,62 +220,51 @@ function toggleTheme() {
   applyTheme(current === 'dark' ? 'light' : 'dark');
 }
 
-// ═══════════════════════════════════════════════════════════
-// Persist / Restore Settings (localStorage)
-// ═══════════════════════════════════════════════════════════
 function persistSettings() {
-  // Junk mode
+
   const junkMode = getBySelector('input[name="junk"]:checked')?.id || 'junk1';
   localStorage.setItem(LS_JUNK_MODE, junkMode);
 
-  // Amnezia 1.5
   const a15 = getById('enableAmnezia15')?.checked || false;
   localStorage.setItem(LS_AMNEZIA15, a15 ? '1' : '0');
 
-  // Randomize per config
   const rpc = getById('randomizePerConfig')?.checked || false;
   localStorage.setItem(LS_RANDOMIZE_PC, rpc ? '1' : '0');
 
-  // Wiresock
   localStorage.setItem(LS_WS_ID, getById('ws_id')?.value || '');
   localStorage.setItem(LS_WS_IP, getById('ws_ip')?.value || 'QUIC');
   localStorage.setItem(LS_WS_IB, getById('ws_ib')?.value || 'Chrome');
 
-  // Custom DNS
   const enableDNS = getById('enableCustomDNS')?.checked || false;
   localStorage.setItem(LS_CUSTOM_DNS, enableDNS ? '1' : '0');
   localStorage.setItem(LS_DNS_PROVIDER, getById('dnsProvider')?.value || 'google');
   localStorage.setItem(LS_CUSTOM_DNS_VAL, getById('customDNS')?.value || '');
 
-  // Custom MTU
   const enableMTU = getById('enableCustomMTU')?.checked || false;
   localStorage.setItem(LS_CUSTOM_MTU, enableMTU ? '1' : '0');
   localStorage.setItem(LS_MTU_VALUE, getById('customMTU')?.value || '1420');
 }
 
 function restoreSettings() {
-  // Junk mode
+
   const junkMode = localStorage.getItem(LS_JUNK_MODE);
   if (junkMode) {
     const el = getById(junkMode);
     if (el) el.checked = true;
   }
 
-  // Amnezia 1.5
   const a15 = localStorage.getItem(LS_AMNEZIA15);
   if (a15 === '1') {
     const cb = getById('enableAmnezia15');
     if (cb) { cb.checked = true; toggleAmnezia15(); }
   }
 
-  // Randomize per config
   const rpc = localStorage.getItem(LS_RANDOMIZE_PC);
   if (rpc === '1') {
     const cb = getById('randomizePerConfig');
     if (cb) cb.checked = true;
   }
 
-  // Wiresock
   const wsId = localStorage.getItem(LS_WS_ID);
   if (wsId !== null) {
     const el = getById('ws_id');
@@ -242,7 +281,6 @@ function restoreSettings() {
     if (el) el.value = wsIb;
   }
 
-  // Custom DNS
   const enableDNS = localStorage.getItem(LS_CUSTOM_DNS);
   if (enableDNS === '1') {
     const cb = getById('enableCustomDNS');
@@ -259,7 +297,6 @@ function restoreSettings() {
     if (el) el.value = customDNSVal;
   }
 
-  // Custom MTU
   const enableMTU = localStorage.getItem(LS_CUSTOM_MTU);
   if (enableMTU === '1') {
     const cb = getById('enableCustomMTU');
@@ -274,14 +311,10 @@ function restoreSettings() {
   validateConvertButton();
 }
 
-// ═══════════════════════════════════════════════════════════
-// Drag-and-Drop Support
-// ═══════════════════════════════════════════════════════════
 function setupDragAndDrop() {
   const uploadLabel = getById('fileUploadLabel');
   const textarea    = elements.confInput;
 
-  // ── Upload label drop zone ────────────────────────────
   ['dragenter', 'dragover'].forEach(evt => {
     uploadLabel.addEventListener(evt, (e) => {
       e.preventDefault();
@@ -302,7 +335,6 @@ function setupDragAndDrop() {
     const files = e.dataTransfer.files;
     if (!files.length) return;
 
-    // Filter .conf files
     const confFiles = Array.from(files).filter(f =>
       f.name.endsWith('.conf') || f.type === '' || f.type === 'text/plain'
     );
@@ -312,19 +344,17 @@ function setupDragAndDrop() {
       return;
     }
 
-    // Inject into file input via DataTransfer
     try {
       const dt = new DataTransfer();
       confFiles.forEach(f => dt.items.add(f));
       elements.wgFiles.files = dt.files;
       handleFileChange({ target: elements.wgFiles });
     } catch {
-      // Fallback: read files manually
+
       readDroppedFiles(confFiles);
     }
   });
 
-  // ── Textarea drop zone ────────────────────────────────
   ['dragenter', 'dragover'].forEach(evt => {
     textarea.addEventListener(evt, (e) => {
       e.preventDefault();
@@ -350,7 +380,7 @@ function setupDragAndDrop() {
     );
 
     if (!confFiles.length) {
-      // Let the user drop text
+
       return;
     }
 
@@ -380,27 +410,20 @@ function readDroppedFiles(files) {
   });
 }
 
-// ═══════════════════════════════════════════════════════════
-// Config Validation / Linting
-// ═══════════════════════════════════════════════════════════
-
-/** Base64 key validation (WireGuard 32-byte keys = 44-char base64) */
 function isValidWGKey(key) {
   if (!key) return false;
   return /^[A-Za-z0-9+/]{43}=$/.test(key);
 }
 
-/** CIDR / IP validation */
 function isValidIP(ip) {
   return /^(\d{1,3}\.){3}\d{1,3}(\/\d{1,2})?$/.test(ip.trim()) ||
          /^[0-9a-fA-F:]+\/\d{1,3}$/.test(ip.trim());
 }
 
-/** host:port validation */
 function isValidEndpoint(ep) {
   if (!ep) return false;
-  // IPv6 bracket notation
-  if (ep.startsWith('[')) return /^$.+$:\d+$/.test(ep);
+
+  if (ep.startsWith('[')) return /^\[(?:[0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}\]:\d+$/.test(ep);
   const parts = ep.split(':');
   return parts.length === 2 && parts[1] && !isNaN(parseInt(parts[1]));
 }
@@ -491,11 +514,6 @@ function runValidationOnInput() {
   }
 }
 
-// ═══════════════════════════════════════════════════════════
-// Configuration Generators
-// ═══════════════════════════════════════════════════════════
-
-/** If randomizePerConfig is on, generate unique junk values; otherwise use shared settings */
 function generateJunkValues(usePerConfigRandom = false) {
   if (usePerConfigRandom) {
     const jc   = getRandomInt(1, 128);
@@ -564,9 +582,6 @@ function generateWiresocketDefaults() {
   };
 }
 
-// ═══════════════════════════════════════════════════════════
-// Configuration Parsers
-// ═══════════════════════════════════════════════════════════
 function parseWGConfig(text) {
   const config = { interface: { amneziaOptions: {} }, peers: [] };
   let currentSection = null;
@@ -615,15 +630,44 @@ function parseWGConfig(text) {
 }
 
 function parseMultipleWGConfigs(text) {
-  return text.split(/\n(?=$Interface$)/)
+  return text.split(/\n(?=\[Interface\])/i)
     .map(p => p.trim())
     .filter(p => p.length > 0)
     .map(p => parseWGConfig(p));
 }
 
-// ═══════════════════════════════════════════════════════════
-// Proxy Conversion
-// ═══════════════════════════════════════════════════════════
+function detectCountryFromEndpoint(hostname) {
+  if (!hostname) return null;
+
+  const host = hostname.replace(/:\d+$/, '').toLowerCase();
+
+  const segments = host.split(/[\.\-]/);
+  for (const segment of segments) {
+
+    const match = segment.match(/^([a-zA-Z]{2})\d*$/);
+    if (match) {
+      const code = match[1].toUpperCase();
+      if (COUNTRY_FLAGS[code]) {
+        return code;
+      }
+    }
+  }
+
+  for (const [tld, code] of Object.entries(COUNTRY_TLDS)) {
+    if (host.endsWith(tld)) {
+      return code;
+    }
+  }
+
+  for (const [name, code] of Object.entries(COUNTRY_NAMES)) {
+    if (host.includes(name)) {
+      return code;
+    }
+  }
+
+  return null;
+}
+
 function convertToProxy(wgConfig, fileName, format = 'clash', usePerConfigRandom = false) {
   const { interface: ifaceData, peers } = wgConfig;
   const peerData = peers[0];
@@ -634,7 +678,6 @@ function convertToProxy(wgConfig, fileName, format = 'clash', usePerConfigRandom
   const server   = peerData.endpoint.slice(0, colonIdx);
   const port     = peerData.endpoint.slice(colonIdx + 1);
 
-  // Use custom DNS if enabled, otherwise use config's DNS
   const customDNS = getCustomDNS();
   const dnsList = customDNS
     ? customDNS.split(',').map(d => d.trim())
@@ -665,54 +708,50 @@ function convertToProxy(wgConfig, fileName, format = 'clash', usePerConfigRandom
   if (!proxyName) {
     proxyName = `Random_${Math.random().toString(36).substr(2, 5)}`;
   } else {
-    // 1. Clean up known garbage strings first
+
     proxyName = proxyName.replace(/FREE#?/gi, '').trim();
 
-    // 2. Normalize numbers, brackets, and common delimiters to clean spaces
-    // This turns "de1" into "de ", and "[pl4]" into " pl "
     const isolatedTokens = proxyName
       .replace(/[\[\]\(\)\{\}\-_]/g, ' ')
-      .replace(/\d+/g, ' '); // Drops trailing digits so "de1" becomes "de"
+      .replace(/\d+/g, ' ');
 
-    // 3. Extract all isolated 2-letter alphabetic clusters
     const candidates = isolatedTokens.match(/\b[a-zA-Z]{2}\b/g);
-    
+
+    let validCountryCode = null;
+
     if (candidates) {
-      // Find the first token that matches a valid code in your COUNTRY_FLAGS mapping
-      const validCountryCode = candidates
+      validCountryCode = candidates
         .map(code => code.toUpperCase())
         .find(code => COUNTRY_FLAGS[code]);
-
-      if (validCountryCode) {
-        // Isolate the emoji flag (e.g. "🇩🇪")
-        const flagEmoji = COUNTRY_FLAGS[validCountryCode].split(' ')[0];
-        
-        // Strip the country code text out of the original string to avoid repetition
-        // dynamically accounts for surrounding symbols
-        const cleanRegex = new RegExp(`[\\s\\[\\(-\\_\\]]*${validCountryCode}[\\s\\]\\)-\\_\\]]*`, 'i');
-        let beautifullyCleanedName = proxyName.replace(cleanRegex, ' ').replace(/\s+/g, ' ').trim();
-        
-        // Fallback if stripping the country text leaves an empty name or just a hanging character
-        if (!beautifullyCleanedName || beautifullyCleanedName === '-') {
-          beautifullyCleanedName = originalName.replace('.conf', '');
-        }
-
-        // Apply flag prefix
-        proxyName = `${flagEmoji} ${beautifullyCleanedName}`;
-      }
     }
 
-    // Final sweep to remove trailing dangling characters
+    if (!validCountryCode) {
+      validCountryCode = detectCountryFromEndpoint(server);
+    }
+
+    if (validCountryCode) {
+
+      const flagEmoji = COUNTRY_FLAGS[validCountryCode].split(' ')[0];
+
+      const cleanRegex = new RegExp(`[\\s\\[\\(-\\_\\]]*${validCountryCode}[\\s\\]\\)-\\_\\]]*`, 'i');
+      let beautifullyCleanedName = proxyName.replace(cleanRegex, ' ').replace(/\s+/g, ' ').trim();
+
+      if (!beautifullyCleanedName || beautifullyCleanedName === '-') {
+        beautifullyCleanedName = originalName.replace('.conf', '');
+      }
+
+      proxyName = `${flagEmoji} ${beautifullyCleanedName}`;
+    }
+
     proxyName = proxyName.replace(/[-\s_]+$/, '').trim();
   }
-
 
   const result = {
     name: proxyName,
     originalName,
     type: "wireguard",
-    server: server.replace(/^$|$$/g, ''), // strip IPv6 brackets for display
-    serverRaw: server, // keep raw for endpoint reconstruction
+    server: server.replace(/^\[|\]$/g, ''),
+    serverRaw: server,
     port: parseInt(port),
     ip: ifaceData.address,
     private_key: ifaceData.privatekey,
@@ -722,7 +761,7 @@ function convertToProxy(wgConfig, fileName, format = 'clash', usePerConfigRandom
       ? peerData.allowedips.split(',').map(ip => `'${ip.trim()}'`)
       : [],
     udp: true,
-    mtu: getCustomMTU() || 1420, // Use custom MTU if set, otherwise default 1420
+    mtu: getCustomMTU() || 1420,
     remote_dns_resolve: true,
     dns: dnsList,
     isDefaultAmnezia: !(ifaceData.amneziaOptions.jc || peerData.amneziaOptions?.jc)
@@ -737,9 +776,6 @@ function convertToProxy(wgConfig, fileName, format = 'clash', usePerConfigRandom
   return result;
 }
 
-// ═══════════════════════════════════════════════════════════
-// YAML / Config Generators
-// ═══════════════════════════════════════════════════════════
 function generateAmneziaOptionsYAML(options) {
   const entries = Object.entries(options)
     .filter(([key, value]) => value !== undefined && value !== '' &&
@@ -763,7 +799,6 @@ ${proxyNames}
   interval: 300`;
 }
 
-// ── Clash ───────────────────────────────────────────────
 function generateClashYaml() {
   if (!proxyList.length) {
     showNotification(translations['could_not_process_files'] || 'Could not process files', 'error');
@@ -794,7 +829,6 @@ function generateClashYaml() {
 
   const fullYaml = `proxies:\n${yamlProxies}\nproxy-groups:${generateProxyGroups(proxyList)}`;
 
-  // Clash = single YAML, use tabs UI with one tab for each proxy + a combined tab
   buildTabsUI(
     proxyList,
     (proxy) => {
@@ -832,7 +866,6 @@ function generateClashYaml() {
   );
 }
 
-// ── AmneziaWG ───────────────────────────────────────────
 function generateAWGYaml() {
   if (!proxyList.length) {
     showNotification(translations['could_not_process_files'] || 'Could not process files', 'error');
@@ -891,7 +924,6 @@ function generateSingleAWGConfig(proxy) {
   return lines.join('\n');
 }
 
-// ── Wiresocket ──────────────────────────────────────────
 function generateWiresocketConfigs() {
   if (!proxyList.length) {
     showNotification(translations['could_not_process_files'] || 'Could not process files', 'error');
@@ -947,21 +979,15 @@ function generateSingleWiresocketConfig(proxy) {
   return lines.join('\n');
 }
 
-// ═══════════════════════════════════════════════════════════
-// Tabbed Per-Config UI
-// ═══════════════════════════════════════════════════════════
 function buildTabsUI(proxies, contentFn, combinedContent, opts) {
   const { downloadAll, downloadSingle, showZip, showQR, format } = opts;
 
-  // Hide legacy output
   elements.yamlOutput.classList.add('hidden');
   const legacyContainer = getById('legacyBtnContainer');
   if (legacyContainer) legacyContainer.style.display = 'none';
 
-  // Show tab container
   elements.configTabsContainer.classList.remove('hidden');
 
-  // Build tab buttons
   elements.configTabsHeader.innerHTML = '';
   elements.configTabsBody.innerHTML   = '';
 
@@ -970,7 +996,6 @@ function buildTabsUI(proxies, contentFn, combinedContent, opts) {
     const shortName = (proxy.originalName || `Config ${idx + 1}`)
       .replace(/[^a-z0-9 _-]/gi, '').trim().slice(0, 18) || `Config ${idx + 1}`;
 
-    // Tab button
     const tabBtn = document.createElement('button');
     tabBtn.className    = `config-tab-btn${idx === 0 ? ' active' : ''}`;
     tabBtn.textContent  = shortName;
@@ -979,7 +1004,6 @@ function buildTabsUI(proxies, contentFn, combinedContent, opts) {
     tabBtn.addEventListener('click', () => activateTab(idx));
     elements.configTabsHeader.appendChild(tabBtn);
 
-    // Tab pane
     const pane = document.createElement('div');
     pane.className = `config-tab-pane${idx === 0 ? ' active' : ''}`;
     pane.dataset.idx = idx;
@@ -992,29 +1016,25 @@ function buildTabsUI(proxies, contentFn, combinedContent, opts) {
     ta.autocapitalize = 'off';
     pane.appendChild(ta);
 
-    // Pane action buttons
     const actionsDiv = document.createElement('div');
     actionsDiv.className = 'config-tab-pane-actions';
 
-  // Download single
     const dlBtn = document.createElement('button');
     dlBtn.className   = 'download-btn';
-    dlBtn.setAttribute('data-i18n', 'download'); // Add data-i18n attribute
+    dlBtn.setAttribute('data-i18n', 'download');
     dlBtn.innerHTML   = `Download`;
     dlBtn.addEventListener('click', () => {
       downloadSingle(proxy, ta.value, idx);
     });
     actionsDiv.appendChild(dlBtn);
 
-    // Copy single
     const cpBtn = document.createElement('button');
     cpBtn.className   = 'download-btn';
-    cpBtn.setAttribute('data-i18n', 'copy'); // Add data-i18n attribute
+    cpBtn.setAttribute('data-i18n', 'copy');
     cpBtn.innerHTML   = `Copy`;
     cpBtn.addEventListener('click', () => copyToClipboard(ta.value));
     actionsDiv.appendChild(cpBtn);
 
-    // QR button (Only for formats that don't balloon data payload size)
     const isAmneziaActive = getById('enableAmnezia15')?.checked;
     if (showQR && !isAmneziaActive) {
       const qrBtn = document.createElement('button');
@@ -1028,7 +1048,6 @@ function buildTabsUI(proxies, contentFn, combinedContent, opts) {
     elements.configTabsBody.appendChild(pane);
   });
 
-  // Global action buttons
   const dlBtn = getById('downloadBtn');
   const cpBtn = getById('copyBtn');
   const zipBtn = getById('downloadZipBtn');
@@ -1040,7 +1059,6 @@ function buildTabsUI(proxies, contentFn, combinedContent, opts) {
   cpBtn.onclick = () => copyToClipboard(combinedContent);
   zipBtn.onclick = () => downloadZIP(proxies, contentFn, format);
 
-  // Show wrappers only if more than 1 config was converted
   const actionsHeader = getBySelector('.config-tabs-actions-header');
   const actionsFooter = getBySelector('.config-tabs-actions');
   const hasMultipleConfigs = proxies.length > 1;
@@ -1048,7 +1066,6 @@ function buildTabsUI(proxies, contentFn, combinedContent, opts) {
   if (actionsHeader) actionsHeader.style.display = hasMultipleConfigs ? 'flex' : 'none';
   if (actionsFooter) actionsFooter.style.display = hasMultipleConfigs ? 'flex' : 'none';
 
-  // Translate the freshly injected individual action buttons
   loadLanguage(currentLang);
 }
 
@@ -1061,47 +1078,43 @@ function activateTab(idx) {
   });
 }
 
-// ═══════════════════════════════════════════════════════════
-// QR Code Modal
-// ═══════════════════════════════════════════════════════════
 function showQRModal(configText, title) {
     const modal     = getById('qrModal');
     const container = getById('qrCodeContainer');
     const titleEl   = getById('qrModalTitle');
-    
-    // Check if the classic QRCode library is loaded
+
     if (!modal || !container || typeof QRCode === 'undefined' || typeof QRCode.CorrectLevel === 'undefined') {
         showNotification('QRCode library not loaded. Please check the <script> tag in index.html', 'error');
         return;
     }
-    
+
     container.innerHTML = '';
     titleEl.textContent = title || 'QR Code';
-    
+
     try {
-        // FIX: Normalize line endings and trim whitespace to save precious QR code bytes
+
         const cleanText = String(configText).replace(/\r\n/g, '\n').trim();
-        
+
         new QRCode(container, {
             text:          cleanText,
             width:         256,
             height:        256,
             colorDark:     '#000000',
             colorLight:    '#ffffff',
-            correctLevel:  QRCode.CorrectLevel.L // 'L' holds the maximum amount of data
+            correctLevel:  QRCode.CorrectLevel.L
         });
     } catch (err) {
         console.error("QR Code Generation Error:", err);
-        
+
         let errMsg = "Failed to generate QR code.";
-        // Catch the specific qrcodejs overflow error
+
         if (err.message && err.message.includes('code length overflow')) {
             errMsg = "Config exceeds the maximum physical limit of a QR code (~2900 bytes).<br><br>This is almost always caused by the massive Amnezia 'I1' parameter. Try disabling 'Enable Amnezia 1.5' or use the Download/ZIP feature instead.";
         }
-        
+
         container.innerHTML = `<p style="color:var(--danger);font-size:0.85rem;padding:1rem;text-align:center;line-height:1.5;"> ${errMsg} </p>`;
     }
-    
+
     modal.classList.remove('hidden');
 }
 
@@ -1117,9 +1130,6 @@ function setupQRModal() {
   });
 }
 
-// ═══════════════════════════════════════════════════════════
-// ZIP Download
-// ═══════════════════════════════════════════════════════════
 async function downloadZIP(proxies, contentFn, format) {
   if (typeof JSZip === 'undefined') {
     showNotification('JSZip library not loaded', 'error');
@@ -1158,9 +1168,6 @@ async function downloadZIP(proxies, contentFn, format) {
   }
 }
 
-// ═══════════════════════════════════════════════════════════
-// File Operations
-// ═══════════════════════════════════════════════════════════
 function downloadYAML(content, fileName) {
   const blob = new Blob([content], { type: 'text/plain; charset=utf-8' });
   const url  = URL.createObjectURL(blob);
@@ -1175,7 +1182,6 @@ function downloadYAML(content, fileName) {
 function downloadAWGConfigs() {
   if (!proxyList.length) return;
 
-  // Use ZIP if multiple, else single download
   if (proxyList.length > 1) {
     downloadZIP(proxyList, (proxy) => generateSingleAWGConfig(proxy), 'awg');
   } else {
@@ -1198,15 +1204,14 @@ function downloadWiresocketConfigs() {
 }
 
 function getAWGFileName(proxy, index) {
-  // Fallback if proxy name is somehow missing
+
   let baseName = proxy.name || proxy.originalName || `config_${index + 1}`;
 
   let cleanedName = baseName
-    .replace(/[\\/:*?"<>|]/g, '') // Remove strictly illegal filesystem characters
-    .replace(/\s+/g, '_')         // Replace spaces with underscores for clean file paths
+    .replace(/[\\/:*?"<>|]/g, '')
+    .replace(/\s+/g, '_')
     .trim();
 
-  // Fallback if cleaning completely empties out the string
   if (!cleanedName || cleanedName === '.conf') {
     cleanedName = `config_${index + 1}`;
   }
@@ -1214,9 +1219,6 @@ function getAWGFileName(proxy, index) {
   return `${cleanedName}.conf`;
 }
 
-// ═══════════════════════════════════════════════════════════
-// UI Helpers
-// ═══════════════════════════════════════════════════════════
 function copyToClipboard(text) {
   if (!text?.trim()) {
     showNotification(translations['nothing_to_copy'] || 'Nothing to copy!', 'error');
@@ -1249,8 +1251,7 @@ function resetTabsUI() {
   if (dlBtn) dlBtn.style.display = 'none';
   if (cpBtn) cpBtn.style.display = 'none';
   if (zipBtn) zipBtn.style.display = 'none';
-  
-  // Reset bulk actions containers visibility
+
   const actionsHeader = getBySelector('.config-tabs-actions-header');
   const actionsFooter = getBySelector('.config-tabs-actions');
   if (actionsHeader) actionsHeader.style.display = 'none';
@@ -1259,9 +1260,6 @@ function resetTabsUI() {
   elements.yamlOutput.value = '';
 }
 
-// ═══════════════════════════════════════════════════════════
-// Main Conversion Logic
-// ═══════════════════════════════════════════════════════════
 function convert() {
   const selectedFormat = getBySelector('input[name="option"]:checked')?.id;
 
@@ -1308,7 +1306,6 @@ function processFiles(files, selectedOption) {
       try {
         const wgConfig = parseWGConfig(reader.result);
 
-        // Validate
         const issues = validateWGConfig(wgConfig, file.name);
         allIssues.push(...issues);
 
@@ -1403,27 +1400,21 @@ function finalizeConversion(selectedOption) {
   elements.configTabsContainer?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ═══════════════════════════════════════════════════════════
-// Event Handlers
-// ═══════════════════════════════════════════════════════════
 function setupEventListeners() {
-  // Format radio buttons
+
   getAllBySelector('input[name="option"]').forEach(radio => {
     radio.addEventListener('change', handleOptionChange);
   });
 
-  // Wiresock Id validation
   getById('ws_id')?.addEventListener('input', () => { validateConvertButton(); persistSettings(); });
   getById('ws_ip')?.addEventListener('change', persistSettings);
   getById('ws_ib')?.addEventListener('change', persistSettings);
 
-  // Amnezia 1.5 toggle
   getById('enableAmnezia15')?.addEventListener('change', () => {
     toggleAmnezia15();
     persistSettings();
   });
 
-  // Junk mode radios — persist & reset randomization on junk1/junk2
   getAllBySelector('input[name="junk"]').forEach(r => {
     r.addEventListener('change', function() {
       if (this.id === 'junk1' || this.id === 'junk2') {
@@ -1434,7 +1425,6 @@ function setupEventListeners() {
     });
   });
 
-  // Randomize per config
   getById('randomizePerConfig')?.addEventListener('change', function() {
     if (this.checked) {
       const junk3Radio = getById('junk3');
@@ -1443,7 +1433,6 @@ function setupEventListeners() {
     persistSettings();
   });
 
-  // Custom DNS settings
   getById('enableCustomDNS')?.addEventListener('change', () => {
     toggleCustomDNS();
     persistSettings();
@@ -1456,7 +1445,6 @@ function setupEventListeners() {
 
   getById('customDNS')?.addEventListener('input', persistSettings);
 
-  // Custom MTU settings
   getById('enableCustomMTU')?.addEventListener('change', () => {
     toggleCustomMTU();
     persistSettings();
@@ -1464,26 +1452,19 @@ function setupEventListeners() {
 
   getById('customMTU')?.addEventListener('input', persistSettings);
 
-  // File input
   elements.wgFiles.addEventListener('change', handleFileChange);
 
-  // Live validation on textarea input
   elements.confInput.addEventListener('input', debounce(runValidationOnInput, 600));
 
-  // Random junk
-  getById('randomJunkBtn').onclick  = handleRandomJunk;
-  getBySelector('.randombtn2').onclick = handleRandomWiresocket;
+  getById('randomJunkBtn')?.addEventListener('click', handleRandomJunk);
+  getBySelector('.randombtn2')?.addEventListener('click', handleRandomWiresocket);
 
-  // Reset junk defaults
   getById('resetJunkBtn')?.addEventListener('click', handleResetJunk);
 
-  // Reset Amnezia 1.5 I1-I5
   getById('resetAmnezia15Btn')?.addEventListener('click', handleResetAmnezia15);
 
-  // Clear button
   elements.clearBtn.addEventListener('click', handleClear);
 
-  // Theme toggle
   getById('themeToggleBtn')?.addEventListener('click', toggleTheme);
 }
 
@@ -1545,7 +1526,7 @@ function getCustomMTU() {
 
   const mtuValue = parseInt(getById('customMTU')?.value);
   if (isNaN(mtuValue) || mtuValue < 576 || mtuValue > 1500) {
-    return 1420; // Default value if invalid
+    return 1420;
   }
   return mtuValue;
 }
@@ -1609,19 +1590,18 @@ function handleRandomWiresocket() {
 }
 
 function handleResetJunk() {
-    // Reset to "Light" preset (junk1)
+
     getById('junk1').checked = true;
     getById('jc1').value   = '';
     getById('jmin1').value = '';
     getById('jmax1').value = '';
-    
-    // FIX: Explicitly uncheck randomize per config and update storage
+
     const randomizeCb = getById('randomizePerConfig');
     if (randomizeCb) {
         randomizeCb.checked = false;
         localStorage.setItem(LS_RANDOMIZE_PC, '0');
     }
-    
+
     localStorage.setItem(LS_JUNK_MODE, 'junk1');
     showNotification('Junk settings reset to Light defaults', 'info');
 }
@@ -1647,7 +1627,6 @@ function handleClear() {
   updateFileLabel();
 }
 
-// ── Debounce utility ─────────────────────────────────────
 function debounce(fn, delay) {
   let timer;
   return (...args) => {
@@ -1656,20 +1635,29 @@ function debounce(fn, delay) {
   };
 }
 
-// ═══════════════════════════════════════════════════════════
-// Internationalization
-// ═══════════════════════════════════════════════════════════
 function detectBrowserLang() {
   const lang = navigator.language.slice(0, 2);
   return SUPPORTED_LANGS.includes(lang) ? lang : 'en';
 }
 
+const languageCache = {};
+
 async function loadLanguage(lang) {
   try {
+    if (languageCache[lang]) {
+      translatePage(languageCache[lang]);
+      localStorage.setItem('lang', lang);
+      document.body.className = document.body.className.replace(/lang-\w+/g, '') + ` lang-${lang}`;
+      currentLang = lang;
+      updateDropdownSelection(lang);
+      updateFileLabel();
+      return;
+    }
     const response = await fetch(`./lang/${lang}.json?v=1.1`);
     if (!response.ok) throw new Error(`Language file not found: ${lang}`);
 
     const languageData = await response.json();
+    languageCache[lang] = languageData;
     translatePage(languageData);
 
     localStorage.setItem('lang', lang);
@@ -1736,9 +1724,6 @@ function setupLanguageDropdown() {
   });
 }
 
-// ═══════════════════════════════════════════════════════════
-// Helpers
-// ═══════════════════════════════════════════════════════════
 function i18n(key, params = {}) {
   let str = (translations && translations[key]) ? translations[key] : key;
   Object.entries(params).forEach(([k, v]) => {
@@ -1774,9 +1759,6 @@ function validateConvertButton() {
   }
 }
 
-// ═══════════════════════════════════════════════════════════
-// Donation Modal
-// ═══════════════════════════════════════════════════════════
 function setupDonationModal() {
   const donateBtn = getById('donateBtn');
   const modal     = getById('donateModal');
@@ -1800,9 +1782,6 @@ function setupDonationModal() {
   });
 }
 
-// ═══════════════════════════════════════════════════════════
-// Draggable Tabs Navigation (Mouse Drag to Scroll)
-// ═══════════════════════════════════════════════════════════
 function setupDraggableTabs() {
     const slider = document.querySelector('.config-tabs-header');
     if (!slider) return;
@@ -1830,19 +1809,15 @@ function setupDraggableTabs() {
 
     slider.addEventListener('mousemove', (e) => {
         if (!isDown) return;
-        e.preventDefault(); // Prevents text selection while dragging
+        e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 2; // Scroll speed multiplier (adjust if needed)
+        const walk = (x - startX) * 2;
         slider.scrollLeft = scrollLeft - walk;
     });
-    
-    // Set initial cursor
+
     slider.style.cursor = 'grab';
 }
 
-// ═══════════════════════════════════════════════════════════
-// Initialize
-// ═══════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function () {
   initTheme();
   setupEventListeners();

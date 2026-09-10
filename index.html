@@ -20,9 +20,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lalezar&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <!-- JSZip for batch ZIP download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <!-- QRCode.js for QR generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script defer src="script.js"></script>
 </head>
@@ -36,7 +34,6 @@
         <h1 class="main-title" data-i18n="main_title">WireGuard Converter</h1>
         <p class="subtitle" data-i18n="subtitle">Convert your WireGuard configurations to different formats</p>
 
-        <!-- Theme Toggle -->
         <button type="button" id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme" title="Toggle dark/light theme">
             <span class="theme-icon-dark">🌙</span>
             <span class="theme-icon-light">☀️</span>
@@ -61,7 +58,6 @@
         <div class="container">
             <div class="section-title" data-i18n="section_configuration">Configuration</div>
 
-            <!-- File Upload with drag-and-drop -->
             <label for="wgFiles" class="custom-file-upload" id="fileUploadLabel">
                 <span class="upload-text" data-i18n="select_files">Select files</span>
             </label>
@@ -69,7 +65,6 @@
 
             <textarea id="confInput" class="textarea1" placeholder="Or paste your .conf file content here..." data-i18n-placeholder="input_placeholder"></textarea>
 
-            <!-- Validation panel -->
             <div id="validationPanel" class="validation-panel hidden"></div>
 
             <div class="action-btns">
@@ -81,7 +76,6 @@
                 </button>
             </div>
 
-            <!-- Per-config tabbed/accordion output -->
             <div id="configTabsContainer" class="config-tabs-container hidden">
                 <div class="config-tabs-header" id="configTabsHeader"></div>
                 <div class="config-tabs-body" id="configTabsBody"></div>
@@ -99,7 +93,6 @@
                 </div>
             </div>
 
-            <!-- Legacy single output textarea (hidden when tabs active) -->
             <textarea id="yamlOutput" class="textarea1 hidden" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
                         placeholder="The converted configuration will appear here..." data-i18n-placeholder="converted_placeholder"></textarea>
             <div class="button-container" id="legacyBtnContainer" style="display:none;">
@@ -156,7 +149,6 @@
             <div class="musor1">
                 <div class="settings-group-title" data-i18n="junk_packet_settings">Junk Packet Settings</div>
 
-                <!-- Amnezia 1.5 Toggle -->
                 <label class="modern-checkbox" id="amnezia15-toggle-label">
                     <div class="checkbox">
                         <input type="checkbox" id="enableAmnezia15" class="hidden"/>
@@ -189,7 +181,6 @@
                   </div>
                 </label>
 
-                <!-- Standard Junk Packet Inputs -->
                 <div id="standard-junk-inputs" class="custom-inputs">
                     <div class="input-row">
                         <label class="input-label">jc =</label>
@@ -211,7 +202,7 @@
                             <span>Reset Defaults</span>
                         </button>
                     </div>
-                    <!-- Randomize per config option -->
+
                     <label class="randomize-per-config-label" style="margin-top:0.5rem;">
                         <div class="checkbox">
                             <input type="checkbox" id="randomizePerConfig" class="hidden"/>
@@ -221,7 +212,6 @@
                     </label>
                 </div>
 
-                <!-- Amnezia 1.5 I1-I5 Inputs -->
                 <div id="amnezia15-inputs" class="custom-inputs hidden amnezia15-inputs-panel">
                     <div class="settings-group-title amnezia15-group-title" data-i18n="amnezia_params">Amnezia 1.5 Parameters (v4.8.11.4+)</div>
                     <small class="amnezia15-doc">
@@ -249,7 +239,7 @@
                         <label class="input-label">I5 =</label>
                         <textarea id="i5_1" class="jc modern-input amnezia15-field" rows="1" placeholder="Enter I5 value"></textarea>
                     </div>
-                    <!-- Reset I1-I5 button -->
+
                     <button class="modern-secondary-btn" id="resetAmnezia15Btn" style="margin-top:0.5rem;">
                         <span>Reset I1–I5</span>
                     </button>
@@ -325,7 +315,6 @@
                 </div>
             </div>
 
-            <!-- DNS Settings -->
             <div class="musor3">
                 <div class="settings-group-title" data-i18n="dns_settings">DNS Settings</div>
 
@@ -358,7 +347,6 @@
                 </div>
             </div>
 
-            <!-- MTU Settings -->
             <div class="musor4">
                 <div class="settings-group-title" data-i18n="mtu_settings">MTU Settings</div>
 
@@ -397,7 +385,6 @@
     </a>
   </div>
 
-  <!-- Donation Modal -->
   <div id="donateModal" class="modal-overlay hidden">
     <div class="modal-box">
         <div class="modal-header">
@@ -437,7 +424,6 @@
     </div>
   </div>
 
-  <!-- QR Code Modal -->
   <div id="qrModal" class="modal-overlay hidden">
     <div class="modal-box qr-modal-box">
         <div class="modal-header">

@@ -1,11 +1,9 @@
-/* Modern CSS Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* ── Dark Theme (default) ────────────────────────────────── */
 :root,
 [data-theme="dark"] {
     --primary: #6366f1;
@@ -37,7 +35,6 @@
     --radius-xl: 1.25rem;
 }
 
-/* ── Light Theme ─────────────────────────────────────────── */
 [data-theme="light"] {
     --primary: #4f46e5;
     --primary-dark: #3730a3;
@@ -84,7 +81,6 @@ body[data-theme="light"] {
         radial-gradient(ellipse 40% 30% at 85% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
 }
 
-/* ── Font overrides by language ─────────────────────────── */
 body.lang-zh  { font-family: "Noto Sans TC", sans-serif; }
 body.lang-en,
 body.lang-tr  { font-family: "Inter", "Josefin Sans", "Segoe UI", sans-serif; }
@@ -92,14 +88,12 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
 
 .rtl-text { direction: rtl; }
 
-/* ── Wrapper ─────────────────────────────────────────────── */
 .wrapper {
     max-width: 1160px;
     margin: 0 auto;
     padding: 2.5rem 2rem 2rem;
 }
 
-/* ── Header ──────────────────────────────────────────────── */
 .header {
     text-align: center;
     margin-bottom: 2.5rem;
@@ -141,7 +135,6 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
     font-weight: 400;
 }
 
-/* ── Theme Toggle Button ─────────────────────────────────── */
 .theme-toggle-btn {
     position: absolute;
     top: 0;
@@ -173,7 +166,6 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
 [data-theme="light"] .theme-icon-light { display: inline; }
 [data-theme="light"] .theme-icon-dark  { display: none; }
 
-/* ── Layout Grid ─────────────────────────────────────────── */
 .container-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -181,7 +173,6 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
     margin-bottom: 1.5rem;
 }
 
-/* ── Cards ───────────────────────────────────────────────── */
 .container,
 .container2 {
     background: var(--surface);
@@ -210,7 +201,6 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
     border-color: var(--border-strong);
 }
 
-/* ── Section & Group Titles ──────────────────────────────── */
 .section-title {
     font-size: 0.75rem;
     font-weight: 600;
@@ -231,7 +221,6 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
     text-align: left;
 }
 
-/* ── File Upload with Drag-and-Drop ──────────────────────── */
 .custom-file-upload {
     display: flex;
     align-items: center;
@@ -271,7 +260,6 @@ body.lang-fa  { font-family: "Lalezar", sans-serif; }
     opacity: 0.8;
 }
 
-/* ── Buttons ─────────────────────────────────────────────── */
 button,
 .convert-btn {
     width: 100%;
@@ -320,7 +308,6 @@ button:hover,
     gap: 0.75rem;
 }
 
-/* Generate Random / Secondary buttons */
 .modern-secondary-btn {
     background: var(--surface-3);
     color: var(--text-secondary);
@@ -351,7 +338,6 @@ button:hover,
     padding: 0.5rem 0.5rem;
 }
 
-/* Download / Copy buttons */
 .button-container {
     display: flex;
     gap: 0.75rem;
@@ -428,7 +414,6 @@ button:hover,
     color: var(--text);
 }
 
-/* ── Format Options (Radio) ──────────────────────────────── */
 .format-options {
     display: flex;
     flex-direction: column;
@@ -506,7 +491,6 @@ button:hover,
     margin-left: 0;
 }
 
-/* ── Amnezia 1.5 Checkbox ────────────────────────────────── */
 .modern-checkbox {
     display: flex;
     align-items: center;
@@ -590,7 +574,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     margin-left: 7px; font-size:0.8rem; color: var(--text-secondary);
 }
 
-/* ── Custom Inputs ───────────────────────────────────────── */
 .custom-inputs {
     margin-top: 0.75rem;
     padding: 1rem;
@@ -652,14 +635,12 @@ input[type="checkbox"]:checked + .checkmark::after {
     background: var(--surface-3);
 }
 
-/* Validation error state */
 .modern-input.input-error,
 .jc.input-error {
     border-color: var(--danger) !important;
     box-shadow: 0 0 0 3px var(--danger-dim) !important;
 }
 
-/* Modern Select */
 .modern-select {
     padding: 0.5rem 2rem 0.5rem 0.75rem;
     background: var(--surface-2);
@@ -693,12 +674,11 @@ input[type="checkbox"]:checked + .checkmark::after {
     font-family: inherit;
 }
 
-/* ── Textareas ───────────────────────────────────────────── */
 .textarea1 {
     width: 100%;
     height: 280px;
     background: var(--surface-2);
-    border: 2px dashed var(--border-strong); /* FIX: Dashed border indicates drop zone */
+    border: 2px dashed var(--border-strong);
     border-radius: var(--radius-md);
     padding: 1rem 1.25rem;
     color: var(--text);
@@ -713,7 +693,7 @@ input[type="checkbox"]:checked + .checkmark::after {
 .textarea1:focus {
     outline: none;
     border-color: var(--primary);
-    border-style: solid; /* Solid border when typing for better UX */
+    border-style: solid;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
     background: var(--surface-3);
 }
@@ -741,7 +721,6 @@ input[type="checkbox"]:checked + .checkmark::after {
 .textarea1::-webkit-scrollbar-thumb  { background: var(--surface-3); border-radius: 3px; }
 .textarea1::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
 
-/* ── Validation Panel ────────────────────────────────────── */
 .validation-panel {
     margin-bottom: 0.75rem;
     border-radius: var(--radius-md);
@@ -791,7 +770,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     line-height: 1.4;
 }
 
-/* ── Config Tabs ─────────────────────────────────────────── */
 .config-tabs-container {
     margin-bottom: 1rem;
     border: 1px solid var(--border);
@@ -810,10 +788,10 @@ input[type="checkbox"]:checked + .checkmark::after {
     background: var(--surface-3);
     border-bottom: 1px solid var(--border);
     scrollbar-width: thin;
-    scrollbar-color: var(--primary) var(--surface-2); /* More visible */
-    cursor: grab; /* Indicates it can be dragged */
-    touch-action: pan-x; /* Ensures smooth native touch scrolling on mobile */
-    user-select: none; /* Prevents text highlighting while dragging */
+    scrollbar-color: var(--primary) var(--surface-2);
+    cursor: grab;
+    touch-action: pan-x;
+    user-select: none;
     -webkit-user-select: none;
 }
 
@@ -821,9 +799,8 @@ input[type="checkbox"]:checked + .checkmark::after {
     cursor: grabbing;
 }
 
-/* Make scrollbar much more obvious on Webkit browsers (Chrome, Edge, Safari) */
 .config-tabs-header::-webkit-scrollbar {
-    height: 10px; /* Increased from 4px for easy grabbing */
+    height: 10px;
 }
 .config-tabs-header::-webkit-scrollbar-track {
     background: var(--surface-2);
@@ -832,7 +809,7 @@ input[type="checkbox"]:checked + .checkmark::after {
 .config-tabs-header::-webkit-scrollbar-thumb {
     background: var(--primary);
     border-radius: 5px;
-    border: 2px solid var(--surface-2); /* Creates a nice padded look */
+    border: 2px solid var(--surface-2);
 }
 .config-tabs-header::-webkit-scrollbar-thumb:hover {
     background: var(--primary-dark);
@@ -933,7 +910,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     background: rgba(167, 139, 250, 0.2) !important;
 }
 
-/* ── File List Bar ───────────────────────────────────────── */
 .infobtn {
     width: 100%;
     grid-column: 1 / -1;
@@ -954,7 +930,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     justify-content: center;
 }
 
-/* ── Musor fade-in ───────────────────────────────────────── */
 .musor1,
 .musor2 {
     animation: fadeIn 0.2s ease;
@@ -965,7 +940,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Custom Dropdown (Language) ──────────────────────────── */
 .custom-dropdown {
     position: absolute;
     top: 0;
@@ -1073,7 +1047,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     transform: translateY(1px);
 }
 
-/* ── Footer ──────────────────────────────────────────────── */
 .footer-container {
     display: flex;
     align-items: center;
@@ -1114,7 +1087,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     opacity: 0.7;
 }
 
-/* ── Amnezia 1.5 specifics ───────────────────────────────── */
 #ws_id,
 .amnezia15-field {
     width: 100%;
@@ -1166,7 +1138,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     margin-bottom: 0.5rem;
 }
 
-/* ── DNS and MTU Settings ────────────────────────────────── */
 .musor3,
 .musor4 {
     margin-top: 0.75rem;
@@ -1181,7 +1152,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     text-align: left;
 }
 
-/* ── Utility ─────────────────────────────────────────────── */
 .hidden,
 .hidden-input,
 .radio {
@@ -1192,7 +1162,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     width: 100%;
 }
 
-/* ── Donation Modal ──────────────────────────────────────── */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -1305,7 +1274,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     white-space: nowrap;
 }
 
-/* ── QR Modal ────────────────────────────────────────────── */
 .qr-modal-box {
     max-width: 340px;
     text-align: center;
@@ -1333,7 +1301,6 @@ input[type="checkbox"]:checked + .checkmark::after {
     margin-top: 0.5rem;
 }
 
-/* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 768px) {
     .wrapper {
         padding: 1.25rem 1rem;
