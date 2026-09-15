@@ -491,6 +491,115 @@ button:hover,
     margin-left: 0;
 }
 
+.apps-dropdown {
+    position: relative;
+    margin: -0.2rem 0 0.5rem;
+}
+
+.apps-dropdown.hidden {
+    display: none;
+}
+
+.apps-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.45rem 0.75rem;
+    background: transparent;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.apps-dropdown-trigger:hover {
+    background: var(--surface-2);
+    border-color: var(--primary);
+    color: var(--text);
+}
+
+.apps-dropdown.open .apps-dropdown-trigger {
+    background: var(--surface-2);
+    border-color: var(--primary);
+    color: var(--text);
+    border-style: solid;
+}
+
+.apps-dropdown-trigger-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.apps-dropdown-trigger .dropdown-arrow {
+    font-size: 0.6rem;
+    opacity: 0.6;
+    transition: transform 0.2s ease;
+}
+
+.apps-dropdown.open .apps-dropdown-trigger .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.apps-dropdown-panel {
+    position: absolute;
+    top: calc(100% + 0.3rem);
+    left: 0.75rem;
+    right: 0.75rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 30;
+}
+
+.apps-dropdown.open .apps-dropdown-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.apps-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.55rem 0.8rem;
+    color: var(--text);
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s ease;
+}
+
+.apps-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.apps-dropdown-item:hover {
+    background: var(--surface-3);
+}
+
+.apps-dropdown-item-action {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--primary);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
 .modern-checkbox {
     display: flex;
     align-items: center;

@@ -1473,6 +1473,12 @@ function handleOptionChange() {
 
   elements.musor1.classList.toggle('hidden', isWiresocket);
   elements.musor2.classList.toggle('hidden', !isWiresocket);
+
+  getAllBySelector('.apps-dropdown').forEach(dropdown => {
+    const matches = dropdown.dataset.for === this.id;
+    dropdown.classList.toggle('hidden', !matches);
+    if (!matches) dropdown.classList.remove('open');
+  });
   elements.containerColumns.classList.toggle('karing-active', isWiresocket);
   elements.container2.classList.toggle('karing-active', isWiresocket);
 
@@ -1698,6 +1704,33 @@ function updateDropdownSelection(lang) {
   }
 }
 
+function setupAppsDropdowns() {
+  const dropdowns = getAllBySelector('.apps-dropdown');
+
+  dropdowns.forEach(dropdown => {
+    const trigger = dropdown.querySelector('.apps-dropdown-trigger');
+    if (!trigger) return;
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = !dropdown.classList.contains('open');
+      dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('open'); });
+      dropdown.classList.toggle('open', willOpen);
+      trigger.setAttribute('aria-expanded', String(willOpen));
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    dropdowns.forEach(dropdown => {
+      if (!dropdown.contains(e.target)) dropdown.classList.remove('open');
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') dropdowns.forEach(d => d.classList.remove('open'));
+  });
+}
+
 function setupLanguageDropdown() {
   const dropdown = getById('languageSwitcher');
   const selected = dropdown.querySelector('.dropdown-selected');
@@ -1822,6 +1855,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initTheme();
   setupEventListeners();
   setupLanguageDropdown();
+  setupAppsDropdowns();
   setupDragAndDrop();
   setupQRModal();
   setupDonationModal();

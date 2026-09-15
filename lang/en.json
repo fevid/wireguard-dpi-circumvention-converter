@@ -43,5 +43,7 @@
   "dns_label": "DNS:",
   "mtu_settings": "MTU Settings",
   "enable_custom_mtu": "Override MTU Value",
-  "mtu_hint": "Default: 1420. Typical range: 1280-1500"
+  "mtu_hint": "Default: 1420. Typical range: 1280-1500",
+  "supported_apps": "Supported Apps",
+  "download_link": "Download ↗"
 }

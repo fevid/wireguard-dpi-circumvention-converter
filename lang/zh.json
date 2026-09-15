@@ -43,5 +43,7 @@
 "dns_label": "DNS:",
 "mtu_settings": "MTU 设置",
 "enable_custom_mtu": "修改 MTU 值",
-"mtu_hint": "默认: 1420. 典型范围: 1280-1500"
+"mtu_hint": "默认: 1420. 典型范围: 1280-1500",
+"supported_apps": "支持的应用",
+"download_link": "下载 ↗"
 }

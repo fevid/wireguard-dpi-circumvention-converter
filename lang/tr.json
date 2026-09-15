@@ -43,5 +43,7 @@
 "dns_label": "DNS:",
 "mtu_settings": "MTU Ayarları",
 "enable_custom_mtu": "MTU Değerini Değiştir",
-"mtu_hint": "Varsayılan: 1420. Tipik aralık: 1280-1500"
+"mtu_hint": "Varsayılan: 1420. Tipik aralık: 1280-1500",
+"supported_apps": "Desteklenen Uygulamalar",
+"download_link": "İndir ↗"
 }
