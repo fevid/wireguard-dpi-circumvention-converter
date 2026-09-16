@@ -45,6 +45,17 @@ const COUNTRY_FLAGS = {
 
 const AMNEZIA_KEYS    = ['jc', 'jmin', 'jmax', 's1', 's2', 'h1', 'h2', 'h3', 'h4'];
 const AMNEZIA15_KEYS  = ['i1', 'i2', 'i3', 'i4', 'i5'];
+const AMNEZIA_ADV_KEYS  = ['contentpaddingaddition', 'rekeyaftertime', 'rekeytimeout', 'rejectaftertime', 'keepalivetimeout', 'maxhandshakeattempts', 'disablecookies'];
+const ADV_FIELD_IDS     = ['advContentPadding', 'advRekeyAfterTime', 'advRekeyTimeout', 'advRejectAfterTime', 'advKeepaliveTimeout', 'advMaxHandshakeAttempts'];
+const CLASH_ADV_KEY_MAP = {
+  contentpaddingaddition: 'content-padding-addition',
+  rekeyaftertime:         'rekey-after-time',
+  rekeytimeout:           'rekey-timeout',
+  rejectaftertime:        'reject-after-time',
+  keepalivetimeout:       'keepalive-timeout',
+  maxhandshakeattempts:   'max-handshake-attempts',
+  disablecookies:         'disable-cookies'
+};
 const SUPPORTED_LANGS = ["en", "tr", "fa", "ru", "zh"];
 
 const COUNTRY_TLDS = {
@@ -136,6 +147,9 @@ const LS_DNS_PROVIDER  = 'wg_dns_provider';
 const LS_CUSTOM_DNS_VAL = 'wg_custom_dns_val';
 const LS_CUSTOM_MTU    = 'wg_custom_mtu';
 const LS_MTU_VALUE     = 'wg_mtu_value';
+const LS_ADV_SETTINGS  = 'wg_adv_settings';
+const LS_ADV_VALUES    = 'wg_adv_values';
+const LS_ADV_COOKIES   = 'wg_adv_cookies';
 
 let proxyList    = [];
 let translations = {};
@@ -243,6 +257,13 @@ function persistSettings() {
   const enableMTU = getById('enableCustomMTU')?.checked || false;
   localStorage.setItem(LS_CUSTOM_MTU, enableMTU ? '1' : '0');
   localStorage.setItem(LS_MTU_VALUE, getById('customMTU')?.value || '1420');
+
+  const adv = getById('enableAdvancedSettings')?.checked || false;
+  localStorage.setItem(LS_ADV_SETTINGS, adv ? '1' : '0');
+  const advValues = {};
+  ADV_FIELD_IDS.forEach(id => { advValues[id] = getById(id)?.value || ''; });
+  localStorage.setItem(LS_ADV_VALUES, JSON.stringify(advValues));
+  localStorage.setItem(LS_ADV_COOKIES, getById('advDisableCookies')?.checked ? '1' : '0');
 }
 
 function restoreSettings() {
@@ -306,6 +327,26 @@ function restoreSettings() {
   if (mtuValue) {
     const el = getById('customMTU');
     if (el) el.value = mtuValue;
+  }
+
+  const adv = localStorage.getItem(LS_ADV_SETTINGS);
+  if (adv === '1') {
+    const cb = getById('enableAdvancedSettings');
+    if (cb) { cb.checked = true; toggleAdvancedSettings(); }
+  }
+  const advValues = localStorage.getItem(LS_ADV_VALUES);
+  if (advValues) {
+    try {
+      const parsed = JSON.parse(advValues);
+      ADV_FIELD_IDS.forEach(id => {
+        const el = getById(id);
+        if (el && parsed[id] !== undefined) el.value = parsed[id];
+      });
+    } catch (e) {}
+  }
+  if (localStorage.getItem(LS_ADV_COOKIES) === '1') {
+    const cb = getById('advDisableCookies');
+    if (cb) cb.checked = true;
   }
 
   validateConvertButton();
@@ -555,6 +596,22 @@ function generateAmneziaDefaults(usePerConfigRandom = false) {
     result.i5 = getById('i5_1')?.value || '';
   }
 
+  if (getById('enableAdvancedSettings')?.checked) {
+    const advMap = [
+      ['contentpaddingaddition', 'advContentPadding'],
+      ['rekeyaftertime',         'advRekeyAfterTime'],
+      ['rekeytimeout',           'advRekeyTimeout'],
+      ['rejectaftertime',        'advRejectAfterTime'],
+      ['keepalivetimeout',       'advKeepaliveTimeout'],
+      ['maxhandshakeattempts',   'advMaxHandshakeAttempts']
+    ];
+    for (const [key, id] of advMap) {
+      const v = normalizeAdvValue(getById(id)?.value);
+      if (v) result[key] = v;
+    }
+    if (getById('advDisableCookies')?.checked) result.disablecookies = 'on';
+  }
+
   return result;
 }
 
@@ -610,13 +667,13 @@ function parseWGConfig(text) {
     const value = trimmedLine.slice(equalIndex + 1).trim();
 
     if (currentSection === 'interface') {
-      const target = [...AMNEZIA_KEYS, ...AMNEZIA15_KEYS, 'id', 'ip', 'ib'].includes(key)
+      const target = [...AMNEZIA_KEYS, ...AMNEZIA15_KEYS, ...AMNEZIA_ADV_KEYS, 'id', 'ip', 'ib'].includes(key)
         ? config.interface.amneziaOptions
         : config.interface;
       target[key] = value;
     } else if (currentSection === 'peer' && config.peers.length > 0) {
       const peer = config.peers[config.peers.length - 1];
-      if ([...AMNEZIA_KEYS, ...AMNEZIA15_KEYS, 'id', 'ip', 'ib'].includes(key)) {
+      if ([...AMNEZIA_KEYS, ...AMNEZIA15_KEYS, ...AMNEZIA_ADV_KEYS, 'id', 'ip', 'ib'].includes(key)) {
         peer.amneziaOptions[key] = value;
       } else if (key === 'presharedkey') {
         peer.presharedKey = value;
@@ -700,6 +757,10 @@ function convertToProxy(wgConfig, fileName, format = 'clash', usePerConfigRandom
       const v = ifaceData.amneziaOptions[key] || peerData.amneziaOptions?.[key];
       if (v) options[key] = v;
     }
+    for (const key of AMNEZIA_ADV_KEYS) {
+      const v = ifaceData.amneziaOptions[key] || peerData.amneziaOptions?.[key];
+      if (v) options[key] = v;
+    }
   }
 
   let proxyName    = peerData.name || fileName.replace('.conf', '');
@@ -779,8 +840,12 @@ function convertToProxy(wgConfig, fileName, format = 'clash', usePerConfigRandom
 function generateAmneziaOptionsYAML(options) {
   const entries = Object.entries(options)
     .filter(([key, value]) => value !== undefined && value !== '' &&
-      [...AMNEZIA_KEYS, ...AMNEZIA15_KEYS].includes(key))
-    .map(([key, value]) => `    ${key}: ${value}`)
+      [...AMNEZIA_KEYS, ...AMNEZIA15_KEYS, ...AMNEZIA_ADV_KEYS].includes(key))
+    .map(([key, value]) => {
+      const outKey = CLASH_ADV_KEY_MAP[key] || key;
+      const outVal = key === 'disablecookies' ? 'true' : value;
+      return `    ${outKey}: ${outVal}`;
+    })
     .join('\n');
   return entries ? `  amnezia-wg-option:\n${entries}\n` : '';
 }
@@ -915,6 +980,13 @@ function generateSingleAWGConfig(proxy) {
   if (options.i3) lines.push(`I3 = ${options.i3}`);
   if (options.i4) lines.push(`I4 = ${options.i4}`);
   if (options.i5) lines.push(`I5 = ${options.i5}`);
+  if (options.contentpaddingaddition) lines.push(`ContentPaddingAddition = ${options.contentpaddingaddition}`);
+  if (options.rekeyaftertime)         lines.push(`RekeyAfterTime = ${options.rekeyaftertime}`);
+  if (options.rekeytimeout)           lines.push(`RekeyTimeout = ${options.rekeytimeout}`);
+  if (options.rejectaftertime)        lines.push(`RejectAfterTime = ${options.rejectaftertime}`);
+  if (options.keepalivetimeout)       lines.push(`KeepaliveTimeout = ${options.keepalivetimeout}`);
+  if (options.maxhandshakeattempts)   lines.push(`MaxHandshakeAttempts = ${options.maxhandshakeattempts}`);
+  if (options.disablecookies)         lines.push(`DisableCookies = on`);
   lines.push(``, `[Peer]`, `PublicKey = ${proxy.public_key}`);
   if (proxy.preshared_key) lines.push(`PresharedKey = ${proxy.preshared_key}`);
   lines.push(
@@ -1415,6 +1487,20 @@ function setupEventListeners() {
     persistSettings();
   });
 
+  getById('enableAdvancedSettings')?.addEventListener('change', () => {
+    toggleAdvancedSettings();
+    persistSettings();
+  });
+
+  ADV_FIELD_IDS.forEach(id => {
+    getById(id)?.addEventListener('input', persistSettings);
+  });
+
+  getById('advDisableCookies')?.addEventListener('change', persistSettings);
+
+  getById('randomAdvBtn')?.addEventListener('click', handleRandomAdvanced);
+  getById('resetAdvBtn')?.addEventListener('click', handleResetAdvanced);
+
   getAllBySelector('input[name="junk"]').forEach(r => {
     r.addEventListener('change', function() {
       if (this.id === 'junk1' || this.id === 'junk2') {
@@ -1490,12 +1576,25 @@ function handleOptionChange() {
     if (cb) { cb.checked = false; toggleAmnezia15(); }
   }
 
+  const advToggle = getById('advanced-settings-toggle-label');
+  if (advToggle) advToggle.style.display = isWiresocket ? 'none' : 'block';
+
+  if (isWiresocket) {
+    const advCb = getById('enableAdvancedSettings');
+    if (advCb) { advCb.checked = false; toggleAdvancedSettings(); }
+  }
+
   validateConvertButton();
 }
 
 function toggleAmnezia15() {
   const isChecked = getById('enableAmnezia15')?.checked || false;
   getById('amnezia15-inputs')?.classList.toggle('hidden', !isChecked);
+}
+
+function toggleAdvancedSettings() {
+  const isChecked = getById('enableAdvancedSettings')?.checked || false;
+  getById('advanced-settings-inputs')?.classList.toggle('hidden', !isChecked);
 }
 
 function toggleCustomDNS() {
@@ -1524,6 +1623,17 @@ function getCustomDNS() {
   } else {
     return DNS_PROVIDERS[provider] || DNS_PROVIDERS.google;
   }
+}
+
+function normalizeAdvValue(raw) {
+  if (!raw) return null;
+  const m = String(raw).trim().match(/^(\d+)(?:\s*-\s*(\d+))?$/);
+  if (!m) return null;
+  let a = parseInt(m[1], 10);
+  let b = m[2] !== undefined ? parseInt(m[2], 10) : a;
+  if (a > 65535 || b > 65535) return null;
+  if (b < a) { const t = a; a = b; b = t; }
+  return a === b ? `${a}` : `${a}-${b}`;
 }
 
 function getCustomMTU() {
@@ -1583,6 +1693,32 @@ function handleRandomJunk() {
   getById('jmax1').value = jmax;
   getById('junk3').checked = true;
   persistSettings();
+}
+
+function handleRandomAdvanced() {
+  const randRange = (lo, hi) => {
+    const a = getRandomInt(lo, Math.floor((lo + hi) / 2));
+    const b = getRandomInt(a, hi);
+    return a === b ? `${a}` : `${a}-${b}`;
+  };
+  getById('advContentPadding').value       = `0-${getRandomInt(4, 128)}`;
+  getById('advRekeyAfterTime').value       = randRange(90, 150);
+  getById('advRekeyTimeout').value         = randRange(3, 10);
+  getById('advRejectAfterTime').value      = randRange(150, 210);
+  getById('advKeepaliveTimeout').value     = randRange(5, 15);
+  getById('advMaxHandshakeAttempts').value = randRange(5, 18);
+  persistSettings();
+}
+
+function handleResetAdvanced() {
+  ADV_FIELD_IDS.forEach(id => {
+    const el = getById(id);
+    if (el) el.value = '';
+  });
+  const cookies = getById('advDisableCookies');
+  if (cookies) cookies.checked = false;
+  persistSettings();
+  showNotification('Advanced settings cleared', 'info');
 }
 
 function handleRandomWiresocket() {
@@ -1862,6 +1998,7 @@ document.addEventListener('DOMContentLoaded', function () {
   loadLanguage(currentLang);
   restoreSettings();
   toggleAmnezia15();
+  toggleAdvancedSettings();
   toggleCustomDNS();
   toggleCustomDNSPanel();
   toggleCustomMTU();

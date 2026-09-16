@@ -44,6 +44,10 @@
 "mtu_settings": "MTU Ayarları",
 "enable_custom_mtu": "MTU Değerini Değiştir",
 "mtu_hint": "Varsayılan: 1420. Tipik aralık: 1280-1500",
+"enable_advanced": "Gelişmiş Ayarları Etkinleştir",
+"advanced_params": "Gelişmiş Parametreler (V5.0.1.5+)",
+"disable_cookies": "Çerezleri Devre Dışı Bırak",
+"reset_advanced": "Gelişmiş Ayarları Sıfırla",
 "supported_apps": "Desteklenen Uygulamalar",
 "download_link": "İndir ↗"
 }

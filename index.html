@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="WireGuard Converter">
     <meta name="twitter:description" content="Easily convert WireGuard configurations to Clash, AmneziaWG, WG Tunnel, Wiresock formats.">
-    <link rel="icon" href="assets/wg.svg" type="image/svg+xml">
+    <script type="text/javascript" nonce="9dc63ac431614b0d94295c70877" src="//local.adguard.org?ts=1789547316320&amp;type=content-script&amp;dmn=www.kimi.ai&amp;url=https%3A%2F%2Fwww.kimi.ai%2Fapiv2%2Fprojects%2F1a0a92fc-0192-829c-8000-0e5f8dd12401%2Ffiles%3Adownload%3Fsig%3DpWFlGmqvIgBhdXRkOWxsZTcxZzZpOG1mNjg1aWxsMGFweCQxYTBhOTJmYy0wMTkyLTgyOWMtODAwMC0wZTVmOGRkMTI0MDFhZnVvdXRwdXQvYXBwL2luZGV4Lmh0bWxhdvToJK6NcGG-4Ch4m8yPraloYtBNriwFWsseH-a3aTLcRA%26etag%3D31358-1789547282&amp;app=brave.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="9dc63ac431614b0d94295c70877" src="//local.adguard.org?ts=1789547316320&amp;name=AdGuard%20Assistant&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><link rel="icon" href="assets/wg.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lalezar&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
@@ -23,6 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script defer src="script.js"></script>
+<base target="_blank">
 </head>
 <body>
   <div class="wrapper">
@@ -199,6 +200,14 @@
                     </div>
                 </label>
 
+                <label class="modern-checkbox" id="advanced-settings-toggle-label">
+                    <div class="checkbox">
+                        <input type="checkbox" id="enableAdvancedSettings" class="hidden"/>
+                        <span class="checkmark"></span>
+                        <span class="option-label amnezia15-label" data-i18n="enable_advanced">Enable Advanced Settings</span>
+                    </div>
+                </label>
+
                 <label>
                   <div class="checkbox modern-radio">
                     <input type="radio" id="junk1" name="junk" class="radio" checked/>
@@ -286,6 +295,103 @@
                         <span>Reset I1–I5</span>
                     </button>
                 </div>
+
+                <div id="advanced-settings-inputs" class="custom-inputs hidden advanced-panel">
+                    <div class="settings-group-title advanced-group-title" data-i18n="advanced_params">Advanced Parameters (V5.0.1.5+)</div>
+                    <div class="input-row">
+                        <label class="input-label">ContentPaddingAddition =</label>
+                        <textarea id="advContentPadding" class="jc modern-input" rows="1" maxlength="9" placeholder="0-128"></textarea>
+                    </div>
+                    <div class="input-row">
+                        <label class="input-label">RekeyAfterTime =</label>
+                        <textarea id="advRekeyAfterTime" class="jc modern-input" rows="1" maxlength="7" placeholder="90-150"></textarea>
+                    </div>
+                    <div class="input-row">
+                        <label class="input-label">RekeyTimeout =</label>
+                        <textarea id="advRekeyTimeout" class="jc modern-input" rows="1" maxlength="7" placeholder="3-10"></textarea>
+                    </div>
+                    <div class="input-row">
+                        <label class="input-label">RejectAfterTime =</label>
+                        <textarea id="advRejectAfterTime" class="jc modern-input" rows="1" maxlength="7" placeholder="150-210"></textarea>
+                    </div>
+                    <div class="input-row">
+                        <label class="input-label">KeepaliveTimeout =</label>
+                        <textarea id="advKeepaliveTimeout" class="jc modern-input" rows="1" maxlength="7" placeholder="5-15"></textarea>
+                    </div>
+                    <div class="input-row">
+                        <label class="input-label">MaxHandshakeAttempts =</label>
+                        <textarea id="advMaxHandshakeAttempts" class="jc modern-input" rows="1" maxlength="7" placeholder="5-18"></textarea>
+                    </div>
+
+                    <label class="modern-checkbox" style="margin-top:0.5rem;">
+                        <div class="checkbox">
+                            <input type="checkbox" id="advDisableCookies" class="hidden"/>
+                            <span class="checkmark"></span>
+                            <span class="option-label" data-i18n="disable_cookies">DisableCookies</span>
+                        </div>
+                    </label>
+
+                    <div class="junk-actions-row">
+                        <button class="modern-secondary-btn" id="randomAdvBtn">
+                            <span data-i18n="generate_random">Generate Random</span>
+                        </button>
+                        <button class="modern-secondary-btn" id="resetAdvBtn" title="Clear advanced fields">
+                            <span data-i18n="reset_advanced">Reset Advanced</span>
+                        </button>
+                    </div>
+
+                    <div class="adv-dns-mtu-block">
+                        <div class="settings-group-title" data-i18n="dns_settings">DNS Settings</div>
+
+                        <label class="modern-checkbox" id="custom-dns-toggle-label">
+                            <div class="checkbox">
+                                <input type="checkbox" id="enableCustomDNS" class="hidden"/>
+                                <span class="checkmark"></span>
+                                <span class="option-label" data-i18n="enable_custom_dns">Override DNS Settings</span>
+                            </div>
+                        </label>
+
+                        <div id="dns-settings-panel" class="custom-inputs hidden">
+                            <div class="input-row">
+                                <label class="input-label" data-i18n="dns_provider">DNS Provider:</label>
+                                <select id="dnsProvider" class="modern-select">
+                                    <option value="google">Google (8.8.8.8, 8.8.4.4)</option>
+                                    <option value="cloudflare">Cloudflare (1.1.1.1, 1.0.0.1)</option>
+                                    <option value="quad9">Quad9 (9.9.9.9, 149.112.112.112)</option>
+                                    <option value="opendns">OpenDNS (208.67.222.222, 208.67.220.220)</option>
+                                    <option value="adguard">AdGuard (94.140.14.14, 94.140.15.15)</option>
+                                    <option value="nextdns">NextDNS (45.90.28.0, 45.90.30.0)</option>
+                                    <option value="custom" data-i18n="custom_dns_option">Custom DNS</option>
+                                </select>
+                            </div>
+
+                            <div id="custom-dns-panel" class="input-row hidden">
+                                <label class="input-label" data-i18n="dns_label">DNS:</label>
+                                <textarea id="customDNS" class="jc modern-input" rows="1" placeholder="8.8.8.8, 1.1.1.1"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="adv-dns-mtu-block">
+                        <div class="settings-group-title" data-i18n="mtu_settings">MTU Settings</div>
+
+                        <label class="modern-checkbox" id="custom-mtu-toggle-label">
+                            <div class="checkbox">
+                                <input type="checkbox" id="enableCustomMTU" class="hidden"/>
+                                <span class="checkmark"></span>
+                                <span class="option-label" data-i18n="enable_custom_mtu">Override MTU Value</span>
+                            </div>
+                        </label>
+
+                        <div id="mtu-settings-panel" class="custom-inputs hidden">
+                            <div class="input-row">
+                                <label class="input-label">MTU =</label>
+                                <textarea id="customMTU" class="jc modern-input" rows="1" maxlength="4" placeholder="1420"></textarea>
+                            </div>
+                            <small class="setting-hint" data-i18n="mtu_hint">Default: 1420. Typical range: 1280-1420</small>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="musor2 hidden">
@@ -357,57 +463,6 @@
                 </div>
             </div>
 
-            <div class="musor3">
-                <div class="settings-group-title" data-i18n="dns_settings">DNS Settings</div>
-
-                <label class="modern-checkbox" id="custom-dns-toggle-label">
-                    <div class="checkbox">
-                        <input type="checkbox" id="enableCustomDNS" class="hidden"/>
-                        <span class="checkmark"></span>
-                        <span class="option-label" data-i18n="enable_custom_dns">Override DNS Settings</span>
-                    </div>
-                </label>
-
-                <div id="dns-settings-panel" class="custom-inputs hidden">
-                    <div class="input-row">
-                        <label class="input-label" data-i18n="dns_provider">DNS Provider:</label>
-                        <select id="dnsProvider" class="modern-select">
-                            <option value="google">Google (8.8.8.8, 8.8.4.4)</option>
-                            <option value="cloudflare">Cloudflare (1.1.1.1, 1.0.0.1)</option>
-                            <option value="quad9">Quad9 (9.9.9.9, 149.112.112.112)</option>
-                            <option value="opendns">OpenDNS (208.67.222.222, 208.67.220.220)</option>
-                            <option value="adguard">AdGuard (94.140.14.14, 94.140.15.15)</option>
-                            <option value="nextdns">NextDNS (45.90.28.0, 45.90.30.0)</option>
-                            <option value="custom" data-i18n="custom_dns_option">Custom DNS</option>
-                        </select>
-                    </div>
-
-                    <div id="custom-dns-panel" class="input-row hidden">
-                        <label class="input-label" data-i18n="dns_label">DNS:</label>
-                        <textarea id="customDNS" class="jc modern-input" rows="1" placeholder="8.8.8.8, 1.1.1.1"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div class="musor4">
-                <div class="settings-group-title" data-i18n="mtu_settings">MTU Settings</div>
-
-                <label class="modern-checkbox" id="custom-mtu-toggle-label">
-                    <div class="checkbox">
-                        <input type="checkbox" id="enableCustomMTU" class="hidden"/>
-                        <span class="checkmark"></span>
-                        <span class="option-label" data-i18n="enable_custom_mtu">Override MTU Value</span>
-                    </div>
-                </label>
-
-                <div id="mtu-settings-panel" class="custom-inputs hidden">
-                    <div class="input-row">
-                        <label class="input-label">MTU =</label>
-                        <textarea id="customMTU" class="jc modern-input" rows="1" maxlength="4" placeholder="1420"></textarea>
-                    </div>
-                    <small class="setting-hint" data-i18n="mtu_hint">Default: 1420. Typical range: 1280-1420</small>
-                </div>
-            </div>
         </div>
     </div>
 

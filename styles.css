@@ -732,7 +732,6 @@ input[type="checkbox"]:checked + .checkmark::after {
 #dns-settings-panel .modern-select,
 #dns-settings-panel .modern-input {
     flex: 1;
-    width: auto;
     text-align: left;
 }
 
@@ -1220,13 +1219,36 @@ input[type="checkbox"]:checked + .checkmark::after {
     opacity: 1;
 }
 
-.amnezia15-inputs-panel {
+.amnezia15-inputs-panel, .advanced-panel {
     margin-top: 0.75rem;
     border-color: rgba(167, 139, 250, 0.25);
 }
 
-.amnezia15-group-title {
+.amnezia15-group-title, .advanced-group-title {
     color: var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.advanced-panel .input-row{
+    display: flex;
+    justify-content: space-between;
+}
+
+.advanced-panel .input-label{
+    min-width: 42%;
+}
+
+.advanced-panel textarea{
+    flex-grow: 1;
+}
+
+.adv-dns-mtu-block {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed rgba(167, 139, 250, 0.25);
+}
+
+.adv-dns-mtu-block .settings-group-title {
     margin-bottom: 0.5rem;
 }
 

@@ -44,6 +44,10 @@
 "mtu_settings": "تنظیمات MTU",
 "enable_custom_mtu": "تغییر مقدار MTU",
 "mtu_hint": "پیش‌فرض: 1420. محدوده معمول: 1280-1500",
+"enable_advanced": "فعال‌سازی تنظیمات پیشرفته",
+"advanced_params": "پارامترهای پیشرفته (V5.0.1.5+)",
+"disable_cookies": "غیرفعال کردن کوکی‌ها",
+"reset_advanced": "بازنشانی تنظیمات پیشرفته",
 "supported_apps": "برنامه‌های پشتیبانی‌شده",
 "download_link": "دانلود ↗"
 }

@@ -44,6 +44,10 @@
 "mtu_settings": "MTU 设置",
 "enable_custom_mtu": "修改 MTU 值",
 "mtu_hint": "默认: 1420. 典型范围: 1280-1500",
+"enable_advanced": "启用高级设置",
+"advanced_params": "高级参数 (V5.0.1.5+)",
+"disable_cookies": "禁用 Cookie",
+"reset_advanced": "重置高级设置",
 "supported_apps": "支持的应用",
 "download_link": "下载 ↗"
 }

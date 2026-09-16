@@ -44,6 +44,10 @@
   "mtu_settings": "MTU Settings",
   "enable_custom_mtu": "Override MTU Value",
   "mtu_hint": "Default: 1420. Typical range: 1280-1500",
+  "enable_advanced": "Enable Advanced Settings",
+  "advanced_params": "Advanced Parameters (V5.0.1.5+)",
+  "disable_cookies": "DisableCookies",
+  "reset_advanced": "Reset Advanced",
   "supported_apps": "Supported Apps",
   "download_link": "Download ↗"
 }
